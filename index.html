@@ -216,6 +216,56 @@ section {
   position: relative;
 }
 
+.hero-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 56px;
+}
+
+.hero-photo-wrap {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.hero-photo {
+  width: 260px;
+  height: 320px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 20px;
+  border: 1px solid var(--border-2);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(245,158,11,0.08), var(--shadow-glow);
+  display: block;
+}
+
+.hero-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 21px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.18) 0%, transparent 50%, rgba(244,63,94,0.10) 100%);
+  z-index: -1;
+}
+
+@media (max-width: 860px) {
+  .hero-layout {
+    flex-direction: column-reverse;
+    gap: 36px;
+  }
+  .hero-photo {
+    width: 180px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-photo {
+    width: 140px;
+    height: 175px;
+  }
+}
+
 /* Big background number */
 #hero::before {
   content: 'AC';
@@ -764,6 +814,7 @@ footer {
 
 <!-- ══════════════════════════════════════════════════════ HERO -->
 <section id="hero">
+  <div class="hero-layout">
   <div class="hero-inner">
     <div class="hero-eyebrow">
       <span class="live-dot" aria-hidden="true"></span>
@@ -806,6 +857,11 @@ footer {
         <i data-lucide="mail"></i>
       </a>
     </div>
+  </div>
+
+  <div class="hero-photo-wrap reveal">
+    <img src="headshot.jpg" alt="Alex Chan" class="hero-photo">
+  </div>
   </div>
 
   <div class="hero-scroll" aria-hidden="true">
