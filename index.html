@@ -573,6 +573,7 @@ section {
 .proj-icon.rose { background: rgba(244,63,94,0.10); color: var(--rose-lt); }
 .proj-icon.green { background: rgba(16,185,129,0.10); color: #6EE7B7; }
 .proj-icon.slate { background: rgba(148,136,128,0.10); color: var(--text-muted); }
+.proj-icon.blue { background: rgba(37,99,235,0.12); color: #93C5FD; }
 
 .proj-name {
   font-family: 'DM Serif Display', serif;
@@ -1048,17 +1049,36 @@ footer {
       <p class="proj-desc" style="text-align:center;">More projects on the way.</p>
     </div>
 
-    <div class="card bento-card reveal reveal-delay-1" style="align-items:center;justify-content:center;text-align:center;">
-      <span class="badge-status soon"><span class="dot-s" aria-hidden="true"></span>Coming Soon</span>
-      <p class="proj-desc" style="text-align:center;">More projects on the way.</p>
+    <div class="card bento-card featured reveal reveal-delay-1">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div class="proj-icon blue"><i data-lucide="plane-landing"></i></div>
+        <span class="badge-status live"><span class="dot-s" aria-hidden="true"></span>Live</span>
+      </div>
+      <div class="proj-name">Landed — Job Application Tracker</div>
+      <p class="proj-desc">
+        Full-stack app for tracking a job search from saved posting to offer. Drag-and-drop Kanban board,
+        filterable table and per-application timeline, with company autocomplete and logos, worldwide
+        city suggestions, secure accounts and rate limiting. Covered by unit, integration and end-to-end tests.
+      </p>
+      <div class="proj-tags">
+        <span class="tag">Next.js</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Prisma</span>
+        <span class="tag rose">Auth.js</span>
+        <span class="tag rose">Playwright</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://job-tracker-eight-orcin.vercel.app" target="_blank" rel="noopener" class="proj-link live">
+          <i data-lucide="external-link"></i> Live Demo
+        </a>
+        <a href="https://github.com/archan06/job-tracker" target="_blank" rel="noopener" class="proj-link">
+          <i data-lucide="github"></i> Source
+        </a>
+      </div>
     </div>
 
     <div class="card bento-card reveal reveal-delay-2" style="align-items:center;justify-content:center;text-align:center;">
-      <span class="badge-status soon"><span class="dot-s" aria-hidden="true"></span>Coming Soon</span>
-      <p class="proj-desc" style="text-align:center;">More projects on the way.</p>
-    </div>
-
-    <div class="card bento-card reveal reveal-delay-3" style="align-items:center;justify-content:center;text-align:center;">
       <span class="badge-status soon"><span class="dot-s" aria-hidden="true"></span>Coming Soon</span>
       <p class="proj-desc" style="text-align:center;">More projects on the way.</p>
     </div>
