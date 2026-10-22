@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T00:00:00Z",
+  "title": "Design System: Alex Chan, Bulletin of Work",
+  "extensions": {
+    "colorMeta": {
+      "amber": {
+        "role": "primary",
+        "displayName": "Bulletin Amber",
+        "canonical": "oklch(76.9% 0.165 70.1)",
+        "tonalRamp": [
+          "#170700",
+          "#351E00",
+          "#5A3702",
+          "#805210",
+          "#AD721C",
+          "#DF921E",
+          "#FDBC6F",
+          "#FEEBD7"
+        ]
+      },
+      "amber-pale": {
+        "role": "primary",
+        "displayName": "Pale Amber",
+        "canonical": "oklch(87.9% 0.153 91.6)",
+        "tonalRamp": [
+          "#120A00",
+          "#2D2300",
+          "#4E3E04",
+          "#705B12",
+          "#997D1F",
+          "#C4A123",
+          "#EFC63D",
+          "#FFEEBC"
+        ]
+      },
+      "amber-dim": {
+        "role": "primary",
+        "displayName": "Dim Amber",
+        "canonical": "oklch(53.3% 0.104 70.8)",
+        "tonalRamp": [
+          "#160700",
+          "#341F01",
+          "#583806",
+          "#825200",
+          "#A77532",
+          "#CE9958",
+          "#F6BF7E",
+          "#FFEBD5"
+        ]
+      },
+      "rose": {
+        "role": "secondary",
+        "displayName": "Signal Rose",
+        "canonical": "oklch(64.5% 0.215 16.4)",
+        "tonalRamp": [
+          "#200003",
+          "#4A0111",
+          "#790924",
+          "#A91C39",
+          "#E32C51",
+          "#FE6F7E",
+          "#FCB5B8",
+          "#FEE9E9"
+        ]
+      },
+      "bulletin-black": {
+        "role": "neutral",
+        "displayName": "Bulletin Black",
+        "canonical": "oklch(14.0% 0.005 86.6)",
+        "tonalRamp": [
+          "#0C0B09",
+          "#252421",
+          "#41403D",
+          "#5F5D5A",
+          "#81807D",
+          "#A6A4A1",
+          "#CCCAC7",
+          "#F0EEEB"
+        ]
+      },
+      "bulletin-black-raised": {
+        "role": "neutral",
+        "displayName": "Raised Black",
+        "canonical": "oklch(16.6% 0.010 75.0)",
+        "tonalRamp": [
+          "#0E0B07",
+          "#27231F",
+          "#433F3A",
+          "#615D58",
+          "#847F7A",
+          "#A8A49E",
+          "#CECAC4",
+          "#F2EEE8"
+        ]
+      },
+      "plate": {
+        "role": "neutral",
+        "displayName": "Plate",
+        "canonical": "oklch(18.6% 0.008 48.3)",
+        "tonalRamp": [
+          "#0E0A08",
+          "#272321",
+          "#433F3C",
+          "#615C5A",
+          "#847F7C",
+          "#A9A3A0",
+          "#CFC9C6",
+          "#F3EDEA"
+        ]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream",
+        "canonical": "oklch(95.7% 0.012 79.8)",
+        "tonalRamp": [
+          "#0E0B06",
+          "#27231E",
+          "#433F39",
+          "#615D56",
+          "#848078",
+          "#A9A49C",
+          "#CFCAC2",
+          "#F3EEE6"
+        ]
+      },
+      "prose-cream": {
+        "role": "neutral",
+        "displayName": "Prose Cream",
+        "canonical": "oklch(90.7% 0.022 80.7)",
+        "tonalRamp": [
+          "#100A02",
+          "#2A2318",
+          "#463F32",
+          "#645D50",
+          "#877F71",
+          "#ACA395",
+          "#D2C9BB",
+          "#F6EDDE"
+        ]
+      },
+      "marginalia": {
+        "role": "neutral",
+        "displayName": "Marginalia",
+        "canonical": "oklch(68.7% 0.039 78.0)",
+        "tonalRamp": [
+          "#140800",
+          "#2E220D",
+          "#4B3D28",
+          "#6A5B45",
+          "#8D7E66",
+          "#B2A28A",
+          "#D9C8AF",
+          "#FDECD2"
+        ]
+      },
+      "dim-marginalia": {
+        "role": "neutral",
+        "displayName": "Dim Marginalia",
+        "canonical": "oklch(59.3% 0.034 76.7)",
+        "tonalRamp": [
+          "#130900",
+          "#2D2210",
+          "#4A3E2B",
+          "#695B48",
+          "#8C7E6A",
+          "#B1A28D",
+          "#D7C8B3",
+          "#FCECD6"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "rgba(245,158,11,.36)"
+      },
+      "rule-soft": {
+        "role": "neutral",
+        "displayName": "Soft Rule",
+        "canonical": "rgba(245,158,11,.16)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name on the title page only; second line italic at 340."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings after a muted mono § numeral."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Entry names; variable weight rises 420 to 600 on hover."
+      },
+      "title-project": {
+        "displayName": "Project Title",
+        "purpose": "Project names in full-width entries."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Title-page introduction, max 34em."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose at 66ch (entries) or 36em (About)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Running head, notes, topics, folio, footer, captions."
+      },
+      "code": {
+        "displayName": "Catalogue Code",
+        "purpose": "Codes and terms, ledger rows, degree line."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "Button and link text for actions."
+      },
+      "live": {
+        "displayName": "Live Mark",
+        "purpose": "Rose LIVE signal only."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "All reveals, underline draws and weight shifts."
+      },
+      {
+        "name": "title-reveal",
+        "value": "lines y 110% to 0, 1.1s, stagger .12s; degree/lede/actions fade-rise 14px over .8s from .45s; offered list slides 24px from .6s",
+        "purpose": "Title-page entrance only (Motion 14.5.0)."
+      },
+      {
+        "name": "margin-rule-draw",
+        "value": "scaleY(0) to scaleY(1), linear, linked to page scroll",
+        "purpose": "The reading rule draws as you read; hidden at 960px and below."
+      },
+      {
+        "name": "weight-hover",
+        "value": "font-variation-settings wght 420 to 600 (list 400 to 640), .35s",
+        "purpose": "Hover state for entry names."
+      },
+      {
+        "name": "underline-draw",
+        "value": "background-size 0% to 100% 1px, .3s",
+        "purpose": "Text-action hover/focus."
+      },
+      {
+        "name": "color-shift",
+        "value": ".2s (actions, contents links), .3s (§ markers)",
+        "purpose": "State color transitions."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all transitions none; no Motion animations; scroll-behavior auto",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "960px"
+      },
+      {
+        "name": "phone",
+        "value": "480px"
+      },
+      {
+        "name": "narrow",
+        "value": "420px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one solid amber action per surface (Read the resume).",
+      "html": "<a class=\"ds-btn\" href=\"#\">Read the resume <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3 8h9M8.5 4.5 12 8l-3.5 3.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\"/></svg></a>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-btn{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--bg);text-decoration:none;padding:14px 22px;font-family:var(--mono);font-size:15px;font-weight:700;border-radius:0;transition:background .2s} .ds-btn:hover{background:var(--amber-lt)} .ds-btn:focus-visible{outline:2px solid var(--amber);outline-offset:3px}"
+    },
+    {
+      "name": "Text Action",
+      "kind": "button",
+      "refersTo": "link-action",
+      "description": "Amber mono action whose underline draws in from the left.",
+      "html": "<div class=\"ds-wrap\"><a class=\"ds-link\" href=\"#\">Live demo <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M5 11 11 5M6 5h5v5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\"/></svg></a></div>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-wrap{background:var(--bg);padding:16px} .ds-link{color:var(--amber);font-family:var(--mono);font-size:14px;font-weight:700;text-decoration:none;background:linear-gradient(currentColor,currentColor) no-repeat 100% 100%/0% 1px;padding-bottom:1px;transition:background-size .3s cubic-bezier(.16,1,.3,1)} .ds-link:hover,.ds-link:focus-visible{background-size:100% 1px;background-position:0% 100%} .ds-link:focus-visible{outline:2px solid var(--amber);outline-offset:3px}"
+    },
+    {
+      "name": "Running Head",
+      "kind": "nav",
+      "refersTo": "running-head",
+      "description": "Sticky bulletin header with the § contents as navigation; current section in amber.",
+      "html": "<header class=\"ds-head\"><a class=\"ds-who\" href=\"#\">ALEX CHAN <b>·</b> BULLETIN OF WORK, 2026–27</a><ol class=\"ds-toc\"><li><a href=\"#\">§1 About</a></li><li><a href=\"#\">§2 Experience</a></li><li><a href=\"#\" aria-current=\"true\">§3 Projects</a></li><li><a href=\"#\">§7 Contact</a></li></ol></header>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-head{position:relative;height:52px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 32px;background:rgba(10,9,7,.94);border-bottom:1px solid var(--rule-soft);font-family:var(--mono);font-size:13px;color:var(--muted)} .ds-head::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:var(--amber)} .ds-who{color:var(--text);text-decoration:none;letter-spacing:.04em;white-space:nowrap} .ds-who b{color:var(--amber);font-weight:400} .ds-toc{display:flex;gap:18px;list-style:none;margin:0;padding:0} .ds-toc a{color:var(--muted);text-decoration:none;padding:6px 0;position:relative;white-space:nowrap;transition:color .2s} .ds-toc a:hover{color:var(--text)} .ds-toc a[aria-current=true]{color:var(--amber)} .ds-toc a[aria-current=true]::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--amber)} .ds-toc a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}"
+    },
+    {
+      "name": "Contents Menu (mobile)",
+      "kind": "nav",
+      "refersTo": "contents-menu",
+      "description": "Disclosure that replaces the contents list at 960px and below.",
+      "html": "<details class=\"ds-contents\" open><summary>Contents <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M4 6.5 8 10l4-3.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\"/></svg></summary><ul><li><a href=\"#\">§1 About</a></li><li><a href=\"#\">§3 Projects</a></li><li><a href=\"#\">§7 Contact</a></li></ul></details>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-contents{background:var(--bg);padding:8px 16px 16px;font-family:var(--mono);font-size:13px;width:240px} .ds-contents summary{list-style:none;cursor:pointer;color:var(--amber);padding:12px 0;display:flex;gap:8px;align-items:center} .ds-contents summary::-webkit-details-marker{display:none} .ds-contents ul{background:var(--bg-2);border:1px solid var(--rule);list-style:none;margin:0;padding:6px 0} .ds-contents a{display:block;padding:12px 18px;text-decoration:none;color:var(--text)} .ds-contents a:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}"
+    },
+    {
+      "name": "Catalogue Entry",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature unit: code and term left, serif name and prose right; hover thickens the name.",
+      "html": "<article class=\"ds-entry\"><div class=\"ds-when\"><span class=\"ds-code\">EXP 2026</span>June – August 2026</div><div><h3>AI Engineering Intern</h3><div class=\"ds-org\">Amicus</div><p>Contributed to an AI-powered case-management platform for personal injury law firms.</p><p class=\"ds-topics\"><b>Topics</b>Claude · LLM Pipelines · AI Assistants</p></div></article>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-entry{display:grid;grid-template-columns:170px minmax(0,1fr);gap:8px 40px;padding:34px 16px;background:var(--bg);border-bottom:1px solid var(--rule-soft);font-family:var(--serif);font-size:18px;line-height:1.6;color:var(--text)} .ds-when{font-family:var(--mono);font-size:14px;color:var(--muted);line-height:1.5} .ds-code{display:block;margin-bottom:6px} .ds-entry h3{margin:0;font-weight:420;font-size:28px;line-height:1.15;letter-spacing:-.01em;font-variation-settings:'wght' 420;transition:font-variation-settings .35s cubic-bezier(.16,1,.3,1)} .ds-entry:hover h3{font-variation-settings:'wght' 600} .ds-org{font-style:italic;color:var(--muted);margin-top:2px} .ds-entry p{color:var(--prose);margin:12px 0 0;max-width:66ch} .ds-topics{font-family:var(--mono);font-size:13px;color:var(--muted) !important;margin-top:14px} .ds-topics b{color:var(--dim);font-weight:400;margin-right:8px}"
+    },
+    {
+      "name": "Project Entry with Live Mark",
+      "kind": "card",
+      "refersTo": "live-mark",
+      "description": "Full-width project row; rose LIVE and amber links in the right column.",
+      "html": "<article class=\"ds-proj\"><div class=\"ds-when\">PRJ 220<br>Node.js · Express</div><div><h3>ResumeAI</h3><div class=\"ds-tag\">AI Resume Analyzer</div></div><div class=\"ds-side\"><span class=\"ds-live\">LIVE</span><a class=\"ds-l\" href=\"#\">Live demo <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M5 11 11 5M6 5h5v5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\"/></svg></a><a class=\"ds-l\" href=\"#\">Source <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M5 11 11 5M6 5h5v5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"square\"/></svg></a></div></article>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-proj{display:grid;grid-template-columns:170px minmax(0,1fr) auto;gap:8px 40px;padding:44px 16px;background:var(--bg);border-bottom:1px solid var(--rule-soft);font-family:var(--serif);color:var(--text)} .ds-when{font-family:var(--mono);font-size:14px;color:var(--muted);line-height:1.9} .ds-proj h3{margin:0;font-weight:420;font-size:40px;line-height:1.15;letter-spacing:-.01em;font-variation-settings:'wght' 420;transition:font-variation-settings .35s cubic-bezier(.16,1,.3,1)} .ds-proj:hover h3{font-variation-settings:'wght' 600} .ds-tag{font-style:italic;color:var(--muted);font-size:19px;margin-top:4px} .ds-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px} .ds-live{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;color:var(--rose);display:inline-flex;align-items:center;gap:7px} .ds-live::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--rose)} .ds-l{color:var(--amber);font-family:var(--mono);font-size:14px;font-weight:700;text-decoration:none;background:linear-gradient(currentColor,currentColor) no-repeat 100% 100%/0% 1px;padding-bottom:1px;transition:background-size .3s cubic-bezier(.16,1,.3,1)} .ds-l:hover,.ds-l:focus-visible{background-size:100% 1px;background-position:0% 100%}"
+    },
+    {
+      "name": "Ledger",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Facts and stats as label/value rows; never big-number tiles.",
+      "html": "<dl class=\"ds-ledger\"><div><dt>Expected</dt><dd>May 2028</dd></div><div><dt>GPA</dt><dd>3.25 / 4.0</dd></div><div><dt>Leadership</dt><dd>VP External, Lambda Phi Epsilon</dd></div></dl>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-ledger{margin:0;padding:0 16px;background:var(--bg);font-family:var(--mono);font-size:14px;border-top:1px solid var(--rule);max-width:420px} .ds-ledger div{display:flex;justify-content:space-between;gap:18px;padding:11px 0;border-bottom:1px solid var(--rule-soft)} .ds-ledger dt{color:var(--muted)} .ds-ledger dd{margin:0;color:var(--text);text-align:right}"
+    },
+    {
+      "name": "Section Head with § Marker",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Headline with muted § numeral, optional mono note, closed by a full rule; margin marker lights when current.",
+      "html": "<div class=\"ds-sec\"><span class=\"ds-mark on\">§3</span><div class=\"ds-sh\"><h2><span class=\"ds-sym\">§3</span>Things I've built</h2><p class=\"ds-note\">A mix of AI tools, full-stack apps, and experiments.</p></div></div>",
+      "css": ":root{--bg:#0A0907;--bg-2:#110E0A;--plate:#161210;--amber:#F59E0B;--amber-lt:#FCD34D;--rose:#F43F5E;--text:#F5F0E8;--prose:#E8DFD0;--muted:#A89880;--dim:#8A7C68;--rule:rgba(245,158,11,.36);--rule-soft:rgba(245,158,11,.16);--serif:'Source Serif 4','Iowan Old Style',Georgia,serif;--mono:'Courier Prime','Courier New',monospace} .ds-sec{position:relative;background:var(--bg);padding:24px 16px 24px 72px;border-left:0;font-family:var(--serif);color:var(--text)} .ds-sec::before{content:'';position:absolute;left:36px;top:0;bottom:0;width:2px;background:var(--amber)} .ds-mark{position:absolute;left:24px;top:40px;font-family:var(--mono);font-size:15px;color:var(--dim);background:var(--bg);padding:4px 3px;transition:color .3s} .ds-mark.on{color:var(--amber)} .ds-sh{display:grid;grid-template-columns:1fr auto;align-items:end;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--rule)} .ds-sh h2{margin:0;font-weight:400;font-size:48px;line-height:1.04;letter-spacing:-.015em} .ds-sym{font-family:var(--mono);font-size:15px;color:var(--muted);vertical-align:.9em;margin-right:14px} .ds-note{margin:0;font-family:var(--mono);font-size:13px;color:var(--muted);text-align:right;max-width:34ch}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Course Bulletin",
+    "overview": "The site is Alex's own course catalogue. Every project, role, certification and skill is a catalogued entry: a monospaced code (PRJ 301, EXP 2026, CRT), a term, a serif name and a description in Alex's words. Sections are numbered § chapters under a running head, the title page carries a folio (\"p. 1\"), the headshot is a captioned plate (\"Fig. 1\"), and stats are set as a ledger. The page reads like printed matter on warm black paper, not like a developer template.\n\nDensity is editorial: generous section spacing, one strict left column of codes and terms (170px) against a serif reading column held to 66ch, and one dominant moment per viewport. Hierarchy is carried by type size and weight, hairline amber rules and position, never by cards, shadows or color fills. A single thin amber reading rule runs down the left margin, draws itself as the reader scrolls, and lights each § marker as its section arrives.\n\nThe world rejects the generic AI developer portfolio: glow cards, \"Hi, I'm\" heroes, bento grids, pill chips.",
+    "keyCharacteristics": [
+      "Warm black bulletin paper with cream serif text and muted mono marginalia.",
+      "Amber is reserved for things you can act on and for the drawn rules; rose only says LIVE.",
+      "Every entry is a row in a catalogue: code and term on the left, name and prose on the right.",
+      "Square corners, hairline rules, no shadows, no pills.",
+      "Motion is limited to the title-page reveal, the scroll-drawn margin rule, and weight shifts on hover."
+    ],
+    "rules": [
+      {
+        "name": "The Palette Law Rule",
+        "body": "Amber marks what can be clicked or what is being drawn: links, actions, rules. Codes, § symbols, taglines and labels stay in marginalia even when they look important. If amber appears on something that does nothing, it is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Signal Rule",
+        "body": "Rose means LIVE. It never decorates, never marks hover, never appears without a working demo behind it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Weight Carries State Rule",
+        "body": "Hover on an entry raises its name's variable weight (420 to 600 on entries, 400 to 640 on the title-page list) over .35s with cubic-bezier(.16,1,.3,1). Color does not change; the type thickens.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two Registers Rule",
+        "body": "Serif for names and prose, mono for codes, metadata and actions. Never set a name in mono or a code in serif.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Rule",
+        "body": "Nothing floats. A layer is distinguished by a slightly warmer black or a hairline, never by a shadow or glow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do give every new entry a mono catalogue code and term in the 170px left column.",
+      "Do keep amber to links, actions and drawn rules, and rose to LIVE only.",
+      "Do separate rows with soft rules (16% amber) and open groups with full rules (36% amber).",
+      "Do show hover by raising variable font weight, not by color or lift.",
+      "Do set facts and stats as a ledger of label/value rows.",
+      "Do keep motion to the title-page reveal (lines rise 110% to 0 over 1.1s, staggered .12s, ease cubic-bezier(.16,1,.3,1)), the scroll-drawn margin rule and hover weight shifts, and drop all of it under prefers-reduced-motion.",
+      "Do keep dim text at dim-marginalia or lighter for contrast."
+    ],
+    "donts": [
+      "Don't use rounded corners, pill chips or tag badges; skills and topics are plain text lists separated by middots.",
+      "Don't use shadows, glows or gradient fills.",
+      "Don't put amber on codes, § symbols, taglines or labels.",
+      "Don't use bento grids or card tiles; entries are full-width rows.",
+      "Don't add a second italic-amber display moment; the pale-amber \"Chan\" on the title page is a one-off of the name, not a heading treatment.",
+      "Don't color a single word inside a section heading."
+    ]
+  }
+}
