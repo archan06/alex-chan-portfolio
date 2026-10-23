@@ -184,6 +184,7 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 /* ── title page depth: three layers move apart on scroll and lean with the cursor ── */
 .title { isolation: isolate; }
 .title > .layer { position: relative; z-index: 1; }
+.embers { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }  /* stretched edge to edge by the script */
 .depth { position: absolute; inset: 0 0 -10vh 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .depth hr { position: absolute; left: 0; right: 0; border: 0; border-top: 1px solid rgba(245,158,11,.08); }
 .depth hr:nth-of-type(1) { top: 22%; } .depth hr:nth-of-type(2) { top: 49%; } .depth hr:nth-of-type(3) { top: 76%; }
@@ -312,6 +313,7 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 
   <!-- title page -->
   <div class="title">
+    <canvas class="embers" aria-hidden="true"></canvas>
     <div class="depth" data-depth="0.25" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span></div>
     <div class="layer" data-depth="0.55">
       <h1 aria-label="Alex Chan"><span class="ln" aria-hidden="true"><span>Alex</span></span><span class="ln" aria-hidden="true"><em><span>Chan</span></em></span></h1>
@@ -578,6 +580,69 @@ const spy = new IntersectionObserver((entries) => {
 }, { rootMargin: "-45% 0px -50% 0px" });
 sections.forEach((s) => spy.observe(s));
 document.querySelectorAll(".contents a").forEach((a) => a.addEventListener("click", () => { a.closest("details").open = false; }));
+
+
+// Background VFX: amber embers drifting up through three depth planes behind the title page.
+// Far motes are small, dim and slow; near ones bigger and brighter. They lean with the cursor and
+// scroll like the layers above them. Paused off-screen or in a hidden tab; one still frame under reduced motion.
+{
+  const canvas = document.querySelector(".embers");
+  const ctx = canvas.getContext("2d");
+  const title = canvas.parentElement;
+  const COLORS = ["245,158,11", "252,211,77", "245,240,232"];  // amber, pale gold, cream
+  let w = 0, h = 0, dpr = 1, motes = [], running = false, last = 0, lean = { x: 0, y: 0, tx: 0, ty: 0 }, scrollY = 0;
+  const rand = (a, b) => a + Math.random() * (b - a);
+  function spawn(m, anywhere) {
+    const z = Math.random() ** 1.6;  // more far motes than near ones
+    Object.assign(m, { z, x: rand(0, w), y: anywhere ? rand(0, h) : h + rand(4, 40), r: 0.6 + z * 2.2,
+      vy: 8 + z * 26, sway: rand(0, Math.PI * 2), swaySpeed: rand(0.3, 0.9), a: 0.18 + z * 0.55,
+      color: COLORS[Math.random() < 0.7 ? 0 : Math.random() < 0.6 ? 1 : 2], flicker: rand(0, Math.PI * 2) });
+    return m;
+  }
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    // full screen width, whatever the page's side margins: start at the viewport's left edge
+    const vw = document.documentElement.clientWidth, offset = title.getBoundingClientRect().left;
+    canvas.style.left = `${-offset}px`; canvas.style.width = `${vw}px`;
+    const r = canvas.getBoundingClientRect(); w = r.width; h = r.height;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.round(Math.min(110, (w * h) / 11000));
+    motes = Array.from({ length: count }, (_, i) => motes[i] ? motes[i] : spawn({}, true));
+  }
+  function draw(t, dt) {
+    ctx.clearRect(0, 0, w, h);
+    lean.x += (lean.tx - lean.x) * 0.05; lean.y += (lean.ty - lean.y) * 0.05;
+    for (const m of motes) {
+      if (dt) { m.y -= m.vy * dt; m.sway += m.swaySpeed * dt; m.flicker += dt * 3; if (m.y < -10) spawn(m, false); }
+      const px = m.x + Math.sin(m.sway) * (4 + m.z * 10) - lean.x * m.z * 34;
+      const py = m.y - lean.y * m.z * 22 - scrollY * m.z * 0.35;
+      const a = m.a * (0.75 + 0.25 * Math.sin(m.flicker));
+      if (m.z > 0.55) {  // near embers carry a soft halo
+        const g = ctx.createRadialGradient(px, py, 0, px, py, m.r * 5);
+        g.addColorStop(0, `rgba(${m.color},${a * 0.35})`); g.addColorStop(1, `rgba(${m.color},0)`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, m.r * 5, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.fillStyle = `rgba(${m.color},${a})`; ctx.beginPath(); ctx.arc(px, py, m.r, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  function loop(t) {
+    if (!running) return;
+    const dt = last ? Math.min((t - last) / 1000, 0.05) : 0; last = t;
+    draw(t, dt); requestAnimationFrame(loop);
+  }
+  const start = () => { if (!running && !reduce && !document.hidden) { running = true; last = 0; requestAnimationFrame(loop); } };
+  const stop = () => { running = false; };
+  resize(); draw(0, 0);
+  new ResizeObserver(() => { resize(); draw(0, 0); }).observe(title);
+  new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(title);
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  addEventListener("scroll", () => { scrollY = Math.min(scrollY = window.scrollY, h); }, { passive: true });
+  if (matchMedia("(pointer: fine)").matches) {
+    title.addEventListener("pointermove", (e) => { const r = title.getBoundingClientRect();
+      lean.tx = (e.clientX - r.left) / r.width - 0.5; lean.ty = (e.clientY - r.top) / r.height - 0.5; });
+    title.addEventListener("pointerleave", () => { lean.tx = 0; lean.ty = 0; });
+  }
+}
 
 // §3 project window: tabs (WAI-ARIA pattern; arrow keys, Home/End). Works with or without motion.
 const tabs = [...document.querySelectorAll(".mac-tabs [role=tab]")];
