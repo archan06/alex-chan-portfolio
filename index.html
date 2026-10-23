@@ -208,10 +208,21 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 .mac-addr { display: flex; align-items: center; gap: 8px; margin: 10px 14px; padding: 7px 12px; border-radius: 7px; background: var(--plate);
   font: 400 13px var(--mono); color: var(--muted); overflow: hidden; white-space: nowrap; }
 .mac-addr .ic { width: 13px; height: 13px; flex: none; }
-.mac-view { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg); border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
+/* each tab: a small preview of the app beside its catalogue details */
+.mac-panel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3vw, 40px); align-items: start;
+  padding: 8px clamp(16px, 2.4vw, 30px) 30px; border-top: 1px solid var(--rule-soft); }
+.mac-view { margin: 22px 0 0; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg); border: 1px solid var(--rule-soft); border-radius: 6px; }
 .mac-view img { width: 100%; height: 100%; object-fit: cover; object-position: left top; }
-.mac-panel .entry { border-bottom: 0; padding: 30px clamp(18px, 3vw, 36px) 34px; }
+.mac-panel .entry { grid-template-columns: 1fr; gap: 6px; border-bottom: 0; padding: 22px 0 0; }
+.mac-panel .entry .when { display: flex; gap: 12px; flex-wrap: wrap; } .mac-panel .entry .when .code { margin: 0; }
+.mac-panel .project h3 { font-size: clamp(26px, 2.6vw, 36px); }
+.mac-panel .side { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: 10px; }
+.mac-panel .links { flex-direction: row; gap: 18px; }
 .mac-panel[hidden] { display: none; }
+@media (max-width: 760px) {
+  .mac-panel { grid-template-columns: 1fr; gap: 0; }
+  .mac-view { max-width: 340px; aspect-ratio: 16 / 9; }
+}
 
 /* the full contents line needs about 1180px; below that it folds into a Contents menu */
 @media (max-width: 1180px) {
