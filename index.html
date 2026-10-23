@@ -184,7 +184,8 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 /* ── title page depth: three layers move apart on scroll and lean with the cursor ── */
 .title { isolation: isolate; }
 .title > .layer { position: relative; z-index: 1; }
-.embers { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }  /* stretched edge to edge by the script */
+.embers { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }  /* behind the whole page */
+main, footer { position: relative; z-index: 1; }
 .depth { position: absolute; inset: 0 0 -10vh 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .depth hr { position: absolute; left: 0; right: 0; border: 0; border-top: 1px solid rgba(245,158,11,.08); }
 .depth hr:nth-of-type(1) { top: 22%; } .depth hr:nth-of-type(2) { top: 49%; } .depth hr:nth-of-type(3) { top: 76%; }
@@ -279,6 +280,7 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
   <symbol id="i-next" viewBox="0 0 16 16"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
   <symbol id="i-down" viewBox="0 0 16 16"><path d="M4 6.5 8 10l4-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
 </svg>
+<canvas class="embers" aria-hidden="true"></canvas>
 <a class="sr" href="#about">Skip to content</a>
 
 <header class="head">
@@ -313,7 +315,6 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 
   <!-- title page -->
   <div class="title">
-    <canvas class="embers" aria-hidden="true"></canvas>
     <div class="depth" data-depth="0.25" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span></div>
     <div class="layer" data-depth="0.55">
       <h1 aria-label="Alex Chan"><span class="ln" aria-hidden="true"><span>Alex</span></span><span class="ln" aria-hidden="true"><em><span>Chan</span></em></span></h1>
@@ -582,66 +583,130 @@ sections.forEach((s) => spy.observe(s));
 document.querySelectorAll(".contents a").forEach((a) => a.addEventListener("click", () => { a.closest("details").open = false; }));
 
 
-// Background VFX: amber embers drifting up through three depth planes behind the title page.
-// Far motes are small, dim and slow; near ones bigger and brighter. They lean with the cursor and
-// scroll like the layers above them. Paused off-screen or in a hidden tab; one still frame under reduced motion.
+// Background VFX, the whole page: amber embers drift up through three depth planes, lean with the
+// cursor, streak when you scroll fast, and flock into each section's § number as its heading reaches
+// the middle of the screen, then scatter as you read on. Paused in hidden tabs; a still frame under
+// reduced motion.
 {
   const canvas = document.querySelector(".embers");
   const ctx = canvas.getContext("2d");
-  const title = canvas.parentElement;
+  const phone = matchMedia("(max-width: 960px)").matches;
   const COLORS = ["245,158,11", "252,211,77", "245,240,232"];  // amber, pale gold, cream
-  let w = 0, h = 0, dpr = 1, motes = [], running = false, last = 0, lean = { x: 0, y: 0, tx: 0, ty: 0 }, scrollY = 0;
   const rand = (a, b) => a + Math.random() * (b - a);
+  let w = 0, h = 0, dpr = 1, motes = [], running = false, last = 0;
+  let lean = { x: 0, y: 0, tx: 0, ty: 0 }, lastScroll = scrollY, scrollV = 0;
+  let glyphs = {}, active = null, anchor = null;  // section id -> § number points (relative); the one drawn; its heading
+
   function spawn(m, anywhere) {
     const z = Math.random() ** 1.6;  // more far motes than near ones
-    Object.assign(m, { z, x: rand(0, w), y: anywhere ? rand(0, h) : h + rand(4, 40), r: 0.6 + z * 2.2,
-      vy: 8 + z * 26, sway: rand(0, Math.PI * 2), swaySpeed: rand(0.3, 0.9), a: 0.18 + z * 0.55,
-      color: COLORS[Math.random() < 0.7 ? 0 : Math.random() < 0.6 ? 1 : 2], flicker: rand(0, Math.PI * 2) });
-    return m;
+    return Object.assign(m, { z, x: rand(0, w), y: anywhere ? rand(0, h) : h + rand(4, 40), vx: 0, vy: 0,
+      r: 0.6 + z * 2.2, rise: 8 + z * 26, sway: rand(0, 6.28), swaySpeed: rand(0.3, 0.9), a: 0.16 + z * 0.5,
+      color: COLORS[Math.random() < 0.7 ? 0 : Math.random() < 0.6 ? 1 : 2], flicker: rand(0, 6.28), target: null });
   }
   function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    // full screen width, whatever the page's side margins: start at the viewport's left edge
-    const vw = document.documentElement.clientWidth, offset = title.getBoundingClientRect().left;
-    canvas.style.left = `${-offset}px`; canvas.style.width = `${vw}px`;
-    const r = canvas.getBoundingClientRect(); w = r.width; h = r.height;
+    dpr = Math.min(devicePixelRatio || 1, 2); w = innerWidth; h = innerHeight;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const count = Math.round(Math.min(110, (w * h) / 11000));
-    motes = Array.from({ length: count }, (_, i) => motes[i] ? motes[i] : spawn({}, true));
+    const count = Math.round(Math.min(phone ? 200 : 340, (w * h) / (phone ? 1500 : 3900)));
+    motes = Array.from({ length: count }, (_, i) => motes[i] || spawn({}, true));
+    buildGlyphs();
   }
-  function draw(t, dt) {
-    ctx.clearRect(0, 0, w, h);
+  // Sample each § number as points: draw it on a scratch canvas and keep the filled pixels on a grid.
+  function buildGlyphs() {
+    const size = phone ? Math.min(w * 0.28, 110) : Math.min(h * 0.3, w * 0.2);
+    const scratch = document.createElement("canvas"), sc = scratch.getContext("2d");
+    scratch.width = Math.ceil(size * 2.2); scratch.height = Math.ceil(size * 1.3);
+    glyphs = {};
+    document.querySelectorAll("main section[id] .sym").forEach((sym) => {
+      const id = sym.closest("section").id, text = sym.textContent.trim();  // "§1" … "§7"
+      sc.clearRect(0, 0, scratch.width, scratch.height);
+      sc.fillStyle = "#fff"; sc.font = `420 ${size}px "Source Serif 4", Georgia, serif`; sc.textAlign = "center"; sc.textBaseline = "middle";
+      sc.fillText(text, scratch.width / 2, scratch.height / 2);
+      const data = sc.getImageData(0, 0, scratch.width, scratch.height).data, pts = [], step = Math.max(2, Math.round(size / 90));
+      for (let y = 0; y < scratch.height; y += step) for (let x = 0; x < scratch.width; x += step)
+        if (data[(y * scratch.width + x) * 4 + 3] > 140) pts.push({ x: x - scratch.width / 2, y: y - scratch.height / 2 });  // relative to the glyph's centre
+      const want = motes.length, even = pts.length > want ? pts.filter((_, i) => i % (pts.length / want) < 1) : pts;
+      for (let i = even.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [even[i], even[j]] = [even[j], even[i]]; }
+      glyphs[id] = even;
+    });
+  }
+  function form(id) {  // hand out the § number's points; motes left over keep drifting
+    active = id; anchor = id ? document.querySelector(`#${id} .sec-head h2`) : null;
+    const pts = id ? glyphs[id] || [] : [];
+    motes.forEach((m, i) => { m.target = pts[i] || null; });
+  }
+  function step(dt) {
     lean.x += (lean.tx - lean.x) * 0.05; lean.y += (lean.ty - lean.y) * 0.05;
+    let ox = 0, oy = 0;
+    if (anchor) {  // the § sits beside its heading and scrolls with it
+      const r = anchor.getBoundingClientRect();
+      ox = phone ? w * 0.72 : Math.min(w * 0.7, r.right + w * 0.14);
+      oy = phone ? r.top - Math.min(w * 0.28, 110) * 0.42 : r.top + r.height * 0.5;  // phones: in the gap above the heading
+    }
+    scrollV *= Math.pow(0.02, dt);  // scroll energy fades in about a second
     for (const m of motes) {
-      if (dt) { m.y -= m.vy * dt; m.sway += m.swaySpeed * dt; m.flicker += dt * 3; if (m.y < -10) spawn(m, false); }
-      const px = m.x + Math.sin(m.sway) * (4 + m.z * 10) - lean.x * m.z * 34;
-      const py = m.y - lean.y * m.z * 22 - scrollY * m.z * 0.35;
-      const a = m.a * (0.75 + 0.25 * Math.sin(m.flicker));
-      if (m.z > 0.55) {  // near embers carry a soft halo
+      if (m.target) {  // spring toward its point in the § number
+        const tx = ox + m.target.x, ty = oy + m.target.y;
+        m.vx += ((tx - m.x) * 14 - m.vx * 6) * dt;
+        m.vy += ((ty - m.y) * 14 - m.vy * 6) * dt;
+      } else {  // drift up and sway; scrolling pushes against the scroll, nearer motes harder
+        m.vx += (-m.vx * 1.5) * dt;
+        m.vy += ((-m.rise - scrollV * (0.4 + m.z)) - m.vy) * 2.2 * dt;
+        m.sway += m.swaySpeed * dt;
+      }
+      m.x += m.vx * dt; m.y += m.vy * dt; m.flicker += dt * 3;
+      if (!m.target && (m.y < -20 || m.y > h + 60 || m.x < -40 || m.x > w + 40)) spawn(m, false);
+      if (!m.target && scrollV < -40 && m.y > h + 10) m.y = -10;  // scrolling up: they come back in from the top
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const m of motes) {
+      const formed = m.target && Math.hypot(m.vx, m.vy) < 120;
+      const px = m.x + (m.target ? 0 : Math.sin(m.sway) * (4 + m.z * 10) - lean.x * m.z * 34);
+      const py = m.y - (m.target ? 0 : lean.y * m.z * 22);
+      const a = (m.target ? (phone ? 0.6 : 0.78) : m.a) * (0.75 + 0.25 * Math.sin(m.flicker)) * (phone && m.target ? 0.7 : 1);
+      const speed = Math.hypot(m.vx, m.vy);
+      if (!formed && speed > 140) {  // fast: a short spark streak along its motion
+        const k = Math.min(0.06, 9 / speed);
+        ctx.strokeStyle = `rgba(${m.color},${a})`; ctx.lineWidth = m.r * 1.2; ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px - m.vx * k, py - m.vy * k); ctx.stroke();
+        continue;
+      }
+      if (m.z > 0.55 && !m.target) {  // near embers carry a soft halo
         const g = ctx.createRadialGradient(px, py, 0, px, py, m.r * 5);
         g.addColorStop(0, `rgba(${m.color},${a * 0.35})`); g.addColorStop(1, `rgba(${m.color},0)`);
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, m.r * 5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, m.r * 5, 0, 6.283); ctx.fill();
       }
-      ctx.fillStyle = `rgba(${m.color},${a})`; ctx.beginPath(); ctx.arc(px, py, m.r, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = `rgba(${m.color},${a})`; ctx.beginPath(); ctx.arc(px, py, m.target ? 1.5 : m.r, 0, 6.283); ctx.fill();
     }
   }
   function loop(t) {
     if (!running) return;
     const dt = last ? Math.min((t - last) / 1000, 0.05) : 0; last = t;
-    draw(t, dt); requestAnimationFrame(loop);
+    step(dt); draw(); requestAnimationFrame(loop);
   }
   const start = () => { if (!running && !reduce && !document.hidden) { running = true; last = 0; requestAnimationFrame(loop); } };
-  const stop = () => { running = false; };
-  resize(); draw(0, 0);
-  new ResizeObserver(() => { resize(); draw(0, 0); }).observe(title);
-  new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(title);
-  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
-  addEventListener("scroll", () => { scrollY = Math.min(scrollY = window.scrollY, h); }, { passive: true });
+  resize(); draw();
+  document.fonts.ready.then(() => { buildGlyphs(); if (active) form(active); });
+  addEventListener("resize", () => { resize(); if (active) form(active); draw(); });
+  document.addEventListener("visibilitychange", () => (document.hidden ? (running = false) : start()));
+  addEventListener("scroll", () => {
+    const d = scrollY - lastScroll; lastScroll = scrollY;
+    scrollV = Math.max(-1600, Math.min(1600, scrollV + d * 9));
+    for (const m of motes) if (!m.target) m.y -= d * m.z * 0.25;  // depth: near motes slide past faster
+  }, { passive: true });
+  // A section's § forms while its heading sits in the middle band of the screen.
+  const band = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      const id = e.target.closest("section").id;
+      if (e.isIntersecting) form(id); else if (active === id) form(null);
+    }
+  }, { rootMargin: "-30% 0px -45% 0px" });
+  document.querySelectorAll("main section[id] .sec-head").forEach((el) => band.observe(el));
   if (matchMedia("(pointer: fine)").matches) {
-    title.addEventListener("pointermove", (e) => { const r = title.getBoundingClientRect();
-      lean.tx = (e.clientX - r.left) / r.width - 0.5; lean.ty = (e.clientY - r.top) / r.height - 0.5; });
-    title.addEventListener("pointerleave", () => { lean.tx = 0; lean.ty = 0; });
+    addEventListener("pointermove", (e) => { lean.tx = e.clientX / w - 0.5; lean.ty = e.clientY / h - 0.5; });
   }
+  start();
 }
 
 // §3 project window: tabs (WAI-ARIA pattern; arrow keys, Home/End). Works with or without motion.
