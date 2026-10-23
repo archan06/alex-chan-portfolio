@@ -180,6 +180,39 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
   border-top: 2px solid var(--amber); font-family: var(--mono); font-size: 13px; color: var(--dim); }
 
 
+
+/* ── title page depth: three layers move apart on scroll and lean with the cursor ── */
+.title { isolation: isolate; }
+.title > .layer { position: relative; z-index: 1; }
+.depth { position: absolute; inset: 0 0 -10vh 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.depth hr { position: absolute; left: 0; right: 0; border: 0; border-top: 1px solid rgba(245,158,11,.08); }
+.depth hr:nth-of-type(1) { top: 22%; } .depth hr:nth-of-type(2) { top: 49%; } .depth hr:nth-of-type(3) { top: 76%; }
+.big-s { position: absolute; right: 1vw; top: 46%; transform: translateY(-50%); font-family: var(--serif); font-weight: 300;
+  font-size: min(80vh, 50vw); line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(245,158,11,.16); user-select: none; }
+
+/* ── §3 projects: a macOS browser window, one tab per project ── */
+.mac { margin-top: 44px; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg-2); overflow: hidden;
+  box-shadow: 0 34px 70px -28px rgba(0,0,0,.85); }
+.mac-bar { display: flex; align-items: flex-end; gap: 16px; padding: 10px 14px 0; background: #1A1510; border-bottom: 1px solid var(--rule-soft); }
+.lights { display: flex; gap: 8px; align-self: center; padding-bottom: 9px; flex: none; }
+.lights i { width: 12px; height: 12px; border-radius: 50%; }
+.lights i:nth-child(1) { background: #E0574F; } .lights i:nth-child(2) { background: #D9A33A; } .lights i:nth-child(3) { background: #3FA34D; }
+.mac-tabs { display: flex; gap: 2px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.mac-tabs button { flex: 0 1 250px; min-width: 0; display: flex; align-items: baseline; gap: 9px; padding: 9px 14px 10px; cursor: pointer;
+  border: 1px solid transparent; border-bottom: 0; border-radius: 9px 9px 0 0; background: transparent; color: var(--muted);
+  font: 400 16px var(--serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .2s, background .2s; }
+.mac-tabs button .code { font-size: 12px; flex: none; }
+.mac-tabs button:hover { color: var(--text); background: rgba(245,158,11,.05); }
+.mac-tabs button[aria-selected="true"] { background: var(--bg-2); color: var(--text); border-color: rgba(245,158,11,.12); margin-bottom: -1px; }
+.mac-tabs button[aria-selected="true"] .code { color: var(--amber); }
+.mac-addr { display: flex; align-items: center; gap: 8px; margin: 10px 14px; padding: 7px 12px; border-radius: 7px; background: var(--plate);
+  font: 400 13px var(--mono); color: var(--muted); overflow: hidden; white-space: nowrap; }
+.mac-addr .ic { width: 13px; height: 13px; flex: none; }
+.mac-view { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg); border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
+.mac-view img { width: 100%; height: 100%; object-fit: cover; object-position: left top; }
+.mac-panel .entry { border-bottom: 0; padding: 30px clamp(18px, 3vw, 36px) 34px; }
+.mac-panel[hidden] { display: none; }
+
 /* the full contents line needs about 1180px; below that it folds into a Contents menu */
 @media (max-width: 1180px) {
   .toc { display: none; }
@@ -208,6 +241,13 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
   .hours a:nth-child(3) { border-left: 0; padding-left: 0; }
   .hours a:nth-child(n+3) { border-top: 1px solid var(--rule-soft); }
   .sec-head { grid-template-columns: 1fr; } .sec-note { text-align: left; }
+}
+@media (max-width: 600px) {
+  .mac-tabs button .code { display: none; }
+  .mac-tabs button { padding: 9px 10px 10px; font-size: 15px; }
+  .lights i { width: 10px; height: 10px; } .lights { gap: 6px; }
+  .mac-bar { gap: 10px; padding: 8px 10px 0; }
+  .big-s { font-size: 120vw; right: -18vw; }
 }
 @media (max-width: 480px) {
   .title { padding: 26px 0 70px; gap: 26px; }
@@ -261,7 +301,8 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 
   <!-- title page -->
   <div class="title">
-    <div>
+    <div class="depth" data-depth="0.25" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span></div>
+    <div class="layer" data-depth="0.55">
       <h1 aria-label="Alex Chan"><span class="ln" aria-hidden="true"><span>Alex</span></span><span class="ln" aria-hidden="true"><em><span>Chan</span></em></span></h1>
       <p class="degree"><b>Information Systems</b> · Stony Brook University · Class of 2028</p>
       <p class="lede">Information Systems student at Stony Brook University building full-stack web apps and AI-powered tools.
@@ -272,7 +313,7 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
       </div>
       <p class="open"><span class="dot" aria-hidden="true"></span>Open to internship opportunities</p>
     </div>
-    <div class="offered">
+    <div class="offered layer" data-depth="0.95">
       <p class="cap">§3 Projects — now offered</p>
       <ol>
         <li><a href="#loki"><span class="code">PRJ 301</span><span class="nm">Loki Analyzer<small>AI fantasy football assistant</small></span><span class="live">LIVE</span></a></li>
@@ -382,41 +423,61 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
     <div class="sec-head"><h2 id="proj-h"><span class="sym">§3</span>Things I've <em>built</em></h2>
       <p class="sec-note">A mix of AI tools, full-stack apps, and experiments I'm proud of.</p></div>
 
-    <article class="entry project" id="loki">
-      <div class="when"><span class="code">PRJ 301</span>Python · Streamlit</div>
-      <div>
-        <h3>Loki Analyzer</h3>
-        <div class="tagline">AI Fantasy Football Assistant</div>
-        <p>Phone-first web app for ESPN fantasy football leagues: live matchups, lineup and waiver advice, injury news, and a trade analyzer that blends ESPN and Sleeper projections with weekly market trade values, then has Claude make the final call. Multi-user with Google sign-in, encrypted per-user settings and a tool-using AI chat assistant.</p>
-        <p class="topics"><b>Built with</b>Python · Streamlit · Anthropic Claude · PostgreSQL · Google OAuth · Playwright</p>
+    <div class="mac" id="project-window">
+      <div class="mac-bar">
+        <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="mac-tabs" role="tablist" aria-label="Projects">
+          <button role="tab" id="tab-loki" aria-controls="loki" aria-selected="true" tabindex="0" data-url="loki-fantasy-analyzer…streamlit.app"><span class="code">PRJ 301</span> Loki Analyzer</button>
+          <button role="tab" id="tab-resumeai" aria-controls="resumeai" aria-selected="false" tabindex="-1" data-url="resume-anaylzer-ai.onrender.com"><span class="code">PRJ 220</span> ResumeAI</button>
+          <button role="tab" id="tab-landed" aria-controls="landed" aria-selected="false" tabindex="-1" data-url="job-tracker-eight-orcin.vercel.app"><span class="code">PRJ 215</span> Landed</button>
+        </div>
       </div>
-      <div class="side"><span class="live">LIVE</span>
-        <div class="links"><a class="u" href="https://loki-fantasy-analyzer-ewzmsjdrv93qwsshsufap8.streamlit.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
-    </article>
-    <article class="entry project" id="resumeai">
-      <div class="when"><span class="code">PRJ 220</span>Node.js · Express</div>
-      <div>
-        <h3>ResumeAI</h3>
-        <div class="tagline">AI Resume Analyzer</div>
-        <p>Full-stack web app that analyzes resumes against job descriptions using Anthropic Claude. Streams results in real time via SSE, with a radar chart, score dial, bullet rewriter, keyword cloud, and exportable report.</p>
-        <p class="topics"><b>Built with</b>Node.js · Express · Anthropic Claude · SSE Streaming · Chart.js</p>
-      </div>
-      <div class="side"><span class="live">LIVE</span>
-        <div class="links"><a class="u" href="https://resume-anaylzer-ai.onrender.com" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
-          <a class="u" href="https://github.com/archan06/resume-analyzer-ai" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
-    </article>
-    <article class="entry project" id="landed">
-      <div class="when"><span class="code">PRJ 215</span>Next.js · TypeScript</div>
-      <div>
-        <h3>Landed</h3>
-        <div class="tagline">Job Application Tracker</div>
-        <p>Full-stack app for tracking a job search from saved posting to offer. Drag-and-drop Kanban board, filterable table and per-application timeline, with company autocomplete and logos, worldwide city suggestions, secure accounts and rate limiting. Covered by unit, integration and end-to-end tests.</p>
-        <p class="topics"><b>Built with</b>Next.js · TypeScript · PostgreSQL · Prisma · Auth.js · Playwright</p>
-      </div>
-      <div class="side"><span class="live">LIVE</span>
-        <div class="links"><a class="u" href="https://job-tracker-eight-orcin.vercel.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
-          <a class="u" href="https://github.com/archan06/job-tracker" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
-    </article>
+      <div class="mac-addr" aria-hidden="true"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 7V5.5a3.5 3.5 0 0 1 7 0V7M3.5 7h9v6.5h-9z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span class="url">loki-fantasy-analyzer…streamlit.app</span></div>
+      <article class="mac-panel" role="tabpanel" id="loki" aria-labelledby="tab-loki">
+        <figure class="mac-view"><img src="img/loki.webp" alt="Loki Analyzer's Matchup screen: the week's score drawn as a field, with both starting lineups" width="1440" height="900" loading="lazy" decoding="async"></figure>
+        <div class="entry project">
+          <div class="when"><span class="code">PRJ 301</span>Python · Streamlit</div>
+          <div>
+            <h3>Loki Analyzer</h3>
+            <div class="tagline">AI Fantasy Football Assistant</div>
+            <p>Phone-first web app for ESPN fantasy football leagues: live matchups, lineup and waiver advice, injury news, and a trade analyzer that blends ESPN and Sleeper projections with weekly market trade values, then has Claude make the final call. Multi-user with Google sign-in, encrypted per-user settings and a tool-using AI chat assistant.</p>
+            <p class="topics"><b>Built with</b>Python · Streamlit · Anthropic Claude · PostgreSQL · Google OAuth · Playwright</p>
+          </div>
+          <div class="side"><span class="live">LIVE</span>
+            <div class="links"><a class="u" href="https://loki-fantasy-analyzer-ewzmsjdrv93qwsshsufap8.streamlit.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+        </div>
+      </article>
+      <article class="mac-panel" role="tabpanel" id="resumeai" aria-labelledby="tab-resumeai">
+        <figure class="mac-view"><img src="img/resumeai.webp" alt="ResumeAI's upload screen: drop a PDF resume and a target job title to analyze it" width="1440" height="900" loading="lazy" decoding="async"></figure>
+        <div class="entry project">
+          <div class="when"><span class="code">PRJ 220</span>Node.js · Express</div>
+          <div>
+            <h3>ResumeAI</h3>
+            <div class="tagline">AI Resume Analyzer</div>
+            <p>Full-stack web app that analyzes resumes against job descriptions using Anthropic Claude. Streams results in real time via SSE, with a radar chart, score dial, bullet rewriter, keyword cloud, and exportable report.</p>
+            <p class="topics"><b>Built with</b>Node.js · Express · Anthropic Claude · SSE Streaming · Chart.js</p>
+          </div>
+          <div class="side"><span class="live">LIVE</span>
+            <div class="links"><a class="u" href="https://resume-anaylzer-ai.onrender.com" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
+              <a class="u" href="https://github.com/archan06/resume-analyzer-ai" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+        </div>
+      </article>
+      <article class="mac-panel" role="tabpanel" id="landed" aria-labelledby="tab-landed">
+        <figure class="mac-view"><img src="img/landed.webp" alt="Landed's board: job applications as cards in Saved, Applied, Phone screen, Interview and Offer columns" width="1440" height="900" loading="lazy" decoding="async"></figure>
+        <div class="entry project">
+          <div class="when"><span class="code">PRJ 215</span>Next.js · TypeScript</div>
+          <div>
+            <h3>Landed</h3>
+            <div class="tagline">Job Application Tracker</div>
+            <p>Full-stack app for tracking a job search from saved posting to offer. Drag-and-drop Kanban board, filterable table and per-application timeline, with company autocomplete and logos, worldwide city suggestions, secure accounts and rate limiting. Covered by unit, integration and end-to-end tests.</p>
+            <p class="topics"><b>Built with</b>Next.js · TypeScript · PostgreSQL · Prisma · Auth.js · Playwright</p>
+          </div>
+          <div class="side"><span class="live">LIVE</span>
+            <div class="links"><a class="u" href="https://job-tracker-eight-orcin.vercel.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
+              <a class="u" href="https://github.com/archan06/job-tracker" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+        </div>
+      </article>
+    </div>
     <p class="more">More projects on the way.</p>
   </section>
 
@@ -507,11 +568,70 @@ const spy = new IntersectionObserver((entries) => {
 sections.forEach((s) => spy.observe(s));
 document.querySelectorAll(".contents a").forEach((a) => a.addEventListener("click", () => { a.closest("details").open = false; }));
 
+// §3 project window: tabs (WAI-ARIA pattern; arrow keys, Home/End). Works with or without motion.
+const tabs = [...document.querySelectorAll(".mac-tabs [role=tab]")];
+const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
+const url = document.querySelector(".mac-addr .url");
+function selectTab(i, { focus = false, animateIn = true } = {}) {
+  tabs.forEach((t, j) => { t.setAttribute("aria-selected", String(i === j)); t.tabIndex = i === j ? 0 : -1; panels[j].hidden = i !== j; });
+  url.textContent = tabs[i].dataset.url;
+  if (focus) tabs[i].focus();
+  if (animateIn && !reduce) animate(panels[i].querySelector(".mac-view img"), { opacity: [0.35, 1], scale: [1.015, 1] }, { duration: 0.45, ease });
+}
+tabs.forEach((t, i) => {
+  t.addEventListener("click", () => selectTab(i));
+  t.addEventListener("keydown", (e) => {
+    const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    selectTab((next + tabs.length) % tabs.length, { focus: true });
+  });
+});
+// Links to a project (the title page list, or #loki in the address bar) open its tab.
+function openProject(id) {
+  const i = panels.findIndex((p) => p.id === id);
+  if (i < 0) return false;
+  selectTab(i, { animateIn: false });
+  document.getElementById("project-window").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  return true;
+}
+document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+  if (openProject(a.hash.slice(1))) { e.preventDefault(); history.replaceState(null, "", a.hash); }
+}));
+selectTab(Math.max(0, panels.findIndex((p) => "#" + p.id === location.hash)), { animateIn: false });
+if (panels.some((p) => "#" + p.id === location.hash)) openProject(location.hash.slice(1));
+
+
 if (!reduce) {
   // The title page: the name rises into place line by line (21st.dev "Text Reveal", done with Motion).
   animate(".title h1 .ln span", { y: ["110%", "0%"] }, { duration: 1.1, ease, delay: stagger(0.12) });
   animate(".degree, .lede, .acts, .open", { opacity: [0, 1], y: [14, 0] }, { duration: 0.8, ease, delay: stagger(0.08, { startDelay: 0.45 }) });
   animate(".offered li", { opacity: [0, 1], y: [12, 0] }, { duration: 0.8, ease, delay: stagger(0.09, { startDelay: 0.6 }) });
+
+
+  // The title page's depth: far (ruled paper and a large §), middle (the name), near (the projects list).
+  // Scroll moves them apart (Motion scroll, on transform); the cursor leans them (on the separate translate property).
+  const title = document.querySelector(".title");
+  const layers = [...title.querySelectorAll("[data-depth]")];
+  layers.forEach((el) => {
+    const d = Number(el.dataset.depth);
+    scroll(animate(el, { transform: ["translateY(0px)", `translateY(${-d * 200}px)`] }, { ease: "linear" }),
+      { target: title, offset: ["start start", "end start"] });
+  });
+  if (matchMedia("(pointer: fine)").matches) {
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    const follow = () => {  // ease toward the cursor so the layers glide rather than jump
+      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+      layers.forEach((el) => { const d = Number(el.dataset.depth); el.style.translate = `${(-cx * d * 28).toFixed(2)}px ${(-cy * d * 18).toFixed(2)}px`; });
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.001 ? requestAnimationFrame(follow) : 0;
+    };
+    const aim = (x, y) => { tx = x; ty = y; if (!raf) raf = requestAnimationFrame(follow); };
+    title.addEventListener("pointermove", (e) => {
+      const r = title.getBoundingClientRect();
+      aim((e.clientX - r.left) / r.width - 0.5, (e.clientY - r.top) / r.height - 0.5);
+    });
+    title.addEventListener("pointerleave", () => aim(0, 0));
+  }
 
   // The reading rule: the margin line draws down the page as you read.
   const thread = document.querySelector(".thread i");
