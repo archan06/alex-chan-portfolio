@@ -330,6 +330,7 @@ main, footer { position: relative; z-index: 1; }
     <div class="offered layer" data-depth="0.95">
       <p class="cap">§3 Projects — now offered</p>
       <ol>
+        <li><a href="#nflillion"><span class="code">PRJ 310</span><span class="nm">NFLillion<small>NFL trivia game</small></span><span class="live">LIVE</span></a></li>
         <li><a href="#loki"><span class="code">PRJ 301</span><span class="nm">Loki Analyzer<small>AI fantasy football assistant</small></span><span class="live">LIVE</span></a></li>
         <li><a href="#resumeai"><span class="code">PRJ 220</span><span class="nm">ResumeAI<small>AI resume analyzer</small></span><span class="live">LIVE</span></a></li>
         <li><a href="#landed"><span class="code">PRJ 215</span><span class="nm">Landed<small>Job application tracker</small></span><span class="live">LIVE</span></a></li>
@@ -354,7 +355,7 @@ main, footer { position: relative; z-index: 1; }
           and connecting with people to get things done. Currently looking for
           <strong>internship opportunities</strong> where I can grow as a developer.</p>
         <dl class="ledger facts">
-          <div><dt>Projects built</dt><dd>3+</dd></div>
+          <div><dt>Projects built</dt><dd>4+</dd></div>
           <div><dt>Years coding</dt><dd>3</dd></div>
           <div><dt>Technologies</dt><dd>5+</dd></div>
           <div><dt>Graduation</dt><dd>2028</dd></div>
@@ -441,12 +442,27 @@ main, footer { position: relative; z-index: 1; }
       <div class="mac-bar">
         <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
         <div class="mac-tabs" role="tablist" aria-label="Projects">
-          <button role="tab" id="tab-loki" aria-controls="loki" aria-selected="true" tabindex="0" data-url="loki-fantasy-analyzer…streamlit.app"><span class="code">PRJ 301</span> Loki Analyzer</button>
+          <button role="tab" id="tab-nflillion" aria-controls="nflillion" aria-selected="true" tabindex="0" data-url="nflillion.com"><span class="code">PRJ 310</span> NFLillion</button>
+          <button role="tab" id="tab-loki" aria-controls="loki" aria-selected="false" tabindex="-1" data-url="loki-fantasy-analyzer…streamlit.app"><span class="code">PRJ 301</span> Loki Analyzer</button>
           <button role="tab" id="tab-resumeai" aria-controls="resumeai" aria-selected="false" tabindex="-1" data-url="resume-anaylzer-ai.onrender.com"><span class="code">PRJ 220</span> ResumeAI</button>
           <button role="tab" id="tab-landed" aria-controls="landed" aria-selected="false" tabindex="-1" data-url="job-tracker-eight-orcin.vercel.app"><span class="code">PRJ 215</span> Landed</button>
         </div>
       </div>
-      <div class="mac-addr" aria-hidden="true"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 7V5.5a3.5 3.5 0 0 1 7 0V7M3.5 7h9v6.5h-9z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span class="url">loki-fantasy-analyzer…streamlit.app</span></div>
+      <div class="mac-addr" aria-hidden="true"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 7V5.5a3.5 3.5 0 0 1 7 0V7M3.5 7h9v6.5h-9z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span class="url">nflillion.com</span></div>
+      <article class="mac-panel" role="tabpanel" id="nflillion" aria-labelledby="tab-nflillion">
+        <figure class="mac-view"><img src="img/nflillion.webp" alt="NFLillion's home screen: a pixel-art football field, the five scoring tiers from Checkdown +15 yards to Hail Mary +100, and a Press start button" width="1440" height="900" loading="lazy" decoding="async"></figure>
+        <div class="entry project">
+          <div class="when"><span class="code">PRJ 310</span>Next.js · TypeScript</div>
+          <div>
+            <h3>NFLillion</h3>
+            <div class="tagline">Retro NFL Trivia Game</div>
+            <p>A 16-bit arcade trivia game: seven prompts, 25 seconds each, and the less obvious your correct answer, the more yards it gains. Every answer moves the ball down a football field and plays back as a replay drawn on canvas. 418 prompts and 18,000+ accepted answers come from cited Wikipedia tables through a Python data pipeline; the server owns the clock and the scoring.</p>
+            <p class="topics"><b>Built with</b>Next.js · TypeScript · React · Tailwind CSS · SQLite · Fly.io</p>
+          </div>
+          <div class="side"><span class="live">LIVE</span>
+            <div class="links"><a class="u" href="https://nflillion.com" target="_blank" rel="noopener">Live site <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+        </div>
+      </article>
       <article class="mac-panel" role="tabpanel" id="loki" aria-labelledby="tab-loki">
         <figure class="mac-view"><img src="img/loki.webp" alt="Loki Analyzer's Matchup screen: the week's score drawn as a field, with both starting lineups" width="1440" height="900" loading="lazy" decoding="async"></figure>
         <div class="entry project">
