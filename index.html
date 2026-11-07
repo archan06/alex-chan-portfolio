@@ -181,16 +181,24 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 
 
 
-/* ── title page depth: three layers move apart on scroll and lean with the cursor ── */
-.title { isolation: isolate; }
+/* ── title page: a reading lamp follows the cursor and inks the ruled paper; scrolling turns the page back ── */
+.title { isolation: isolate; transform-origin: 50% 100%; }
 .title > .layer { position: relative; z-index: 1; }
 .embers { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }  /* behind the whole page */
 main, footer { position: relative; z-index: 1; }
-.depth { position: absolute; inset: 0 0 -10vh 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.depth { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; --mx: 70%; --my: 45%; }
 .depth hr { position: absolute; left: 0; right: 0; border: 0; border-top: 1px solid rgba(245,158,11,.08); }
 .depth hr:nth-of-type(1) { top: 22%; } .depth hr:nth-of-type(2) { top: 49%; } .depth hr:nth-of-type(3) { top: 76%; }
 .big-s { position: absolute; right: 1vw; top: 46%; transform: translateY(-50%); font-family: var(--serif); font-weight: 300;
   font-size: min(80vh, 50vw); line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(245,158,11,.16); user-select: none; }
+/* the lit copy: same paper, inked, shown only inside the lamp's circle */
+.lamp { position: absolute; inset: 0; opacity: 0; transition: opacity .5s;
+  background: radial-gradient(circle 340px at var(--mx) var(--my), rgba(245,158,11,.10), transparent 70%);
+  -webkit-mask: radial-gradient(circle 300px at var(--mx) var(--my), #000 30%, transparent 100%);
+          mask: radial-gradient(circle 300px at var(--mx) var(--my), #000 30%, transparent 100%); }
+.lamp hr { border-top-color: rgba(245,158,11,.5); }
+.lamp .big-s { color: rgba(245,158,11,.22); -webkit-text-stroke-color: var(--amber-pale); }
+.depth.on .lamp { opacity: 1; }
 
 /* ── §3 projects: a macOS browser window, one tab per project ── */
 .mac { margin-top: 44px; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg-2); overflow: hidden;
@@ -323,8 +331,9 @@ main, footer { position: relative; z-index: 1; }
 
   <!-- title page -->
   <div class="title">
-    <div class="depth" data-depth="0.25" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span></div>
-    <div class="layer" data-depth="0.55">
+    <div class="depth" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span>
+      <div class="lamp"><hr><hr><hr><span class="big-s">§</span></div></div>
+    <div class="layer">
       <h1 aria-label="Alex Chan"><span class="ln" aria-hidden="true"><span>Alex</span></span><span class="ln" aria-hidden="true"><em><span>Chan</span></em></span></h1>
       <p class="degree"><b>Information Systems</b> · Stony Brook University · Class of 2028</p>
       <p class="lede">Information Systems student at Stony Brook University building full-stack web apps and AI-powered tools.
@@ -335,7 +344,7 @@ main, footer { position: relative; z-index: 1; }
       </div>
       <p class="open"><span class="dot" aria-hidden="true"></span>Open to internship opportunities</p>
     </div>
-    <div class="offered layer" data-depth="0.95">
+    <div class="offered layer">
       <p class="cap">§3 Projects — now offered</p>
       <ol>
         <li><a href="#nflillion"><span class="code">PRJ 310</span><span class="nm">NFLillion<small>NFL trivia game</small></span><span class="live">LIVE</span></a></li>
@@ -464,8 +473,8 @@ main, footer { position: relative; z-index: 1; }
           <div class="when"><span class="code">PRJ 310</span>Next.js · TypeScript</div>
           <div>
             <h3>NFLillion</h3>
-            <div class="tagline">Retro NFL Trivia Game</div>
-            <p>A 16-bit arcade trivia game: seven prompts, 25 seconds each, and the less obvious your correct answer, the more yards it gains. Every answer moves the ball down a football field and plays back as a replay drawn on canvas. 418 prompts and 18,000+ accepted answers come from cited Wikipedia tables through a Python data pipeline; the server owns the clock and the scoring.</p>
+            <div class="tagline">Retro NFL Trivia Game · Hundreds of daily players</div>
+            <p>A 16-bit arcade trivia game, played by hundreds of people every day: seven prompts, 25 seconds each, and the less obvious your correct answer, the more yards it gains. Every answer moves the ball down a football field and plays back as a replay drawn on canvas. 418 prompts and 18,000+ accepted answers come from cited Wikipedia tables through a Python data pipeline; the server owns the clock and the scoring.</p>
             <p class="topics"><b>Built with</b>Next.js · TypeScript · React · Tailwind CSS · SQLite · Fly.io</p>
           </div>
           <div class="side"><span class="live">LIVE</span>
@@ -609,90 +618,82 @@ sections.forEach((s) => spy.observe(s));
 document.querySelectorAll(".contents a").forEach((a) => a.addEventListener("click", () => { a.closest("details").open = false; }));
 
 
-// Background VFX, the whole page: a hyperspace starfield in amber, gold and cream. Stars stream toward
-// you from the vanishing point; scrolling accelerates into light-speed streaks (scrolling up pulls back),
-// each new section that reaches the middle of the screen fires a short jump, and the page itself
-// opens by dropping out of hyperspace. No flashing: streaks
-// lengthen, they never strobe. Paused in hidden tabs; one still frame under reduced motion.
+// Background VFX, the whole page: a living topographic map. Amber contour lines (every 5th one heavier, as on
+// a survey map) breathe slowly. Scrolling glides you over the terrain and reshapes it, and one bright gold
+// "waterline" contour rises through the elevations as you read further down the page. Paused in hidden tabs;
+// one still frame under reduced motion.
 {
   const canvas = document.querySelector(".embers");
   const ctx = canvas.getContext("2d");
-  const phone = matchMedia("(max-width: 960px)").matches;
-  const COLORS = ["245,158,11", "252,211,77", "245,240,232"];  // amber, pale gold, cream
-  const IDLE = 0.07, MAX = 3.2;  // depth units per second: drifting vs. full light speed
-  let w = 0, h = 0, dpr = 1, stars = [], running = false, last = 0;
-  let speed = MAX, scrollBoost = 0, jump = 1, lean = { x: 0, y: 0, tx: 0, ty: 0 }, lastScroll = scrollY;
+  const LEVELS = 14;
+  let w = 0, h = 0, dpr = 1, cell = 16, cols = 0, rows = 0, field = new Float32Array(0);
+  let running = false, last = 0, t = 0, intro = reduce ? 1 : 0, sy = scrollY;
 
-  const rand = (a, b) => a + Math.random() * (b - a);
-  function spawn(s, anywhere) {
-    return Object.assign(s, { x: rand(-1, 1), y: rand(-1, 1), z: anywhere ? rand(0.05, 1) : rand(0.85, 1), pz: null,
-      color: COLORS[Math.random() < 0.6 ? 0 : Math.random() < 0.6 ? 1 : 2], tw: rand(0, 6.28) });
+  // 3D value noise (x, y, time) with smoothstep interpolation; two octaves read as terrain.
+  const P = new Uint8Array(512); { const a = [...Array(256).keys()]; for (let i = 255; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } for (let i = 0; i < 512; i++) P[i] = a[i & 255]; }
+  const hash = (x, y, z) => P[P[P[x & 255] + (y & 255)] + (z & 255)] / 255;
+  const sm = (v) => v * v * (3 - 2 * v), mix = (a, b, v) => a + (b - a) * v;
+  function noise(x, y, z) {
+    const X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z), u = sm(x - X), v = sm(y - Y), q = sm(z - Z);
+    const l = (dz) => mix(mix(hash(X, Y, Z + dz), hash(X + 1, Y, Z + dz), u), mix(hash(X, Y + 1, Z + dz), hash(X + 1, Y + 1, Z + dz), u), v);
+    return mix(l(0), l(1), q);
   }
   function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2); w = innerWidth; h = innerHeight;
+    dpr = Math.min(devicePixelRatio || 1, 2); w = innerWidth; h = innerHeight; cell = w < 700 ? 20 : 16;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const count = Math.round(Math.min(phone ? 240 : 460, (w * h) / (phone ? 1100 : 2800)));
-    stars = Array.from({ length: count }, (_, i) => stars[i] || spawn({}, true));
+    cols = Math.ceil(w / cell) + 1; rows = Math.ceil(h / cell) + 1; field = new Float32Array(cols * rows);
   }
-  function project(s, z, cx, cy, f) { return [cx + (s.x / z) * f, cy + (s.y / z) * f]; }
-  function frame(dt) {
-    lean.x += (lean.tx - lean.x) * 0.04; lean.y += (lean.ty - lean.y) * 0.04;
-    scrollBoost *= Math.pow(0.08, dt);   // scroll speed fades in about a second
-    jump *= Math.pow(0.18, dt);          // a section jump eases out over ~1.5 s
-    const target = IDLE + scrollBoost + jump * MAX;
-    speed += (target - speed) * Math.min(1, dt * 6);
-    const cx = w / 2 + lean.x * w * 0.08, cy = h * 0.46 + lean.y * h * 0.08, f = Math.max(w, h) * 0.55;
-    const warp = Math.min(1, Math.abs(speed) / 1.4);  // 0 = drifting dots, 1 = full streaks
-    ctx.clearRect(0, 0, w, h);
-    ctx.lineCap = "round";
-    for (const s of stars) {
-      s.pz = s.z;
-      s.z -= speed * dt * 0.5;
-      if (s.z <= 0.02 || s.z > 1.05) { spawn(s, false); if (speed < 0) s.z = rand(0.05, 0.2); s.pz = s.z; continue; }
-      const [x, y] = project(s, s.z, cx, cy, f);
-      if (x < -50 || x > w + 50 || y < -50 || y > h + 50) { spawn(s, false); s.pz = s.z; continue; }
-      const near = 1 - s.z;                                      // 0 far .. 1 close
-      s.tw += dt * 2;
-      const a = Math.min(0.85, (0.24 + near * 0.7) * (0.85 + 0.15 * Math.sin(s.tw)));
-      const r = 0.5 + near * 1.8;
-      // the trail runs back toward where the star was a moment ago, stretched by the warp
-      const trailZ = Math.min(1.05, s.z + Math.abs(speed) * (0.012 + warp * 0.05));
-      const [tx, ty] = project(s, speed >= 0 ? trailZ : Math.max(0.02, s.z - Math.abs(speed) * 0.04), cx, cy, f);
-      if (warp > 0.08 && Math.hypot(x - tx, y - ty) > 1.5) {
-        const g = ctx.createLinearGradient(tx, ty, x, y);
-        g.addColorStop(0, `rgba(${s.color},0)`); g.addColorStop(1, `rgba(${s.color},${a})`);
-        ctx.strokeStyle = g; ctx.lineWidth = r * (1 + warp * 0.6);
-        ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
-      } else {
-        ctx.fillStyle = `rgba(${s.color},${a})`; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill();
-      }
+  function sample(pan, z) {
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const x = i * cell / 260, y = (j * cell + pan) / 260;
+      field[j * cols + i] = noise(x, y, z) * 0.7 + noise(x * 2.3 + 9, y * 2.3, z * 1.4) * 0.3;
     }
   }
-  function loop(t) {
+  // Marching squares: trace one elevation into the current path.
+  function contour(th) {
+    const at = (a, b) => (th - a) / (b - a || 1e-6);
+    for (let j = 0; j < rows - 1; j++) for (let i = 0; i < cols - 1; i++) {
+      const k = j * cols + i, a = field[k], b = field[k + 1], c = field[k + cols + 1], d = field[k + cols];
+      const idx = (a > th) | ((b > th) << 1) | ((c > th) << 2) | ((d > th) << 3);
+      if (idx === 0 || idx === 15) continue;
+      const x = i * cell, y = j * cell, pts = [];
+      if ((a > th) !== (b > th)) pts.push(x + at(a, b) * cell, y);
+      if ((b > th) !== (c > th)) pts.push(x + cell, y + at(b, c) * cell);
+      if ((c > th) !== (d > th)) pts.push(x + at(d, c) * cell, y + cell);
+      if ((d > th) !== (a > th)) pts.push(x, y + at(a, d) * cell);
+      for (let n = 0; n + 3 < pts.length; n += 4) { ctx.moveTo(pts[n], pts[n + 1]); ctx.lineTo(pts[n + 2], pts[n + 3]); }
+    }
+  }
+  function frame() {
+    const max = Math.max(1, document.documentElement.scrollHeight - h), p = Math.min(1, Math.max(0, sy / max));
+    sample(sy * 0.35, t * 0.04 + p * 2.2);  // scroll pans over the land and reshapes it
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1;
+    for (let L = 1; L < LEVELS; L++) {
+      const index = L % 5 === 0;
+      ctx.strokeStyle = `rgba(245,158,11,${(index ? 0.2 : 0.09) * intro})`;
+      ctx.beginPath(); contour(0.18 + (L / LEVELS) * 0.64); ctx.stroke();
+    }
+    // the waterline: rises from the lowlands to the peaks as you read down the page
+    ctx.strokeStyle = `rgba(252,211,77,${0.42 * intro})`; ctx.lineWidth = 1.6;
+    ctx.shadowColor = "rgba(245,158,11,.8)"; ctx.shadowBlur = 8;
+    ctx.beginPath(); contour(0.3 + p * 0.42); ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+  function loop(now) {
     if (!running) return;
-    const dt = last ? Math.min((t - last) / 1000, 0.05) : 0; last = t;
-    frame(dt); requestAnimationFrame(loop);
+    const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
+    if (dt === 0 || dt > 1 / 40) {  // ~30 fps is plenty for slow terrain and halves the work
+      last = now; t += dt; intro = Math.min(1, intro + dt / 1.4);
+      sy += (scrollY - sy) * Math.min(1, dt * 7);  // eased, so the land glides after the scroll
+      frame();
+    }
+    requestAnimationFrame(loop);
   }
   const start = () => { if (!running && !reduce && !document.hidden) { running = true; last = 0; requestAnimationFrame(loop); } };
-  resize(); frame(0);
-  addEventListener("resize", () => { resize(); frame(0); });
+  resize(); frame();
+  addEventListener("resize", () => { resize(); frame(); });
   document.addEventListener("visibilitychange", () => (document.hidden ? (running = false) : start()));
-  addEventListener("scroll", () => {
-    const d = scrollY - lastScroll; lastScroll = scrollY;
-    scrollBoost = Math.max(-1.6, Math.min(MAX, scrollBoost + d * 0.006));  // down = forward, up = back
-  }, { passive: true });
-  // Each new section that reaches the middle of the screen fires a jump to hyperspace.
-  let current = null;
-  const jumps = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      const id = e.target.closest("section").id;
-      if (e.isIntersecting && id !== current) { current = id; jump = 1; }
-    }
-  }, { rootMargin: "-40% 0px -55% 0px" });
-  document.querySelectorAll("main section[id] .sec-head").forEach((el) => jumps.observe(el));
-  if (matchMedia("(pointer: fine)").matches) {
-    addEventListener("pointermove", (e) => { lean.tx = e.clientX / w - 0.5; lean.ty = e.clientY / h - 0.5; });
-  }
   start();
 }
 
@@ -743,28 +744,26 @@ if (!reduce) {
   animate(".offered li", { opacity: [0, 1], y: [12, 0] }, { duration: 0.8, ease, delay: stagger(0.09, { startDelay: 0.6 }) });
 
 
-  // The title page's depth: far (ruled paper and a large §), middle (the name), near (the projects list).
-  // Scroll moves them apart (Motion scroll, on transform); the cursor leans them (on the separate translate property).
+  // Page turn: as you scroll past it, the title page tips back from its bottom edge like a catalogue cover.
   const title = document.querySelector(".title");
-  const layers = [...title.querySelectorAll("[data-depth]")];
-  layers.forEach((el) => {
-    const d = Number(el.dataset.depth);
-    scroll(animate(el, { transform: ["translateY(0px)", `translateY(${-d * 200}px)`] }, { ease: "linear" }),
-      { target: title, offset: ["start start", "end start"] });
-  });
+  scroll(animate(title, { transform: ["perspective(1400px) rotateX(0deg) scale(1)", "perspective(1400px) rotateX(24deg) scale(.9)"], opacity: [1, 0.25] },
+    { ease: "linear" }), { target: title, offset: ["start start", "end start"] });
+
+  // Reading lamp: the cursor carries an amber light that inks the ruled lines and the large §.
   if (matchMedia("(pointer: fine)").matches) {
-    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
-    const follow = () => {  // ease toward the cursor so the layers glide rather than jump
-      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
-      layers.forEach((el) => { const d = Number(el.dataset.depth); el.style.translate = `${(-cx * d * 28).toFixed(2)}px ${(-cy * d * 18).toFixed(2)}px`; });
-      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.001 ? requestAnimationFrame(follow) : 0;
+    const paper = title.querySelector(".depth");
+    let tx = 70, ty = 45, cx = 70, cy = 45, raf = 0;
+    const follow = () => {  // ease toward the cursor so the light glides rather than jumps
+      cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;
+      paper.style.setProperty("--mx", cx.toFixed(2) + "%"); paper.style.setProperty("--my", cy.toFixed(2) + "%");
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.05 ? requestAnimationFrame(follow) : 0;
     };
-    const aim = (x, y) => { tx = x; ty = y; if (!raf) raf = requestAnimationFrame(follow); };
     title.addEventListener("pointermove", (e) => {
-      const r = title.getBoundingClientRect();
-      aim((e.clientX - r.left) / r.width - 0.5, (e.clientY - r.top) / r.height - 0.5);
+      const r = paper.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width * 100; ty = (e.clientY - r.top) / r.height * 100;
+      paper.classList.add("on"); if (!raf) raf = requestAnimationFrame(follow);
     });
-    title.addEventListener("pointerleave", () => aim(0, 0));
+    title.addEventListener("pointerleave", () => paper.classList.remove("on"));
   }
 
   // The reading rule: the margin line draws down the page as you read.
