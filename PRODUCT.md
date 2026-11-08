@@ -20,7 +20,7 @@ A student who ships real, live, multi-user products (an AI fantasy football anal
 - No build step; libraries load from CDNs.
 
 ## Capabilities and Constraints
-- Sections and facts must all stay: hero, about (with stats), experience (6 roles), projects (Loki Analyzer, ResumeAI, Landed + "more on the way"), skills (4 groups), education (Stony Brook, B.S. Information Systems, Technology Systems Management concentration, expected May 2028, GPA 3.25, VP External Lambda Phi Epsilon, coursework), certifications, contact.
+- Sections and facts must all stay: hero, about (with stats), experience (6 roles), projects (Loki Analyzer, ResumeAI, Landed + "more on the way"), skills (4 groups), education (Stony Brook, B.S. Information Systems, Technology Systems Management concentration, expected May 2028, VP External Lambda Phi Epsilon, coursework), certifications, contact.
 - Copy: keep Alex's own words (light trims to fit are fine; ask before rewriting).
 - Must work on phones without horizontal scroll.
 
