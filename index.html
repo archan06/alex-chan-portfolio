@@ -349,8 +349,8 @@ main, footer { position: relative; z-index: 1; }
       <ol>
         <li><a href="#nflillion"><span class="code">PRJ 310</span><span class="nm">NFLillion<small>NFL trivia game</small></span><span class="live">LIVE</span></a></li>
         <li><a href="#loki"><span class="code">PRJ 301</span><span class="nm">Loki Analyzer<small>AI fantasy football assistant</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#resumeai"><span class="code">PRJ 220</span><span class="nm">ResumeAI<small>AI resume analyzer</small></span><span class="live">LIVE</span></a></li>
         <li><a href="#landed"><span class="code">PRJ 215</span><span class="nm">Landed<small>Job application tracker</small></span><span class="live">LIVE</span></a></li>
+        <li><a href="#resumeai"><span class="code">PRJ 220</span><span class="nm">ResumeAI<small>AI resume analyzer</small></span><span class="live">LIVE</span></a></li>
         <li><a href="#amicus"><span class="code">EXP 2026</span><span class="nm">AI Engineering Intern, Amicus<small>June – August 2026</small></span><span></span></a></li>
       </ol>
     </div>
@@ -464,8 +464,8 @@ main, footer { position: relative; z-index: 1; }
         <div class="mac-tabs" role="tablist" aria-label="Projects">
           <button role="tab" id="tab-nflillion" aria-controls="nflillion" aria-selected="true" tabindex="0" data-url="nflillion.com"><span class="code">PRJ 310</span> NFLillion</button>
           <button role="tab" id="tab-loki" aria-controls="loki" aria-selected="false" tabindex="-1" data-url="loki-fantasy-analyzer…streamlit.app"><span class="code">PRJ 301</span> Loki Analyzer</button>
-          <button role="tab" id="tab-resumeai" aria-controls="resumeai" aria-selected="false" tabindex="-1" data-url="resume-anaylzer-ai.onrender.com"><span class="code">PRJ 220</span> ResumeAI</button>
           <button role="tab" id="tab-landed" aria-controls="landed" aria-selected="false" tabindex="-1" data-url="job-tracker-eight-orcin.vercel.app"><span class="code">PRJ 215</span> Landed</button>
+          <button role="tab" id="tab-resumeai" aria-controls="resumeai" aria-selected="false" tabindex="-1" data-url="resume-anaylzer-ai.onrender.com"><span class="code">PRJ 220</span> ResumeAI</button>
         </div>
         <span class="mac-count" aria-hidden="true"></span>
       </div>
@@ -498,21 +498,6 @@ main, footer { position: relative; z-index: 1; }
             <div class="links"><a class="u" href="https://loki-fantasy-analyzer-ewzmsjdrv93qwsshsufap8.streamlit.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
         </div>
       </article>
-      <article class="mac-panel" role="tabpanel" id="resumeai" aria-labelledby="tab-resumeai">
-        <figure class="mac-view"><img src="img/resumeai.webp" alt="ResumeAI's upload screen: drop a PDF resume and a target job title to analyze it" width="1440" height="900" loading="lazy" decoding="async"></figure>
-        <div class="entry project">
-          <div class="when"><span class="code">PRJ 220</span>Node.js · Express</div>
-          <div>
-            <h3>ResumeAI</h3>
-            <div class="tagline">AI Resume Analyzer</div>
-            <p>Full-stack web app that analyzes resumes against job descriptions using Anthropic Claude. Streams results in real time via SSE, with a radar chart, score dial, bullet rewriter, keyword cloud, and exportable report.</p>
-            <p class="topics"><b>Built with</b>Node.js · Express · Anthropic Claude · SSE Streaming · Chart.js</p>
-          </div>
-          <div class="side"><span class="live">LIVE</span>
-            <div class="links"><a class="u" href="https://resume-anaylzer-ai.onrender.com" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
-              <a class="u" href="https://github.com/archan06/resume-analyzer-ai" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
-        </div>
-      </article>
       <article class="mac-panel" role="tabpanel" id="landed" aria-labelledby="tab-landed">
         <figure class="mac-view"><img src="img/landed.webp" alt="Landed's board: job applications as cards in Saved, Applied, Phone screen, Interview and Offer columns" width="1440" height="900" loading="lazy" decoding="async"></figure>
         <div class="entry project">
@@ -526,6 +511,21 @@ main, footer { position: relative; z-index: 1; }
           <div class="side"><span class="live">LIVE</span>
             <div class="links"><a class="u" href="https://job-tracker-eight-orcin.vercel.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
               <a class="u" href="https://github.com/archan06/job-tracker" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+        </div>
+      </article>
+      <article class="mac-panel" role="tabpanel" id="resumeai" aria-labelledby="tab-resumeai">
+        <figure class="mac-view"><img src="img/resumeai.webp" alt="ResumeAI's upload screen: drop a PDF resume and a target job title to analyze it" width="1440" height="900" loading="lazy" decoding="async"></figure>
+        <div class="entry project">
+          <div class="when"><span class="code">PRJ 220</span>Node.js · Express</div>
+          <div>
+            <h3>ResumeAI</h3>
+            <div class="tagline">AI Resume Analyzer</div>
+            <p>Full-stack web app that analyzes resumes against job descriptions using Anthropic Claude. Streams results in real time via SSE, with a radar chart, score dial, bullet rewriter, keyword cloud, and exportable report.</p>
+            <p class="topics"><b>Built with</b>Node.js · Express · Anthropic Claude · SSE Streaming · Chart.js</p>
+          </div>
+          <div class="side"><span class="live">LIVE</span>
+            <div class="links"><a class="u" href="https://resume-anaylzer-ai.onrender.com" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
+              <a class="u" href="https://github.com/archan06/resume-analyzer-ai" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
         </div>
       </article>
       <div class="mac-next"><button type="button" class="u">Next project: <span class="nm"></span> <svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></button></div>
