@@ -137,6 +137,8 @@ h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertic
 .project .side { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
 .links { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; font-family: var(--mono); font-size: 14px; font-weight: 700; }
 .links a { color: var(--amber); }
+.users { font-family: var(--mono); font-size: 14px; color: var(--muted); }
+.users b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
 .more { padding: 34px 0 0 calc(170px + clamp(24px, 4vw, 56px)); font-style: italic; color: var(--muted); }
 
 /* ── §4 skills: departments ── */
@@ -483,7 +485,8 @@ main, footer { position: relative; z-index: 1; }
             <p class="topics"><b>Built with</b>Next.js · TypeScript · React · Tailwind CSS · SQLite · Fly.io</p>
           </div>
           <div class="side"><span class="live">LIVE</span>
-            <div class="links"><a class="u" href="https://nflillion.com" target="_blank" rel="noopener">Live site <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+            <span class="users"><b id="nfl-users">1,241</b> users</span>
+            <div class="links"><a class="u" href="https://nflillion.com" target="_blank" rel="noopener">Live site <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><a class="u" href="https://nflillion.com/numbers" target="_blank" rel="noopener">Stats <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
         </div>
       </article>
       <article class="mac-panel" role="tabpanel" id="loki" aria-labelledby="tab-loki">
@@ -616,6 +619,12 @@ main, footer { position: relative; z-index: 1; }
   </section>
 </main>
 
+<script>
+// NFLillion's live all-time user count; the number in the HTML stays if the request fails.
+fetch("https://nflillion.com/api/numbers").then((r) => r.ok ? r.json() : null).then((t) => {
+  if (t && Number.isFinite(t.users)) document.getElementById("nfl-users").textContent = t.users.toLocaleString("en-US");
+}).catch(() => {});
+</script>
 <script type="module">
 // Motion (motion.dev). Content stays visible if this never loads; the .js class hides only what is about to animate.
 import { animate, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@14.5.0/+esm";
