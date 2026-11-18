@@ -103,10 +103,9 @@ h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertic
 .offered .cap { font-family: var(--mono); font-size: 13px; color: var(--muted); letter-spacing: .04em;
   padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
 .offered ol { list-style: none; }
-.offered li a { display: grid; grid-template-columns: 82px minmax(0, 1fr) auto; gap: 14px; align-items: baseline; padding: 17px 0;
+.offered li a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: baseline; padding: 17px 0;
   border-bottom: 1px solid var(--rule-soft); text-decoration: none; }
 .code { font-family: var(--mono); font-size: 14px; color: var(--muted); }
-.offered li a .code { color: var(--amber); }  /* the title page list is links: amber */
 .offered .nm { font-size: 23px; line-height: 1.2; font-variation-settings: "wght" 400; transition: font-variation-settings .35s cubic-bezier(.16,1,.3,1); }
 .offered .nm small { display: block; font-size: 15px; font-style: italic; color: var(--muted); margin-top: 3px; font-variation-settings: "wght" 400; }
 .offered li a:hover .nm, .offered li a:focus-visible .nm { font-variation-settings: "wght" 640; }
@@ -129,8 +128,8 @@ h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertic
 /* ── catalogue entries (experience, projects) ── */
 .entry { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 8px clamp(24px, 4vw, 56px); padding: 34px 0;
   border-bottom: 1px solid var(--rule-soft); }
+.entry p a { color: var(--amber); }
 .entry .when { font-family: var(--mono); font-size: 14px; color: var(--muted); line-height: 1.5; }
-.entry .when .code { display: block; margin-bottom: 6px; }
 .entry h3 { font-weight: 420; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; letter-spacing: -.01em;
   font-variation-settings: "wght" 420; transition: font-variation-settings .35s cubic-bezier(.16,1,.3,1); }
 .entry:hover h3 { font-variation-settings: "wght" 600; }
@@ -151,7 +150,6 @@ h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertic
 .other { list-style: none; margin-top: 6px; }
 .other li { padding: 6px 0; }
 .other li > span:last-child { font-family: var(--mono); font-size: 14px; color: var(--muted); margin-left: 10px; }
-.more { padding: 34px 0 0 calc(170px + clamp(24px, 4vw, 56px)); font-style: italic; color: var(--muted); }
 
 /* ── §4 skills: departments ── */
 .depts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -214,7 +212,7 @@ main, footer { position: relative; z-index: 1; }
 .lights i:nth-child(1) { background: #E0574F; } .lights i:nth-child(2) { background: #D9A33A; } .lights i:nth-child(3) { background: #3FA34D; }
 .shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; }
 .proj .entry { grid-template-columns: 1fr; gap: 6px; border-bottom: 0; padding: 0; }
-.proj .entry .when { display: flex; gap: 12px; flex-wrap: wrap; } .proj .entry .when .code { margin: 0; }
+.proj .entry .when { display: flex; gap: 12px; flex-wrap: wrap; }
 .proj .project h3 { font-size: clamp(28px, 3vw, 40px); }
 .proj .side { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: 10px; }
 .proj .links { flex-direction: row; flex-wrap: wrap; gap: 18px; }
@@ -272,7 +270,7 @@ main, footer { position: relative; z-index: 1; }
   .acts { margin-top: 20px; font-size: 14px; } .btn { padding: 12px 18px; }
   .open { margin-top: 18px; }
 }
-@media (max-width: 420px) { .dept ul { columns: 1; } body { font-size: 17px; } .offered li a { grid-template-columns: 70px minmax(0, 1fr) auto; } }
+@media (max-width: 420px) { .dept ul { columns: 1; } body { font-size: 17px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 /* Motion is all CSS: a quick title intro, a lift on project hover, and the reading rule
    drawn by scroll where scroll-driven animations exist (elsewhere it simply shows full). */
@@ -343,12 +341,12 @@ main, footer { position: relative; z-index: 1; }
     <div class="offered layer">
       <p class="cap">§3 Projects</p>
       <ol>
-        <li><a href="#nflillion"><span class="code">PRJ 310</span><span class="nm">NFLillion<small>NFL trivia game</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#loki"><span class="code">PRJ 301</span><span class="nm">Loki Analyzer<small>AI fantasy football assistant</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#landed"><span class="code">PRJ 215</span><span class="nm">Landed<small>Job application tracker</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#bustedblends"><span class="code">PRJ 225</span><span class="nm">Busted Blends<small>Barber booking site</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#resumeai"><span class="code">PRJ 220</span><span class="nm">ResumeAI<small>AI resume analyzer</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#amicus"><span class="code">EXP 2026</span><span class="nm">AI Engineering Intern, Amicus<small>June – August 2026</small></span><span></span></a></li>
+        <li><a href="#nflillion"><span class="nm">NFLillion<small>NFL trivia game</small></span><span class="live">LIVE</span></a></li>
+        <li><a href="#loki"><span class="nm">Loki Analyzer<small>AI fantasy football assistant</small></span><span class="live">LIVE</span></a></li>
+        <li><a href="#landed"><span class="nm">Landed<small>Job application tracker</small></span><span class="live">LIVE</span></a></li>
+        <li><a href="#bustedblends"><span class="nm">Busted Blends<small>Barber booking site</small></span><span class="live">LIVE</span></a></li>
+        <li><a href="#resumeai"><span class="nm">ResumeAI<small>AI resume analyzer</small></span><span class="live">LIVE</span></a></li>
+        <li><a href="#amicus"><span class="nm">AI Engineering Intern, Amicus<small>June – August 2026</small></span><span></span></a></li>
       </ol>
     </div>
     <div class="folio"><span>p. 1</span><span>alexrchan.dev</span></div>
@@ -385,12 +383,11 @@ main, footer { position: relative; z-index: 1; }
   <!-- §2 experience -->
   <section id="experience" aria-labelledby="exp-h">
     <span class="mark" aria-hidden="true">§2</span>
-    <div class="sec-head"><h2 id="exp-h"><span class="sym">§2</span>Where I've <em>contributed</em></h2>
-      <p class="sec-note">Roles and work that shaped how I build.</p></div>
+    <div class="sec-head"><h2 id="exp-h"><span class="sym">§2</span><em>Experience</em></h2></div>
 
 
     <article class="entry" id="amicus">
-      <div class="when"><img class="logo full" src="img/logos/amicus.png" alt="Amicus logo" width="48" height="48"><span class="code">EXP 2026</span>June – August 2026</div>
+      <div class="when"><img class="logo full" src="img/logos/amicus.png" alt="Amicus logo" width="48" height="48">June – August 2026</div>
       <div>
         <h3>AI Engineering Intern</h3>
         <div class="org">Amicus</div>
@@ -399,16 +396,16 @@ main, footer { position: relative; z-index: 1; }
       </div>
     </article>
     <article class="entry" id="freelance">
-      <div class="when"><span class="logo" role="img" aria-label="Freelance web development"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span><span class="code">EXP 2026</span>June 2026 – Present</div>
+      <div class="when"><span class="logo" role="img" aria-label="Freelance web development"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span>June 2026 – Present</div>
       <div>
         <h3>Web Developer</h3>
         <div class="org">Freelance</div>
-        <p>Build and launch websites for clients, including a university barber, local companies and a clothing brand. For booking clients I build React and TypeScript sites with appointment slots synced to Google Calendar, plus a password-protected admin page for managing appointments, deployed with Vercel Functions.</p>
+        <p>Build and launch websites for clients, including a university barber (<a class="u" href="#bustedblends">Busted Blends</a>, live), local companies and a clothing brand. For booking clients I build React and TypeScript sites with appointment slots synced to Google Calendar, plus a password-protected admin page for managing appointments, deployed with Vercel Functions.</p>
         <p class="topics"><b>Topics</b>React · TypeScript · Vercel · Google Calendar</p>
       </div>
     </article>
     <article class="entry">
-      <div class="when"><img class="logo" src="img/logos/nyulangone.png" alt="NYU Langone Health logo" width="48" height="48"><span class="code">EXP 2023</span>September – November 2023</div>
+      <div class="when"><img class="logo" src="img/logos/nyulangone.png" alt="NYU Langone Health logo" width="48" height="48">September – November 2023</div>
       <div>
         <h3>Lab Assistant, Clinical Data &amp; Specimen Tracking</h3>
         <div class="org">NYU Langone Hospital</div>
@@ -417,7 +414,7 @@ main, footer { position: relative; z-index: 1; }
       </div>
     </article>
     <article class="entry">
-      <div class="when"><span class="logo" role="img" aria-label="Other experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></span><span class="code">OTHER</span>2023 – 2025</div>
+      <div class="when"><span class="logo" role="img" aria-label="Other experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></span>2023 – 2025</div>
       <div>
         <h3>Other experience</h3>
         <ul class="other">
@@ -433,14 +430,13 @@ main, footer { position: relative; z-index: 1; }
   <!-- §3 projects -->
   <section id="projects" aria-labelledby="proj-h">
     <span class="mark" aria-hidden="true">§3</span>
-    <div class="sec-head"><h2 id="proj-h"><span class="sym">§3</span><em>Projects</em></h2>
-      <p class="sec-note">A mix of AI tools, full-stack apps, and experiments I'm proud of.</p></div>
+    <div class="sec-head"><h2 id="proj-h"><span class="sym">§3</span><em>Projects</em></h2></div>
 
     <div class="projs">
       <article class="proj" id="nflillion">
         <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">nflillion.com</span></div><img src="img/nflillion.webp" alt="NFLillion's home screen: a pixel-art football field, the five scoring tiers from Checkdown +15 yards to Hail Mary +100, and a Press start button" width="1440" height="900" loading="lazy" decoding="async"></figure>
         <div class="entry project">
-          <div class="when"><span class="code">PRJ 310</span>Next.js · TypeScript</div>
+          <div class="when">Next.js · TypeScript</div>
           <div>
             <h3>NFLillion</h3>
             <div class="tagline">Retro NFL Trivia Game · 1,000+ daily players</div>
@@ -455,7 +451,7 @@ main, footer { position: relative; z-index: 1; }
       <article class="proj" id="loki">
         <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">loki-fantasy-analyzer…streamlit.app</span></div><img src="img/loki.webp" alt="Loki Analyzer's Matchup screen: the week's score drawn as a field, with both starting lineups" width="1440" height="900" loading="lazy" decoding="async"></figure>
         <div class="entry project">
-          <div class="when"><span class="code">PRJ 301</span>Python · Streamlit</div>
+          <div class="when">Python · Streamlit</div>
           <div>
             <h3>Loki Analyzer</h3>
             <div class="tagline">AI Fantasy Football Assistant</div>
@@ -469,7 +465,7 @@ main, footer { position: relative; z-index: 1; }
       <article class="proj" id="landed">
         <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">job-tracker-eight-orcin.vercel.app</span></div><img src="img/landed.webp" alt="Landed's board: job applications as cards in Saved, Applied, Phone screen, Interview and Offer columns" width="1440" height="900" loading="lazy" decoding="async"></figure>
         <div class="entry project">
-          <div class="when"><span class="code">PRJ 215</span>Next.js · TypeScript</div>
+          <div class="when">Next.js · TypeScript</div>
           <div>
             <h3>Landed</h3>
             <div class="tagline">Job Application Tracker</div>
@@ -484,7 +480,7 @@ main, footer { position: relative; z-index: 1; }
       <article class="proj" id="bustedblends">
         <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">busted-blends.vercel.app</span></div><img src="img/bustedblends.webp" alt="Busted Blends home page: the name in huge white and red letters, with photos of haircuts flying toward the viewer" width="1440" height="900" loading="lazy" decoding="async"></figure>
         <div class="entry project">
-          <div class="when"><span class="code">PRJ 225</span>React · TypeScript</div>
+          <div class="when">React · TypeScript</div>
           <div>
             <h3>Busted Blends</h3>
             <div class="tagline">Barber Booking Site</div>
@@ -499,7 +495,7 @@ main, footer { position: relative; z-index: 1; }
       <article class="proj" id="resumeai">
         <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">resume-anaylzer-ai.onrender.com</span></div><img src="img/resumeai.webp" alt="ResumeAI's upload screen: drop a PDF resume and a target job title to analyze it" width="1440" height="900" loading="lazy" decoding="async"></figure>
         <div class="entry project">
-          <div class="when"><span class="code">PRJ 220</span>Node.js · Express</div>
+          <div class="when">Node.js · Express</div>
           <div>
             <h3>ResumeAI</h3>
             <div class="tagline">AI Resume Analyzer</div>
@@ -512,14 +508,12 @@ main, footer { position: relative; z-index: 1; }
         </div>
       </article>
     </div>
-    <p class="more">More projects on the way.</p>
   </section>
 
   <!-- §4 skills -->
   <section id="skills" aria-labelledby="skills-h">
     <span class="mark" aria-hidden="true">§4</span>
-    <div class="sec-head"><h2 id="skills-h"><span class="sym">§4</span>Tools of the <em>trade</em></h2>
-      <p class="sec-note">Technologies I work with across the stack.</p></div>
+    <div class="sec-head"><h2 id="skills-h"><span class="sym">§4</span><em>Skills</em></h2></div>
     <div class="depts">
       <div class="dept"><h3>Languages</h3>
         <ul><li>Java</li><li>Python</li><li>TypeScript</li><li>JavaScript</li><li>SQL</li><li>C</li><li>C++</li><li>HTML / CSS</li></ul></div>
@@ -535,7 +529,7 @@ main, footer { position: relative; z-index: 1; }
   <!-- §5 education -->
   <section id="education" aria-labelledby="edu-h">
     <span class="mark" aria-hidden="true">§5</span>
-    <div class="sec-head"><h2 id="edu-h"><span class="sym">§5</span>Academic <em>foundation</em></h2></div>
+    <div class="sec-head"><h2 id="edu-h"><span class="sym">§5</span><em>Education</em></h2></div>
     <div class="record">
       <div>
         <h3>Stony Brook University</h3>
