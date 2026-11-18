@@ -116,14 +116,16 @@ h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertic
   font-size: 13px; color: var(--dim); padding: 12px 0; border-top: 1px solid var(--rule-soft); }
 
 /* ── §1 about ── */
-.about { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(32px, 5vw, 80px); padding-top: 40px; }
-.about p { color: var(--prose); max-width: 36em; }
+.about { display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding-top: 40px; }
+.about p { color: var(--prose); max-width: 38em; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.6; }
 .about p + p { margin-top: 1.1em; }
 .about strong { color: var(--text); font-weight: 600; }
 .plate figure { border: 1px solid var(--rule-soft); background: var(--plate); padding: 10px; }
 .plate img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .plate figcaption { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 10px; }
-.facts { margin-top: 40px; max-width: 36em; border-top: 1px solid var(--rule); }
+.facts { margin-top: 32px; display: flex; gap: clamp(36px, 6vw, 80px); padding-top: 20px; border-top: 1px solid var(--rule); max-width: 38em; }
+.ledger.facts div { display: flex; flex-direction: column-reverse; align-items: flex-start; justify-content: flex-end; gap: 6px; padding: 0; border: 0; }
+.ledger.facts dd { font: 400 clamp(36px, 3.6vw, 48px)/1 var(--serif); color: var(--text); text-align: left; }
 
 /* ── catalogue entries (experience, projects) ── */
 .entry { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 8px clamp(24px, 4vw, 56px); padding: 34px 0;
@@ -247,7 +249,7 @@ main, footer { position: relative; z-index: 1; }
   main { padding-left: calc(var(--gutter) + 6px); }
   .title { grid-template-columns: 1fr; min-height: auto; padding: 40px 0 84px; }
   .about, .record { grid-template-columns: 1fr; }
-  .plate { max-width: 300px; }
+  .plate { max-width: 240px; }
   .entry, .project { grid-template-columns: 1fr; }
   .project .side { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 18px; }
   .links { flex-direction: row; gap: 20px; }
@@ -357,6 +359,12 @@ main, footer { position: relative; z-index: 1; }
     <span class="mark" aria-hidden="true">§1</span>
     <div class="sec-head"><h2 id="about-h"><span class="sym">§1</span>About <em>me</em></h2></div>
     <div class="about">
+      <div class="plate">
+        <figure>
+          <img src="headshot.jpg" alt="Alex Chan" loading="lazy">
+          <figcaption>Fig. 1 — Alex Chan, Stony Brook University</figcaption>
+        </figure>
+      </div>
       <div>
         <p>I'm a <strong>junior studying Information Systems</strong> at Stony Brook University and
           <strong>Vice President External of Lambda Phi Epsilon</strong>. This past summer I was an
@@ -368,12 +376,6 @@ main, footer { position: relative; z-index: 1; }
           <div><dt>Live projects</dt><dd>5</dd></div>
           <div><dt>Graduation</dt><dd>2028</dd></div>
         </dl>
-      </div>
-      <div class="plate">
-        <figure>
-          <img src="headshot.jpg" alt="Alex Chan" loading="lazy">
-          <figcaption>Fig. 1 — Alex Chan, Stony Brook University</figcaption>
-        </figure>
       </div>
     </div>
   </section>
