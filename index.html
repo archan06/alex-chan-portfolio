@@ -183,24 +183,16 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 
 
 
-/* ── title page: a reading lamp follows the cursor and inks the ruled paper; scrolling turns the page back ── */
-.title { isolation: isolate; transform-origin: 50% 100%; }
+/* ── title page: ruled paper behind the name ── */
+.title { isolation: isolate; }
 .title > .layer { position: relative; z-index: 1; }
 .embers { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }  /* behind the whole page */
 main, footer { position: relative; z-index: 1; }
-.depth { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; --mx: 70%; --my: 45%; }
+.depth { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .depth hr { position: absolute; left: 0; right: 0; border: 0; border-top: 1px solid rgba(245,158,11,.08); }
 .depth hr:nth-of-type(1) { top: 22%; } .depth hr:nth-of-type(2) { top: 49%; } .depth hr:nth-of-type(3) { top: 76%; }
 .big-s { position: absolute; right: 1vw; top: 46%; transform: translateY(-50%); font-family: var(--serif); font-weight: 300;
   font-size: min(80vh, 50vw); line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(245,158,11,.16); user-select: none; }
-/* the lit copy: same paper, inked, shown only inside the lamp's circle */
-.lamp { position: absolute; inset: 0; opacity: 0; transition: opacity .5s;
-  background: radial-gradient(circle 340px at var(--mx) var(--my), rgba(245,158,11,.10), transparent 70%);
-  -webkit-mask: radial-gradient(circle 300px at var(--mx) var(--my), #000 30%, transparent 100%);
-          mask: radial-gradient(circle 300px at var(--mx) var(--my), #000 30%, transparent 100%); }
-.lamp hr { border-top-color: rgba(245,158,11,.5); }
-.lamp .big-s { color: rgba(245,158,11,.22); -webkit-text-stroke-color: var(--amber-pale); }
-.depth.on .lamp { opacity: 1; }
 
 /* ── §3 projects: a macOS browser window, one tab per project ── */
 .mac { margin-top: 44px; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg-2); overflow: hidden;
@@ -290,6 +282,21 @@ main, footer { position: relative; z-index: 1; }
 }
 @media (max-width: 420px) { .dept ul { columns: 1; } body { font-size: 17px; } .offered li a { grid-template-columns: 70px minmax(0, 1fr) auto; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+/* Motion is all CSS: a quick title intro, the project screenshot fading in on tab switch, and the reading rule
+   drawn by scroll where scroll-driven animations exist (elsewhere it simply shows full). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise { from { transform: translateY(110%); } }
+  @keyframes fade-up { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes img-in { from { opacity: .35; transform: scale(1.015); } }
+  .title h1 .ln span { animation: rise .6s cubic-bezier(.16,1,.3,1) backwards; }
+  .title h1 .ln + .ln span { animation-delay: .07s; }
+  .degree, .lede, .acts, .open, .offered { animation: fade-up .45s cubic-bezier(.16,1,.3,1) .15s backwards; }
+  .mac-view img { animation: img-in .45s cubic-bezier(.16,1,.3,1); }
+  @supports (animation-timeline: scroll()) {
+    @keyframes draw { from { transform: scaleY(0); } }
+    .thread i { animation: draw linear both; animation-timeline: scroll(root); }
+  }
+}
 </style>
 </head>
 <body>
@@ -333,8 +340,7 @@ main, footer { position: relative; z-index: 1; }
 
   <!-- title page -->
   <div class="title">
-    <div class="depth" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span>
-      <div class="lamp"><hr><hr><hr><span class="big-s">§</span></div></div>
+    <div class="depth" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span></div>
     <div class="layer">
       <h1 aria-label="Alex Chan"><span class="ln" aria-hidden="true"><span>Alex</span></span><span class="ln" aria-hidden="true"><em><span>Chan</span></em></span></h1>
       <p class="degree"><b>Information Systems</b> · Stony Brook University · Class of 2028</p>
@@ -625,7 +631,7 @@ main, footer { position: relative; z-index: 1; }
         <a href="Alex-Chan-Resume.pdf" target="_blank" rel="noopener"><span>Read</span><b>Resume <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></b></a>
       </div>
     </div>
-    <footer><span>Alex Chan · 2026</span><span>Built with HTML, CSS, JS &amp; Motion</span></footer>
+    <footer><span>Alex Chan · 2026</span><span>Built with HTML, CSS &amp; JS</span></footer>
   </section>
 </main>
 
@@ -636,11 +642,7 @@ fetch("https://nflillion.com/api/numbers").then((r) => r.ok ? r.json() : null).t
 }).catch(() => {});
 </script>
 <script type="module">
-// Motion (motion.dev). Content stays visible if this never loads; the .js class hides only what is about to animate.
-import { animate, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@14.5.0/+esm";
-
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const ease = [0.16, 1, 0.3, 1];
 
 // 21st.dev "Table of Contents" scroll-spy, ported: the section in view lights its link and its § mark.
 const links = [...document.querySelectorAll(".toc a")];
@@ -742,14 +744,13 @@ const url = document.querySelector(".mac-addr .url");
 const count = document.querySelector(".mac-count");
 const nextBtn = document.querySelector(".mac-next button");
 nextBtn.addEventListener("click", () => selectTab(+nextBtn.dataset.i, { focus: true }));
-function selectTab(i, { focus = false, animateIn = true } = {}) {
+function selectTab(i, { focus = false } = {}) {
   tabs.forEach((t, j) => { t.setAttribute("aria-selected", String(i === j)); t.tabIndex = i === j ? 0 : -1; panels[j].hidden = i !== j; });
   url.textContent = tabs[i].dataset.url;
   count.textContent = `${i + 1} of ${tabs.length} projects`;
   nextBtn.dataset.i = (i + 1) % tabs.length;
   nextBtn.querySelector(".nm").textContent = tabs[nextBtn.dataset.i].lastChild.textContent.trim();
   if (focus) tabs[i].focus();
-  if (animateIn && !reduce) animate(panels[i].querySelector(".mac-view img"), { opacity: [0.35, 1], scale: [1.015, 1] }, { duration: 0.45, ease });
 }
 tabs.forEach((t, i) => {
   t.addEventListener("click", () => selectTab(i));
@@ -764,53 +765,17 @@ tabs.forEach((t, i) => {
 function openProject(id) {
   const i = panels.findIndex((p) => p.id === id);
   if (i < 0) return false;
-  selectTab(i, { animateIn: false });
+  selectTab(i);
   document.getElementById("project-window").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   return true;
 }
 document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
   if (openProject(a.hash.slice(1))) { e.preventDefault(); history.replaceState(null, "", a.hash); }
 }));
-selectTab(Math.max(0, panels.findIndex((p) => "#" + p.id === location.hash)), { animateIn: false });
+selectTab(Math.max(0, panels.findIndex((p) => "#" + p.id === location.hash)));
 if (panels.some((p) => "#" + p.id === location.hash)) openProject(location.hash.slice(1));
 
 
-if (!reduce) {
-  // The title page: the name rises into place line by line (21st.dev "Text Reveal", done with Motion).
-  animate(".title h1 .ln span", { y: ["110%", "0%"] }, { duration: 1.1, ease, delay: stagger(0.12) });
-  animate(".degree, .lede, .acts, .open", { opacity: [0, 1], y: [14, 0] }, { duration: 0.8, ease, delay: stagger(0.08, { startDelay: 0.45 }) });
-  animate(".offered li", { opacity: [0, 1], y: [12, 0] }, { duration: 0.8, ease, delay: stagger(0.09, { startDelay: 0.6 }) });
-
-
-  // Page turn: as you scroll past it, the title page tips back from its bottom edge like a catalogue cover.
-  const title = document.querySelector(".title");
-  scroll(animate(title, { transform: ["perspective(1400px) rotateX(0deg) scale(1)", "perspective(1400px) rotateX(24deg) scale(.9)"], opacity: [1, 0.25] },
-    { ease: "linear" }), { target: title, offset: ["start start", "end start"] });
-
-  // Reading lamp: the cursor carries an amber light that inks the ruled lines and the large §.
-  if (matchMedia("(pointer: fine)").matches) {
-    const paper = title.querySelector(".depth");
-    let tx = 70, ty = 45, cx = 70, cy = 45, raf = 0;
-    const follow = () => {  // ease toward the cursor so the light glides rather than jumps
-      cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;
-      paper.style.setProperty("--mx", cx.toFixed(2) + "%"); paper.style.setProperty("--my", cy.toFixed(2) + "%");
-      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.05 ? requestAnimationFrame(follow) : 0;
-    };
-    title.addEventListener("pointermove", (e) => {
-      const r = paper.getBoundingClientRect();
-      tx = (e.clientX - r.left) / r.width * 100; ty = (e.clientY - r.top) / r.height * 100;
-      paper.classList.add("on"); if (!raf) raf = requestAnimationFrame(follow);
-    });
-    title.addEventListener("pointerleave", () => paper.classList.remove("on"));
-  }
-
-  // The reading rule: the margin line draws down the page as you read.
-  const thread = document.querySelector(".thread i");
-  if (thread && getComputedStyle(thread.parentElement).display !== "none") {
-    scroll(animate(thread, { transform: ["scaleY(0)", "scaleY(1)"] }, { ease: "linear" }));
-  }
-
-}
 </script>
 </body>
 </html>
