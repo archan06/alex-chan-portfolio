@@ -227,7 +227,7 @@ main, footer { position: relative; z-index: 1; }
 .logo { width: 48px; height: 48px; margin-bottom: 14px; border-radius: 10px; background: #F4EFE6; padding: 7px; object-fit: contain;
   display: grid; place-items: center; color: #1A1510; }
 .logo svg { width: 26px; height: 26px; }
-.logo.mono { font: 500 26px/1 var(--serif); }
+.logo.full { padding: 0; }  /* logos that are already a filled square */
 .other img, .other .mini { width: 22px; height: 22px; border-radius: 5px; background: #F4EFE6; padding: 3px; vertical-align: -5px; margin-right: 10px;
   display: inline-grid; place-items: center; color: #1A1510; object-fit: contain; }
 .other .mini svg { width: 14px; height: 14px; }
@@ -390,7 +390,7 @@ main, footer { position: relative; z-index: 1; }
 
 
     <article class="entry" id="amicus">
-      <div class="when"><span class="logo mono" role="img" aria-label="Amicus">A</span><span class="code">EXP 2026</span>June – August 2026</div>
+      <div class="when"><img class="logo full" src="img/logos/amicus.png" alt="Amicus logo" width="48" height="48"><span class="code">EXP 2026</span>June – August 2026</div>
       <div>
         <h3>AI Engineering Intern</h3>
         <div class="org">Amicus</div>
