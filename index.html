@@ -3,8 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alex Chan — Information Systems Student & Developer</title>
-<meta name="description" content="Alex Chan — Information Systems student at Stony Brook University, full-stack developer, and AI builder.">
+<title>Alex Chan — Software &amp; AI Engineer</title>
+<meta name="description" content="Alex Chan: AI engineering intern at Amicus and Stony Brook Information Systems student. Builds full-stack web apps and AI tools, including NFLillion, played by 1,000+ people a day.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alexrchan.dev/">
+<meta property="og:title" content="Alex Chan — Software &amp; AI Engineer">
+<meta property="og:description" content="AI engineering intern at Amicus. Builds full-stack web apps and AI tools, including NFLillion, played by 1,000+ people a day.">
+<meta property="og:image" content="https://alexrchan.dev/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0A0907">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,8 +145,12 @@ h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertic
 .project .side { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
 .links { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; font-family: var(--mono); font-size: 14px; font-weight: 700; }
 .links a { color: var(--amber); }
+.links .priv { color: var(--muted); font-weight: 400; }
 .users { font-family: var(--mono); font-size: 14px; color: var(--muted); }
 .users b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+.other { list-style: none; margin-top: 6px; }
+.other li { padding: 6px 0; }
+.other span { font-family: var(--mono); font-size: 14px; color: var(--muted); margin-left: 10px; }
 .more { padding: 34px 0 0 calc(170px + clamp(24px, 4vw, 56px)); font-style: italic; color: var(--muted); }
 
 /* ── §4 skills: departments ── */
@@ -161,14 +173,7 @@ h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertic
 .course { margin-top: 30px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
 .course ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 10px; font-family: var(--serif); font-size: 17px; color: var(--prose); }
 
-/* ── §6 certifications ── */
-.certs { list-style: none; padding-top: 10px; }
-.certs li { display: grid; grid-template-columns: 170px minmax(0, 1fr) auto; gap: 8px clamp(24px, 4vw, 56px); align-items: baseline;
-  padding: 22px 0; border-bottom: 1px solid var(--rule-soft); }
-.certs .nm { font-size: 22px; } .certs .by { font-style: italic; color: var(--muted); }
-.certs .st { font-family: var(--mono); font-size: 13px; color: var(--muted); }
-
-/* ── §7 contact: office hours ── */
+/* ── §6 contact: office hours ── */
 .contact .big { font-weight: 360; font-size: clamp(30px, 6.4vw, 96px); line-height: 1; letter-spacing: -.03em; margin-top: 40px; overflow-wrap: anywhere; }
 .contact .big a { color: var(--amber-lt); text-decoration: none; }
 .contact p.note { color: var(--prose); margin-top: 22px; max-width: 34em; }
@@ -250,7 +255,7 @@ main, footer { position: relative; z-index: 1; }
   .title { grid-template-columns: 1fr; min-height: auto; padding: 40px 0 84px; }
   .about, .record { grid-template-columns: 1fr; }
   .plate { max-width: 300px; }
-  .entry, .project, .certs li { grid-template-columns: 1fr; }
+  .entry, .project { grid-template-columns: 1fr; }
   .project .side { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 18px; }
   .links { flex-direction: row; gap: 20px; }
   .more { padding-left: 0; }
@@ -317,8 +322,7 @@ main, footer { position: relative; z-index: 1; }
       <li><a href="#projects">§3 Projects</a></li>
       <li><a href="#skills">§4 Skills</a></li>
       <li><a href="#education">§5 Education</a></li>
-      <li><a href="#certifications">§6 Certifications</a></li>
-      <li><a href="#contact">§7 Contact</a></li>
+      <li><a href="#contact">§6 Contact</a></li>
     </ol>
     <details class="contents">
       <summary>Contents <svg class="ic" aria-hidden="true"><use href="#i-down"/></svg></summary>
@@ -328,8 +332,7 @@ main, footer { position: relative; z-index: 1; }
         <li><a href="#projects">§3 Projects</a></li>
         <li><a href="#skills">§4 Skills</a></li>
         <li><a href="#education">§5 Education</a></li>
-        <li><a href="#certifications">§6 Certifications</a></li>
-        <li><a href="#contact">§7 Contact</a></li>
+        <li><a href="#contact">§6 Contact</a></li>
       </ul>
     </details>
   </nav>
@@ -344,8 +347,8 @@ main, footer { position: relative; z-index: 1; }
     <div class="layer">
       <h1 aria-label="Alex Chan"><span class="ln" aria-hidden="true"><span>Alex</span></span><span class="ln" aria-hidden="true"><em><span>Chan</span></em></span></h1>
       <p class="degree"><b>Information Systems</b> · Stony Brook University · Class of 2028</p>
-      <p class="lede">Information Systems student at Stony Brook University building full-stack web apps and AI-powered tools.
-        Passionate about turning complex problems into clean, user-focused products.</p>
+      <p class="lede">AI engineering intern at Amicus and Information Systems student at Stony Brook. I build full-stack
+        web apps and AI tools, including NFLillion, a trivia game 1,000+ people play every day.</p>
       <div class="acts">
         <a class="btn" href="Alex-Chan-Resume.pdf" target="_blank" rel="noopener">Read the resume <svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></a>
         <a class="u" href="#contact">Get in touch</a>
@@ -353,7 +356,7 @@ main, footer { position: relative; z-index: 1; }
       <p class="open"><span class="dot" aria-hidden="true"></span>Open to internship opportunities</p>
     </div>
     <div class="offered layer">
-      <p class="cap">§3 Projects — now offered</p>
+      <p class="cap">§3 Projects</p>
       <ol>
         <li><a href="#nflillion"><span class="code">PRJ 310</span><span class="nm">NFLillion<small>NFL trivia game</small></span><span class="live">LIVE</span></a></li>
         <li><a href="#loki"><span class="code">PRJ 301</span><span class="nm">Loki Analyzer<small>AI fantasy football assistant</small></span><span class="live">LIVE</span></a></li>
@@ -384,9 +387,9 @@ main, footer { position: relative; z-index: 1; }
           and connecting with people to get things done. Currently looking for
           <strong>internship opportunities</strong> where I can grow as a developer.</p>
         <dl class="ledger facts">
-          <div><dt>Projects built</dt><dd>5+</dd></div>
-          <div><dt>Years coding</dt><dd>3</dd></div>
-          <div><dt>Technologies</dt><dd>25+</dd></div>
+          <div><dt>Live projects</dt><dd>5</dd></div>
+          <div><dt>NFLillion daily players</dt><dd>1,000+</dd></div>
+          <div><dt>Freelance clients</dt><dd>3+</dd></div>
           <div><dt>Graduation</dt><dd>2028</dd></div>
         </dl>
       </div>
@@ -411,8 +414,8 @@ main, footer { position: relative; z-index: 1; }
       <div>
         <h3>AI Engineering Intern</h3>
         <div class="org">Amicus</div>
-        <p>Contributed to an AI-powered case-management platform for personal injury law firms, where each case has a customizable workspace for documents, tasks, deadlines and notes. Supported a case-level AI assistant built on Claude (Opus, Sonnet) and ChatGPT that answers questions from each case's documents and history, and an LLM pipeline that automatically matches incoming court filings, emails, calls and texts to the right case.</p>
-        <p class="topics"><b>Topics</b>Claude · LLM Pipelines · AI Assistants</p>
+        <p>Developed Python and PostgreSQL features for an AI case-management platform used by personal injury law firms. Built a RAG-based case assistant on Claude and ChatGPT that answers questions from a case's documents, and co-built a Python LLM pipeline that routes incoming court filings, emails, calls and texts to the right case.</p>
+        <p class="topics"><b>Topics</b>Python · PostgreSQL · RAG · Claude · LLM Pipelines</p>
       </div>
     </article>
     <article class="entry" id="freelance">
@@ -425,48 +428,24 @@ main, footer { position: relative; z-index: 1; }
       </div>
     </article>
     <article class="entry">
-      <div class="when"><span class="code">EXP 2024</span>Summer 2024 and 2025</div>
+      <div class="when"><span class="code">EXP 2023</span>September – November 2023</div>
       <div>
-        <h3>Tennis Instructor</h3>
-        <div class="org">NYJTL</div>
-        <p>Coached youth tennis through NYJTL, a nonprofit bringing free tennis programs to over 25,000 New York City kids annually.</p>
-        <p class="topics"><b>Topics</b>Coaching · Communication · Leadership</p>
+        <h3>Lab Assistant, Clinical Data &amp; Specimen Tracking</h3>
+        <div class="org">NYU Langone Hospital</div>
+        <p>Maintained patient and supply records in Epic's laboratory information system, checking entries for accuracy. Tracked and labeled blood samples in Epic under hospital and regulatory data-handling protocols, kept blood product inventory records current and coordinated timely specimen delivery to clinical staff.</p>
+        <p class="topics"><b>Topics</b>Epic · Clinical Data · Data Accuracy</p>
       </div>
     </article>
     <article class="entry">
-      <div class="when"><span class="code">EXP 2023</span>September - November 2023</div>
+      <div class="when"><span class="code">OTHER</span>2023 – 2025</div>
       <div>
-        <h3>Blood Bank Lab Assistant</h3>
-        <div class="org">NYU Langone Medical Center</div>
-        <p>Supported the blood bank laboratory at NYU Langone, one of New York's top-ranked academic medical centers, processing and tracking blood samples to ensure safe and accurate patient care.</p>
-        <p class="topics"><b>Topics</b>Healthcare · Lab Work · Attention to Detail</p>
-      </div>
-    </article>
-    <article class="entry">
-      <div class="when"><span class="code">VOL</span>Stony Brook University</div>
-      <div>
-        <h3>Volunteer</h3>
-        <div class="org">National Marrow Donor Program</div>
-        <p>Volunteered at National Marrow Donor Program events at Stony Brook University, spreading awareness about bone marrow donation.</p>
-        <p class="topics"><b>Topics</b>Volunteering · Outreach · Community</p>
-      </div>
-    </article>
-    <article class="entry">
-      <div class="when"><span class="code">EXP 2023</span>2023 – 2024</div>
-      <div>
-        <h3>Retail Sales Representative</h3>
-        <div class="org">Adidas</div>
-        <p>Worked the sales floor at Adidas, a global sportswear brand with over 2,000 retail locations worldwide, handling transactions, product inquiries, and day-to-day store operations.</p>
-        <p class="topics"><b>Topics</b>Customer Service · Retail · Teamwork</p>
-      </div>
-    </article>
-    <article class="entry">
-      <div class="when"><span class="code">HACK</span>2025</div>
-      <div>
-        <h3>Hackathon Participant</h3>
-        <div class="org">HackSBU</div>
-        <p>Competed in 24–36 hour hackathons building functional prototypes from scratch. Focused on AI-assisted tools and developer utilities.</p>
-        <p class="topics"><b>Topics</b>Python · Express · Rapid Prototyping</p>
+        <h3>Other experience</h3>
+        <ul class="other">
+          <li>Hackathon Participant, HackSBU <span>2025</span></li>
+          <li>Tennis Instructor, NYJTL <span>Summers 2024 and 2025</span></li>
+          <li>Retail Sales Representative, Adidas <span>2023 – 2024</span></li>
+          <li>Volunteer, National Marrow Donor Program <span>Stony Brook University</span></li>
+        </ul>
       </div>
     </article>
   </section>
@@ -497,12 +476,12 @@ main, footer { position: relative; z-index: 1; }
           <div>
             <h3>NFLillion</h3>
             <div class="tagline">Retro NFL Trivia Game · 1,000+ daily players</div>
-            <p>A 16-bit arcade trivia game, played by over 1,000 people every day: seven prompts, 25 seconds each, and the less obvious your correct answer, the more yards it gains. Every answer moves the ball down a football field and plays back as a replay drawn on canvas. 418 prompts and 18,000+ accepted answers come from cited Wikipedia tables through a Python data pipeline; the server owns the clock and the scoring.</p>
+            <p>A free NFL trivia game that over 1,000 people play every day: seven prompts, 25 seconds each, and the rarer your correct answer, the bigger the play. I wrote a Python pipeline that generates the 418 prompts and 18,000+ accepted answers from cited Wikipedia tables. The server owns the clock and the scoring, and player scores and stats are saved in the browser.</p>
             <p class="topics"><b>Built with</b>Next.js · TypeScript · React · Tailwind CSS · SQLite · Fly.io</p>
           </div>
           <div class="side"><span class="live">LIVE</span>
             <span class="users"><b id="nfl-users">3,108</b> users</span>
-            <div class="links"><a class="u" href="https://nflillion.com" target="_blank" rel="noopener">Live site <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><a class="u" href="https://nflillion.com/numbers" target="_blank" rel="noopener">Stats <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+            <div class="links"><a class="u" href="https://nflillion.com" target="_blank" rel="noopener">Live site <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><a class="u" href="https://nflillion.com/numbers" target="_blank" rel="noopener">Stats <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><span class="priv">Private repo, code on request</span></div></div>
         </div>
       </article>
       <article class="mac-panel" role="tabpanel" id="loki" aria-labelledby="tab-loki">
@@ -512,11 +491,11 @@ main, footer { position: relative; z-index: 1; }
           <div>
             <h3>Loki Analyzer</h3>
             <div class="tagline">AI Fantasy Football Assistant</div>
-            <p>Phone-first web app for ESPN fantasy football leagues: live matchups, lineup and waiver advice, injury news, and a trade analyzer that blends ESPN and Sleeper projections with weekly market trade values, then has Claude make the final call. Multi-user with Google sign-in, encrypted per-user settings and a tool-using AI chat assistant.</p>
+            <p>A phone-first ESPN fantasy football app with live matchups, lineup and waiver advice, and injury news. Its trade analyzer blends ESPN and Sleeper projections and trade values, then has Claude decide, and a tool-using chat assistant runs on the Anthropic Claude API. Supports multiple users with Google sign-in, encrypted per-user settings and a PostgreSQL database.</p>
             <p class="topics"><b>Built with</b>Python · Streamlit · Anthropic Claude · PostgreSQL · Google OAuth · Playwright</p>
           </div>
           <div class="side"><span class="live">LIVE</span>
-            <div class="links"><a class="u" href="https://loki-fantasy-analyzer-ewzmsjdrv93qwsshsufap8.streamlit.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
+            <div class="links"><a class="u" href="https://loki-fantasy-analyzer-ewzmsjdrv93qwsshsufap8.streamlit.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><span class="priv">Private repo, code on request</span></div></div>
         </div>
       </article>
       <article class="mac-panel" role="tabpanel" id="landed" aria-labelledby="tab-landed">
@@ -526,8 +505,8 @@ main, footer { position: relative; z-index: 1; }
           <div>
             <h3>Landed</h3>
             <div class="tagline">Job Application Tracker</div>
-            <p>Full-stack app for tracking a job search from saved posting to offer. Drag-and-drop Kanban board, filterable table and per-application timeline, with company autocomplete and logos, worldwide city suggestions, secure accounts and rate limiting. Covered by unit, integration and end-to-end tests.</p>
-            <p class="topics"><b>Built with</b>Next.js · TypeScript · PostgreSQL · Prisma · Auth.js · Playwright</p>
+            <p>A full-stack job tracker with a drag-and-drop Kanban board and event-sourced status history. An MCP server with OAuth 2.1 lets Claude and ChatGPT read and update your applications, and the Claude API classifies forwarded job emails and updates applications automatically, with undo. Covered by unit, integration and Playwright end-to-end tests, with rate limiting and per-user data isolation.</p>
+            <p class="topics"><b>Built with</b>Next.js · TypeScript · PostgreSQL · Prisma · Claude API · MCP · Playwright</p>
           </div>
           <div class="side"><span class="live">LIVE</span>
             <div class="links"><a class="u" href="https://job-tracker-eight-orcin.vercel.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
@@ -556,7 +535,7 @@ main, footer { position: relative; z-index: 1; }
           <div>
             <h3>ResumeAI</h3>
             <div class="tagline">AI Resume Analyzer</div>
-            <p>Drop in a PDF resume and the job you want, and Claude scores how well you match. Results stream in live: a radar chart, a score dial, rewritten bullet points, a keyword cloud and a report you can export.</p>
+            <p>Upload a PDF resume and a target job, and Claude scores how well they match. Results stream in live as a radar chart, a score dial, rewritten bullets and a keyword cloud, plus a report you can export.</p>
             <p class="topics"><b>Built with</b>Node.js · Express · Anthropic Claude · SSE Streaming · Chart.js</p>
           </div>
           <div class="side"><span class="live">LIVE</span>
@@ -576,13 +555,13 @@ main, footer { position: relative; z-index: 1; }
       <p class="sec-note">Technologies I work with across the stack.</p></div>
     <div class="depts">
       <div class="dept"><h3>Languages</h3>
-        <ul><li>Java</li><li>C</li><li>C++</li><li>Python</li><li>HTML / CSS</li><li>SQL</li><li>TypeScript</li><li>JavaScript</li></ul></div>
+        <ul><li>Java</li><li>Python</li><li>TypeScript</li><li>JavaScript</li><li>SQL</li><li>C</li><li>C++</li><li>HTML / CSS</li></ul></div>
       <div class="dept"><h3>Frameworks &amp; Libraries</h3>
-        <ul><li>Node.js</li><li>Express</li><li>FastAPI</li><li>REST APIs</li><li>Chart.js</li><li>React</li><li>Next.js</li><li>Tailwind CSS</li><li>Prisma</li><li>Auth.js</li><li>OAuth 2.1</li><li>MCP Servers</li><li>AI / LLM Integration</li><li>SSE Streaming</li><li>Automated Testing</li><li>OOP</li></ul></div>
-      <div class="dept"><h3>Tools &amp; Software</h3>
-        <ul><li>Wireshark</li><li>Git / GitHub</li><li>VS Code</li><li>Postman</li><li>PostgreSQL</li><li>Vercel</li><li>Playwright</li><li>Vitest</li><li>Firebase</li><li>Video Editing</li></ul></div>
-      <div class="dept"><h3>Other Skills</h3>
-        <ul><li>Communication</li><li>Leadership</li><li>Customer Service</li><li>Coaching</li><li>Attention to Detail</li><li>Teamwork</li></ul></div>
+        <ul><li>Next.js</li><li>React</li><li>Node.js</li><li>Express</li><li>Prisma</li><li>Tailwind CSS</li><li>FastAPI</li><li>Streamlit</li><li>Chart.js</li><li>Auth.js</li></ul></div>
+      <div class="dept"><h3>Tools &amp; Platforms</h3>
+        <ul><li>PostgreSQL</li><li>SQLite</li><li>Claude API</li><li>Vercel</li><li>Fly.io</li><li>Git / GitHub</li><li>Vitest</li><li>Playwright</li><li>Firebase</li><li>Wireshark</li><li>Epic</li></ul></div>
+      <div class="dept"><h3>Concepts</h3>
+        <ul><li>REST APIs</li><li>OAuth 2.1</li><li>MCP Servers</li><li>AI / LLM Integration</li><li>RAG</li><li>Automated Testing</li><li>OOP</li><li>SSE Streaming</li></ul></div>
     </div>
   </section>
 
@@ -605,22 +584,10 @@ main, footer { position: relative; z-index: 1; }
     </div>
   </section>
 
-  <!-- §6 certifications -->
-  <section id="certifications" aria-labelledby="cert-h">
-    <span class="mark" aria-hidden="true">§6</span>
-    <div class="sec-head"><h2 id="cert-h"><span class="sym">§6</span>Continuous <em>learning</em></h2>
-      <p class="sec-note">Certifications I'm actively working toward.</p></div>
-    <ol class="certs">
-      <li><span class="code">CRT</span><span><span class="nm">AWS Cloud Practitioner</span> <span class="by">— Amazon Web Services</span></span><span class="st">Coming soon</span></li>
-      <li><span class="code">CRT</span><span><span class="nm">Google IT Support</span> <span class="by">— Google / Coursera</span></span><span class="st">Coming soon</span></li>
-      <li><span class="code">CRT</span><span><span class="nm">DeepLearning.AI Specialization</span> <span class="by">— DeepLearning.AI / Coursera</span></span><span class="st">Coming soon</span></li>
-    </ol>
-  </section>
-
-  <!-- §7 contact -->
+  <!-- §6 contact -->
   <section id="contact" aria-labelledby="contact-h">
-    <span class="mark" aria-hidden="true">§7</span>
-    <div class="sec-head"><h2 id="contact-h"><span class="sym">§7</span>Let's work <em>together</em></h2></div>
+    <span class="mark" aria-hidden="true">§6</span>
+    <div class="sec-head"><h2 id="contact-h"><span class="sym">§6</span>Let's work <em>together</em></h2></div>
     <div class="contact">
       <p class="big"><a href="mailto:alexrc06nyc@gmail.com"><span class="u">alexrc06nyc@gmail.com</span></a></p>
       <p class="note">Open to internships, collaborative projects, and conversations about software and AI.</p>
