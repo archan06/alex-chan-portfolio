@@ -10,9 +10,9 @@
 try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
 <style>
-:root { color-scheme: light; --bg: #fafaf8; --ink: #1a1a18; --muted: #6e6e68; --line: #e6e5e0; --accent: #2f5d50; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --bg: #121211; --ink: #ecebe6; --muted: #9a9a93; --line: #2a2a27; --accent: #8fbfae; } }
-:root[data-theme="dark"] { color-scheme: dark; --bg: #121211; --ink: #ecebe6; --muted: #9a9a93; --line: #2a2a27; --accent: #8fbfae; }
+:root { color-scheme: light; --bg: #faf6f0; --ink: #1c1713; --muted: #7a6c5f; --line: #ebe2d6; --accent: #a8521a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --bg: #14110e; --ink: #f0e9df; --muted: #a39484; --line: #2c241d; --accent: #e8964a; } }
+:root[data-theme="dark"] { color-scheme: dark; --bg: #14110e; --ink: #f0e9df; --muted: #a39484; --line: #2c241d; --accent: #e8964a; }
 body { margin: 0; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; background: var(--bg); color: var(--ink);
   font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
 main { max-width: 640px; padding: 24px; }

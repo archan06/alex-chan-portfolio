@@ -27,12 +27,12 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) root.classList.add(
 <style>
 :root {
   color-scheme: light;
-  --bg: #fafaf8; --ink: #1a1a18; --muted: #6e6e68; --line: #e6e5e0; --accent: #2f5d50; --panel: #f0efeb;
+  --bg: #faf6f0; --ink: #1c1713; --muted: #7a6c5f; --line: #ebe2d6; --accent: #a8521a; --panel: #f3ece2;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) { color-scheme: dark; --bg: #121211; --ink: #ecebe6; --muted: #9a9a93; --line: #2a2a27; --accent: #8fbfae; --panel: #1c1c1a; }
+  :root:not([data-theme]) { color-scheme: dark; --bg: #14110e; --ink: #f0e9df; --muted: #a39484; --line: #2c241d; --accent: #e8964a; --panel: #1d1813; }
 }
-:root[data-theme="dark"] { color-scheme: dark; --bg: #121211; --ink: #ecebe6; --muted: #9a9a93; --line: #2a2a27; --accent: #8fbfae; --panel: #1c1c1a; }
+:root[data-theme="dark"] { color-scheme: dark; --bg: #14110e; --ink: #f0e9df; --muted: #a39484; --line: #2c241d; --accent: #e8964a; --panel: #1d1813; }
 * { box-sizing: border-box; }
 .theming *:not(.theme, .theme *), .theming *::after { transition: color .7s ease, background-color .7s ease, border-color .7s ease, text-decoration-color .7s ease, box-shadow .7s ease !important; }
 body {
