@@ -13,6 +13,8 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <script>
 // Apply the saved theme before first paint so the page doesn't flash.
 {
@@ -32,6 +34,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) root.classList.add(
 }
 :root[data-theme="dark"] { color-scheme: dark; --bg: #121211; --ink: #ecebe6; --muted: #9a9a93; --line: #2a2a27; --accent: #8fbfae; --panel: #1c1c1a; }
 * { box-sizing: border-box; }
+.theming *:not(.theme, .theme *), .theming *::after { transition: color .7s ease, background-color .7s ease, border-color .7s ease, text-decoration-color .7s ease, box-shadow .7s ease !important; }
 body {
   transition: background-color .7s ease, color .7s ease;
   margin: 0; background: var(--bg); color: var(--ink);
@@ -114,6 +117,12 @@ ul.plain span.logo svg { width: 13px; height: 13px; }
 .lights i:nth-child(3) { background: #28c840; }
 .url { flex: 1; text-align: center; margin-right: 46px; font-size: 0.75rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .shot img { display: block; width: 100%; height: auto; }
+.shot { position: relative; transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.shot::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s ease;
+  background: radial-gradient(420px circle at var(--sx, 50%) var(--sy, 50%), rgb(255 255 255 / .16), transparent 60%); }
+.shot.tilt { transition: transform .12s linear; }
+.shot.tilt::after { opacity: 1; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--muted); }
 @media (max-width: 520px) {
   main { padding-top: 56px; }
@@ -142,7 +151,7 @@ footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line);
     <p class="lede">Software engineering intern at Amicus and Information Systems student at Stony Brook. I build full-stack
       web apps and AI tools, including NFLillion, a trivia game 1,000+ people play every day.</p>
     <div class="links">
-      <a href="mailto:alexrc06nyc@gmail.com"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span class="flip"><span data-t="Email">Email</span></span></a>
+      <a href="mailto:alexrc06nyc@gmail.com" title="Click to copy"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span class="flip"><span data-t="Email">Email</span></span></a>
       <a href="https://github.com/archan06" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg><span class="flip"><span data-t="GitHub">GitHub</span></span></a>
       <a href="https://www.linkedin.com/in/alexrchan/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-linkedin"/></svg><span class="flip"><span data-t="LinkedIn">LinkedIn</span></span></a>
       <a href="Alex-Chan-Resume.pdf" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg><span class="flip"><span data-t="Resume">Resume</span></span></a>
@@ -249,23 +258,21 @@ footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line);
   <section id="contact" aria-labelledby="contact-h">
     <h2 id="contact-h">Contact</h2>
     <p>Open to internships, collaborative projects, and conversations about software and AI.
-      Reach me at <a href="mailto:alexrc06nyc@gmail.com">alexrc06nyc@gmail.com</a>.</p>
+      Reach me at <a href="mailto:alexrc06nyc@gmail.com" title="Click to copy">alexrc06nyc@gmail.com</a>.</p>
   </section>
 
   <footer>Alex Chan · 2026</footer>
 </main>
+<p class="sr" aria-live="polite" id="announce"></p>
 
-<script>
-// NFLillion's live all-time user count; the number in the HTML stays if the request fails.
-fetch("https://nflillion.com/api/numbers").then((r) => r.ok ? r.json() : null).then((t) => {
-  if (t && Number.isFinite(t.users)) document.getElementById("nfl-users").textContent = t.users.toLocaleString("en-US");
-}).catch(() => {});
-</script>
 <script>
 const root = document.documentElement;
 const motion = root.classList.contains("motion");
 
+let themingTimer;
 document.querySelector(".theme").addEventListener("click", () => {
+  root.classList.add("theming"); clearTimeout(themingTimer);
+  themingTimer = setTimeout(() => root.classList.remove("theming"), 800);
   root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
   try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
 });
@@ -281,6 +288,63 @@ if (motion) {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }), { rootMargin: "0px 0px -10% 0px" });
   document.querySelectorAll("main section").forEach((s) => io.observe(s));
+
+  // project windows tilt a few degrees toward the cursor, with a shine that follows it
+  if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    for (const shot of document.querySelectorAll(".shot")) {
+      shot.addEventListener("pointermove", (e) => {
+        const r = shot.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        shot.classList.add("tilt");
+        shot.style.setProperty("--ry", `${((x - 0.5) * 8).toFixed(2)}deg`);
+        shot.style.setProperty("--rx", `${((0.5 - y) * 6).toFixed(2)}deg`);
+        shot.style.setProperty("--sx", `${(x * 100).toFixed(1)}%`);
+        shot.style.setProperty("--sy", `${(y * 100).toFixed(1)}%`);
+      });
+      shot.addEventListener("pointerleave", () => { shot.classList.remove("tilt"); shot.style.setProperty("--rx", "0deg"); shot.style.setProperty("--ry", "0deg"); });
+    }
+  }
+}
+
+// NFLillion users: rolls up when scrolled into view; the live count replaces the fallback in the HTML
+const users = document.getElementById("nfl-users");
+let target = Number(users.textContent.replace(/,/g, "")), shown = motion ? 0 : target, seen = !motion, raf = 0;
+const fmt = (n) => Math.round(n).toLocaleString("en-US");
+const roll = () => {
+  if (!seen) return;
+  cancelAnimationFrame(raf);
+  const from = shown, start = performance.now(), dur = from ? 700 : 1400;
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / dur);
+    shown = from + (target - from) * (1 - (1 - t) ** 3);
+    users.textContent = fmt(shown);
+    if (t < 1) raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+};
+if (motion) {
+  users.textContent = "0";
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { seen = true; roll(); o.disconnect(); } }, { threshold: 1 }).observe(users);
+}
+fetch("https://nflillion.com/api/numbers").then((r) => r.ok ? r.json() : null).then((t) => {
+  if (!t || !Number.isFinite(t.users)) return;
+  target = t.users;
+  motion ? roll() : (users.textContent = fmt(target));
+}).catch(() => {});
+
+// email links copy the address and say so; if copying is blocked, the mail app opens as usual
+const announce = document.getElementById("announce");
+for (const a of document.querySelectorAll('a[href^="mailto:"]')) {
+  a.addEventListener("click", async (e) => {
+    if (!navigator.clipboard) return;
+    e.preventDefault();
+    try { await navigator.clipboard.writeText(a.href.slice(7)); } catch { location.href = a.href; return; }
+    const label = a.querySelector(".flip > span") || a;
+    if (!label.dataset.orig) label.dataset.orig = label.textContent;
+    label.textContent = "Copied ✓"; if (label !== a) label.dataset.t = "Copied ✓";
+    announce.textContent = "Email address copied";
+    clearTimeout(a.copyTimer);
+    a.copyTimer = setTimeout(() => { label.textContent = label.dataset.orig; if (label !== a) label.dataset.t = label.dataset.orig; announce.textContent = ""; }, 1800);
+  });
 }
 
 </script>
