@@ -98,15 +98,6 @@ a:hover .flip > span, a:focus-visible .flip > span { transform: translateY(-100%
 .motion section { opacity: 0; filter: blur(6px); transform: translateY(14px); transition: opacity .8s ease, filter .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
 .motion section.in { opacity: 1; filter: none; transform: none; }
 
-/* floating Mac-window preview (after "Project Showcase"); wide screens with a mouse only */
-.float { display: none; }
-@media (hover: hover) and (pointer: fine) and (min-width: 1120px) {
-  #projects .item .shot { display: none; }
-  .float { display: block; position: fixed; top: 0; left: calc(50% + 320px + 32px); width: min(380px, calc(50% - 320px - 64px)); margin: 0;
-    pointer-events: none; z-index: 5; opacity: 0; transform: translateY(var(--y, 0px)) scale(.96); transition: opacity .25s ease, scale .25s ease; }
-  .float.on { opacity: 1; scale: 1.04; }
-  #projects .item { cursor: default; }
-}
 .logo { width: 32px; height: 32px; border-radius: 8px; background: #fff; border: 1px solid var(--line); object-fit: contain; padding: 3px; flex: none; }
 span.logo { display: grid; place-items: center; background: var(--panel); color: var(--muted); padding: 0; }
 span.logo svg { width: 16px; height: 16px; }
@@ -262,7 +253,6 @@ footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line);
   </section>
 
   <footer>Alex Chan · 2026</footer>
-  <figure class="float shot" aria-hidden="true"><div class="shot-bar"><span class="lights"><i></i><i></i><i></i></span><span class="url"></span></div><img alt="" width="1440" height="900"></figure>
 </main>
 
 <script>
@@ -293,36 +283,6 @@ if (motion) {
   document.querySelectorAll("main section").forEach((s) => io.observe(s));
 }
 
-// floating project preview: follows the cursor's height, eased (lerp)
-const float = document.querySelector(".float");
-if (getComputedStyle(float).display !== "none") {
-  const img = float.querySelector("img"), url = float.querySelector(".url");
-  let target = 0, y = 0, raf = 0;
-  const tick = () => {
-    y += (target - y) * (motion ? 0.14 : 1);
-    float.style.setProperty("--y", `${y.toFixed(1)}px`);
-    raf = Math.abs(target - y) > 0.5 ? requestAnimationFrame(tick) : 0;
-  };
-  const aim = (clientY) => {
-    target = Math.max(16, Math.min(innerHeight - float.offsetHeight - 16, clientY - float.offsetHeight / 2));
-    if (!raf) raf = requestAnimationFrame(tick);
-  };
-  for (const item of document.querySelectorAll("#projects .item")) {
-    const shot = item.querySelector(".shot");
-    const show = (clientY) => {
-      const src = shot.querySelector("img");
-      if (img.getAttribute("src") !== src.getAttribute("src")) { img.src = src.getAttribute("src"); img.alt = src.alt; }
-      url.textContent = shot.querySelector(".url").textContent;
-      if (!float.classList.contains("on")) { y = clientY - float.offsetHeight / 2; }
-      float.classList.add("on"); aim(clientY);
-    };
-    item.addEventListener("mouseenter", (e) => show(e.clientY));
-    item.addEventListener("mousemove", (e) => aim(e.clientY));
-    item.addEventListener("mouseleave", () => float.classList.remove("on"));
-    item.addEventListener("focusin", () => show(item.getBoundingClientRect().top + 80));
-    item.addEventListener("focusout", () => float.classList.remove("on"));
-  }
-}
 </script>
 </body>
 </html>
