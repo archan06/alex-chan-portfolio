@@ -123,6 +123,10 @@ ul.plain span.logo svg { width: 13px; height: 13px; }
 .shot.tilt { transition: transform .12s linear; }
 .shot.tilt::after { opacity: 1; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.about { display: flex; gap: 28px; align-items: flex-start; }
+.about p { margin: 0; }
+.me { width: 168px; height: auto; aspect-ratio: 3 / 4; object-fit: cover; flex: none; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); }
+@media (max-width: 520px) { .about { flex-direction: column; gap: 20px; } .me { width: 150px; } }
 footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--muted); }
 @media (max-width: 520px) {
   main { padding-top: 56px; }
@@ -161,11 +165,14 @@ footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line);
 
   <section id="about" aria-labelledby="about-h">
     <h2 id="about-h">About</h2>
+    <div class="about">
+    <img class="me" src="headshot.jpg" alt="Alex Chan" width="1086" height="1448" loading="lazy" decoding="async">
     <p>I'm a junior studying Information Systems at Stony Brook University and Vice President External of
       Lambda Phi Epsilon. This past summer I was a Software Engineering Intern at Amicus, building LLM features for a
       legal case-management platform, and I build websites for small businesses on the side, from idea to launch.
       Coaching youth tennis and working in a hospital lab and in retail taught me to communicate clearly and stay
       detail-oriented under pressure. I'm looking for internships where I can keep shipping real products.</p>
+    </div>
   </section>
 
   <section id="experience" aria-labelledby="exp-h">
