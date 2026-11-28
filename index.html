@@ -13,567 +13,170 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0A0907">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,300..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
 <style>
-/* The Course Bulletin: Alex's work set as his own course catalogue.
-   Palette law: amber marks links and actions only, rose marks LIVE only. */
 :root {
-  --bg: #0A0907; --bg-2: #110E0A; --plate: #161210; --plate-2: #1E1915;
-  --amber: #F59E0B; --amber-lt: #FCD34D; --amber-dim: #92611B;
-  --rose: #F43F5E; --rose-lt: #FDA4AF;
-  --text: #F5F0E8; --prose: #E8DFD0; --muted: #A89880; --dim: #8A7C68;  /* dim text still clears 4.5:1 on the ground */
-  --rule: rgba(245,158,11,.36); --rule-soft: rgba(245,158,11,.16);
-  --serif: 'Source Serif 4', 'Iowan Old Style', Georgia, serif;
-  --mono: 'Courier Prime', 'Courier New', monospace;
-  --gutter: clamp(20px, 4.4vw, 64px);
-  --margin: clamp(0px, 7vw, 120px);   /* the left margin the reading rule runs down */
-  --head: 52px;
+  color-scheme: light dark;
+  --bg: #fafaf8; --ink: #1a1a18; --muted: #6e6e68; --line: #e6e5e0; --accent: #2f5d50;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--head) + 24px); background: var(--bg);
-  scrollbar-color: var(--amber-dim) var(--bg); }
-body { background: var(--bg); color: var(--text); font-family: var(--serif); font-size: 18px; line-height: 1.6;
-  font-optical-sizing: auto; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-::selection { background: var(--amber); color: var(--bg); }
-a { color: inherit; }
-img { display: block; max-width: 100%; }
-:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.sr:focus { position: fixed; left: 12px; top: 12px; width: auto; height: auto; clip: auto; z-index: 60; background: var(--amber);
-  color: var(--bg); padding: 8px 12px; font-family: var(--mono); }
-
-/* 21st.dev "Underline Link", ported: the underline draws in from the left and follows line breaks. */
-.u { text-decoration: none; background: linear-gradient(currentColor, currentColor) no-repeat 100% 100% / 0% 1px;
-  -webkit-box-decoration-break: clone; box-decoration-break: clone; padding-bottom: 1px;
-  transition: background-size .3s cubic-bezier(.16,1,.3,1); }
-.ic { width: .9em; height: .9em; vertical-align: -.08em; flex: none; }
-.u:hover, .u:focus-visible, a:hover > .u { background-size: 100% 1px; background-position: 0% 100%; }
-
-/* ── running head: the bulletin's header line, with the contents as navigation ── */
-.head { position: sticky; top: 0; z-index: 40; height: var(--head); display: flex; align-items: center; justify-content: space-between;
-  gap: 24px; padding: 0 var(--gutter); background: rgba(10,9,7,.94);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule-soft);
-  font-family: var(--mono); font-size: 13px; color: var(--muted); }
-.head::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--amber); }
-.head .who { color: var(--text); text-decoration: none; letter-spacing: .04em; white-space: nowrap; }
-.head .who b { color: var(--amber); font-weight: 400; }
-.toc { display: flex; gap: 18px; list-style: none; }
-.toc a { text-decoration: none; color: var(--muted); padding: 6px 0; position: relative; white-space: nowrap; transition: color .2s; }
-.toc a:hover { color: var(--text); }
-.toc a[aria-current="true"] { color: var(--amber); }
-.toc a[aria-current="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: var(--amber); }
-.contents { display: none; }
-.contents summary { list-style: none; cursor: pointer; color: var(--amber); padding: 12px 0; }
-.contents summary::-webkit-details-marker { display: none; }
-
-/* ── page frame: the reading rule runs down the left margin ── */
-main { position: relative; padding: 0 var(--gutter) 0 calc(var(--gutter) + var(--margin)); }
-.thread { position: absolute; top: 0; bottom: 0; left: calc(var(--gutter) + var(--margin) * .45); width: 1px; background: var(--rule-soft); }
-.thread i { position: absolute; left: -.5px; width: 2px; top: 0; bottom: 0; background: var(--amber); transform-origin: top; }
-section { position: relative; padding: clamp(72px, 10vw, 136px) 0 0; }
-.mark { position: absolute; left: calc(var(--margin) * -.55 - 9px); top: calc(clamp(72px, 10vw, 136px) + 10px); font-family: var(--mono);
-  font-size: 15px; color: var(--dim); background: var(--bg); padding: 4px 3px; transition: color .3s; }
-.mark.on { color: var(--amber); }
-.sec-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
-h2 { font-weight: 400; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -.015em; text-wrap: balance; }
-h2 em { font-style: normal; }  /* no single-word accents in headings */
-h2 .sym { font-family: var(--mono); font-size: 15px; color: var(--muted); vertical-align: .9em; margin-right: 14px; letter-spacing: 0; }
-.sec-note { font-family: var(--mono); font-size: 13px; color: var(--muted); text-align: right; max-width: 34ch; }
-
-/* ── title page ── */
-.title { min-height: calc(100svh - var(--head)); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 72px);
-  align-content: center; align-items: center; padding: clamp(40px, 6vh, 72px) 0 84px; position: relative; }
-.title h1 { font-weight: 360; font-size: clamp(76px, 11.6vw, 176px); line-height: .9; letter-spacing: -.035em; }
-.title h1 em { font-style: italic; color: var(--amber-lt); font-weight: 340; }
-.title h1 .ln { display: block; overflow: hidden; padding-bottom: .06em; }
-.title h1 .ln span { display: inline-block; }
-.degree { font-family: var(--mono); font-size: 14px; color: var(--muted); margin: 24px 0 0; letter-spacing: .02em; }
-.degree b { color: var(--text); font-weight: 400; }
-.lede { font-size: clamp(19px, 1.6vw, 22px); line-height: 1.55; color: var(--prose); max-width: 34em; margin-top: 20px; }
-.acts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 30px; margin-top: 32px; font-family: var(--mono); font-size: 15px; font-weight: 700; }
-.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--amber); color: var(--bg); text-decoration: none; padding: 14px 22px;
-  transition: background .2s; }
-.btn:hover { background: var(--amber-lt); }
-.acts .u { color: var(--amber); }
-.social { display: flex; gap: 10px; }
-.social a { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--rule); border-radius: 50%; color: var(--prose);
-  transition: color .2s, border-color .2s; }
-.social a:hover, .social a:focus-visible { color: var(--amber); border-color: var(--amber); }
-.social svg { width: 18px; height: 18px; }
-.open { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 13px; color: var(--muted); margin-top: 28px; }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text); }
-.offered .cap { font-family: var(--mono); font-size: 13px; color: var(--muted); letter-spacing: .04em;
-  padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
-.offered ol { list-style: none; }
-.offered li a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: baseline; padding: 17px 0;
-  border-bottom: 1px solid var(--rule-soft); text-decoration: none; }
-.code { font-family: var(--mono); font-size: 14px; color: var(--muted); }
-.offered .nm { font-size: 23px; line-height: 1.2; font-variation-settings: "wght" 400; transition: font-variation-settings .35s cubic-bezier(.16,1,.3,1); }
-.offered .nm small { display: block; font-size: 15px; font-style: italic; color: var(--muted); margin-top: 3px; font-variation-settings: "wght" 400; }
-.offered li a:hover .nm, .offered li a:focus-visible .nm { font-variation-settings: "wght" 640; }
-.live { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: .08em; color: var(--rose); white-space: nowrap;
-  display: inline-flex; align-items: center; gap: 7px; }
-.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--rose); }
-.folio { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; font-family: var(--mono);
-  font-size: 13px; color: var(--dim); padding: 12px 0; border-top: 1px solid var(--rule-soft); }
-
-/* ── §1 about ── */
-.about { display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding-top: 40px; }
-.about p { color: var(--prose); max-width: 38em; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.6; }
-.about p + p { margin-top: 1.1em; }
-.about strong { color: var(--text); font-weight: 600; }
-.plate figure { border: 1px solid var(--rule-soft); background: var(--plate); padding: 10px; }
-.plate img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.plate figcaption { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 10px; }
-.facts { margin-top: 32px; display: flex; gap: clamp(36px, 6vw, 80px); padding-top: 20px; border-top: 1px solid var(--rule); max-width: 38em; }
-.ledger.facts div { display: flex; flex-direction: column-reverse; align-items: flex-start; justify-content: flex-end; gap: 6px; padding: 0; border: 0; }
-.ledger.facts dd { font: 400 clamp(36px, 3.6vw, 48px)/1 var(--serif); color: var(--text); text-align: left; }
-
-/* ── catalogue entries (experience, projects) ── */
-.entry { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 8px clamp(24px, 4vw, 56px); padding: 34px 0;
-  border-bottom: 1px solid var(--rule-soft); }
-.entry p a { color: var(--amber); }
-.entry .when { font-family: var(--mono); font-size: 14px; color: var(--muted); line-height: 1.5; }
-.entry h3 { font-weight: 420; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; letter-spacing: -.01em;
-  font-variation-settings: "wght" 420; transition: font-variation-settings .35s cubic-bezier(.16,1,.3,1); }
-.entry:hover h3 { font-variation-settings: "wght" 600; }
-.entry .org { font-style: italic; color: var(--muted); margin-top: 2px; }
-.entry p { color: var(--prose); margin-top: 12px; max-width: 66ch; }
-.topics { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-top: 14px; }
-.topics b { color: var(--dim); font-weight: 400; margin-right: 8px; }
-/* projects get the full width, one entry each */
-.project { grid-template-columns: 170px minmax(0, 1fr) auto; padding: 44px 0; }
-.project h3 { font-size: clamp(30px, 3.4vw, 46px); }
-.project .tagline { font-style: italic; color: var(--muted); margin-top: 4px; font-size: 19px; }
-.project .side { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
-.links { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; font-family: var(--mono); font-size: 14px; font-weight: 700; }
-.links a { color: var(--amber); }
-.links .priv { color: var(--muted); font-weight: 400; }
-.users { font-family: var(--mono); font-size: 14px; color: var(--muted); }
-.users b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
-.other { list-style: none; margin-top: 6px; }
-.other li { padding: 6px 0; }
-.other li > span:last-child { font-family: var(--mono); font-size: 14px; color: var(--muted); margin-left: 10px; }
-
-/* ── §4 skills: departments ── */
-.depts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.dept { padding: 30px 0; border-bottom: 1px solid var(--rule-soft); }
-.dept:nth-child(odd) { padding-right: clamp(20px, 3vw, 44px); border-right: 1px solid var(--rule-soft); }
-.dept:nth-child(even) { padding-left: clamp(20px, 3vw, 44px); }
-.dept h3 { font-weight: 420; font-size: 24px; display: flex; gap: 14px; align-items: baseline; }
-.dept ul { list-style: none; margin-top: 14px; columns: 2; column-gap: 24px; }
-.dept li { color: var(--prose); padding: 3px 0; break-inside: avoid; }
-
-/* ── §5 education: the record ── */
-.record { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 72px); padding-top: 34px; }
-.record h3 { font-weight: 420; font-size: clamp(28px, 3vw, 40px); line-height: 1.1; }
-.record .deg { margin-top: 10px; font-size: 20px; color: var(--prose); }
-.record .deg i { color: var(--muted); }
-.ledger { font-family: var(--mono); font-size: 14px; }
-.ledger div { display: flex; justify-content: space-between; gap: 18px; padding: 11px 0; border-bottom: 1px solid var(--rule-soft); }
-.ledger dt { color: var(--muted); } .ledger dd { color: var(--text); text-align: right; }
-.course { margin-top: 30px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
-.course ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 10px; font-family: var(--serif); font-size: 17px; color: var(--prose); }
-
-/* ── §6 contact: office hours ── */
-.contact .big { font-weight: 360; font-size: clamp(30px, 6.4vw, 96px); line-height: 1; letter-spacing: -.03em; margin-top: 40px; overflow-wrap: anywhere; }
-.contact .big a { color: var(--amber-lt); text-decoration: none; }
-.contact p.note { color: var(--prose); margin-top: 22px; max-width: 34em; }
-.hours { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 48px; border-top: 1px solid var(--rule); }
-.hours a { display: flex; flex-direction: column; gap: 4px; padding: 18px 16px 18px 0; text-decoration: none; }
-.hours a + a { border-left: 1px solid var(--rule-soft); padding-left: 16px; }
-.hours span { font-family: var(--mono); font-size: 13px; color: var(--muted); }
-.hours b { font-weight: 420; font-size: 21px; color: var(--amber); }
-.hours a:hover b { color: var(--amber-lt); }
-footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 90px; padding: 16px 0 28px;
-  border-top: 2px solid var(--amber); font-family: var(--mono); font-size: 13px; color: var(--dim); }
-
-
-
-/* ── title page: ruled paper behind the name ── */
-.title { isolation: isolate; }
-.title > .layer { position: relative; z-index: 1; }
-.embers { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }  /* behind the whole page */
-main, footer { position: relative; z-index: 1; }
-.depth { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-.depth hr { position: absolute; left: 0; right: 0; border: 0; border-top: 1px solid rgba(245,158,11,.08); }
-.depth hr:nth-of-type(1) { top: 22%; } .depth hr:nth-of-type(2) { top: 49%; } .depth hr:nth-of-type(3) { top: 76%; }
-.big-s { position: absolute; right: 1vw; top: 46%; transform: translateY(-50%); font-family: var(--serif); font-weight: 300;
-  font-size: min(80vh, 50vw); line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(245,158,11,.16); user-select: none; }
-
-/* ── §3 projects: every project listed, each app shown in its own small browser window; sides alternate ── */
-.projs { margin-top: 48px; display: grid; gap: clamp(56px, 8vw, 112px); }
-.proj { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: center;
-  scroll-margin-top: calc(var(--head) + 24px); }
-.proj:nth-child(even) .shot { order: 2; }
-.shot { margin: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--bg-2);
-  box-shadow: 0 34px 70px -28px rgba(0,0,0,.85); transition: transform .4s cubic-bezier(.16,1,.3,1), border-color .4s; }
-.proj:hover .shot { transform: translateY(-4px); border-color: var(--amber); }
-.shot-bar { display: flex; align-items: center; gap: 14px; padding: 9px 12px; background: #1A1510; border-bottom: 1px solid var(--rule-soft);
-  font: 400 12px var(--mono); color: var(--muted); white-space: nowrap; overflow: hidden; }
-.lights { display: flex; gap: 6px; flex: none; }
-.lights i { width: 10px; height: 10px; border-radius: 50%; }
-.lights i:nth-child(1) { background: #E0574F; } .lights i:nth-child(2) { background: #D9A33A; } .lights i:nth-child(3) { background: #3FA34D; }
-.shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; }
-.proj .entry { grid-template-columns: 1fr; gap: 6px; border-bottom: 0; padding: 0; }
-.proj .entry .when { display: flex; gap: 12px; flex-wrap: wrap; }
-.proj .project h3 { font-size: clamp(28px, 3vw, 40px); }
-.proj .side { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: 10px; }
-.proj .links { flex-direction: row; flex-wrap: wrap; gap: 18px; }
-@media (max-width: 760px) {
-  .proj { grid-template-columns: 1fr; gap: 22px; }
-  .proj:nth-child(even) .shot { order: 0; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #121211; --ink: #ecebe6; --muted: #9a9a93; --line: #2a2a27; --accent: #8fbfae; }
 }
-
-/* experience logos: a small paper tile in the date column */
-.logo { width: 48px; height: 48px; margin-bottom: 14px; border-radius: 10px; background: #F4EFE6; padding: 7px; object-fit: contain;
-  display: grid; place-items: center; color: #1A1510; }
-.logo svg { width: 26px; height: 26px; }
-.logo.full { padding: 0; }  /* logos that are already a filled square */
-.other img, .other .mini { width: 22px; height: 22px; border-radius: 5px; background: #F4EFE6; padding: 3px; vertical-align: -5px; margin-right: 10px;
-  display: inline-grid; place-items: center; color: #1A1510; object-fit: contain; }
-.other .mini svg { width: 14px; height: 14px; }
-
-/* the full contents line needs about 1180px; below that it folds into a Contents menu */
-@media (max-width: 1180px) {
-  .toc { display: none; }
-  .contents { display: block; position: relative; }
-  .contents ul { position: absolute; right: 0; top: calc(100% + 1px); background: var(--bg-2); border: 1px solid var(--rule);
-    list-style: none; padding: 6px 0; min-width: 220px; }
-  .contents a { display: block; padding: 12px 18px; text-decoration: none; color: var(--text); }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
-/* ── phones and narrow windows ── */
-@media (max-width: 960px) {
-  :root { --margin: 0px; --head: 50px; }
-  .head .who .yr, .head .who b { display: none; }
-  .thread { left: calc(var(--gutter) / 2 - 1px); }
-  .mark { display: none; }
-  main { padding-left: calc(var(--gutter) + 6px); }
-  .title { grid-template-columns: 1fr; min-height: auto; padding: 40px 0 84px; }
-  .about, .record { grid-template-columns: 1fr; }
-  .plate { max-width: 240px; }
-  .entry, .project { grid-template-columns: 1fr; }
-  .project .side { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 18px; }
-  .links { flex-direction: row; gap: 20px; }
-  .more { padding-left: 0; }
-  .depts { grid-template-columns: 1fr; }
-  .dept:nth-child(odd) { padding-right: 0; border-right: 0; } .dept:nth-child(even) { padding-left: 0; }
-  .hours { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hours a:nth-child(3) { border-left: 0; padding-left: 0; }
-  .hours a:nth-child(n+3) { border-top: 1px solid var(--rule-soft); }
-  .sec-head { grid-template-columns: 1fr; } .sec-note { text-align: left; }
-}
-@media (max-width: 600px) {
-  .big-s { font-size: 120vw; right: -18vw; }
-}
-@media (max-width: 480px) {
-  .title { padding: 26px 0 70px; gap: 26px; }
-  .title h1 { font-size: 72px; }
-  .degree { font-size: 12px; letter-spacing: 0; margin-top: 16px; }
-  .lede { font-size: 17px; margin-top: 14px; }
-  .acts { margin-top: 20px; font-size: 14px; } .btn { padding: 12px 18px; }
-  .open { margin-top: 18px; }
-}
-@media (max-width: 420px) { .dept ul { columns: 1; } body { font-size: 17px; } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
-/* Motion is all CSS: a quick title intro, a lift on project hover, and the reading rule
-   drawn by scroll where scroll-driven animations exist (elsewhere it simply shows full). */
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes rise { from { transform: translateY(110%); } }
-  @keyframes fade-up { from { opacity: 0; transform: translateY(10px); } }
-  .title h1 .ln span { animation: rise .6s cubic-bezier(.16,1,.3,1) backwards; }
-  .title h1 .ln + .ln span { animation-delay: .07s; }
-  .degree, .lede, .acts, .open, .offered { animation: fade-up .45s cubic-bezier(.16,1,.3,1) .15s backwards; }
-  @supports (animation-timeline: scroll()) {
-    @keyframes draw { from { transform: scaleY(0); } }
-    .thread i { animation: draw linear both; animation-timeline: scroll(root); }
-  }
+main { max-width: 640px; margin: 0 auto; padding: 96px 24px 64px; }
+h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+h2 { font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 24px; }
+h3 { font-size: 1rem; font-weight: 600; margin: 0; }
+p { margin: 0 0 12px; }
+section { margin-top: 72px; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; transition: text-decoration-color .15s; }
+a:hover { text-decoration-color: currentColor; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.muted { color: var(--muted); }
+.sub { color: var(--muted); margin-top: 4px; }
+.lede { margin-top: 24px; }
+.links { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 20px; }
+.open { margin-top: 20px; font-size: 0.9rem; color: var(--accent); }
+.item { margin-bottom: 36px; }
+.item:last-child { margin-bottom: 0; }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.row .muted { font-size: 0.875rem; white-space: nowrap; }
+.item p { margin-top: 8px; }
+.tags { font-size: 0.875rem; color: var(--muted); }
+.item .links { margin-top: 8px; gap: 4px 16px; font-size: 0.9rem; }
+ul.plain { list-style: none; padding: 0; margin: 0; }
+ul.plain li { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; }
+ul.plain li span { color: var(--muted); font-size: 0.875rem; white-space: nowrap; }
+dl { margin: 0; display: grid; grid-template-columns: 11rem 1fr; gap: 10px 16px; }
+dt { color: var(--muted); }
+dd { margin: 0; }
+footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--muted); }
+@media (max-width: 520px) {
+  main { padding-top: 56px; }
+  .row { flex-direction: column; gap: 0; }
+  dl { grid-template-columns: 1fr; gap: 0; }
+  dd { margin-bottom: 12px; }
+  ul.plain li { flex-direction: column; gap: 0; }
 }
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-out" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
-  <symbol id="i-next" viewBox="0 0 16 16"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5.5h18v13H3zM3.5 6l8.5 7 8.5-7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
-  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></symbol>
-  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></symbol>
-  <symbol id="i-down" viewBox="0 0 16 16"><path d="M4 6.5 8 10l4-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
-</svg>
-<canvas class="embers" aria-hidden="true"></canvas>
-<a class="sr" href="#about">Skip to content</a>
-
-<header class="head">
-  <a class="who" href="#top">ALEX CHAN <b>·</b><span class="yr"> BULLETIN OF WORK, 2026–27</span></a>
-  <nav aria-label="Contents">
-    <ol class="toc">
-      <li><a href="#about">§1 About</a></li>
-      <li><a href="#experience">§2 Experience</a></li>
-      <li><a href="#projects">§3 Projects</a></li>
-      <li><a href="#skills">§4 Skills</a></li>
-      <li><a href="#education">§5 Education</a></li>
-      <li><a href="#contact">§6 Contact</a></li>
-    </ol>
-    <details class="contents">
-      <summary>Contents <svg class="ic" aria-hidden="true"><use href="#i-down"/></svg></summary>
-      <ul>
-        <li><a href="#about">§1 About</a></li>
-        <li><a href="#experience">§2 Experience</a></li>
-        <li><a href="#projects">§3 Projects</a></li>
-        <li><a href="#skills">§4 Skills</a></li>
-        <li><a href="#education">§5 Education</a></li>
-        <li><a href="#contact">§6 Contact</a></li>
-      </ul>
-    </details>
-  </nav>
-</header>
-
-<main id="top">
-  <div class="thread" aria-hidden="true"><i></i></div>
-
-  <!-- title page -->
-  <div class="title">
-    <div class="depth" aria-hidden="true"><hr><hr><hr><span class="big-s">§</span></div>
-    <div class="layer">
-      <h1 aria-label="Alex Chan"><span class="ln" aria-hidden="true"><span>Alex</span></span><span class="ln" aria-hidden="true"><em><span>Chan</span></em></span></h1>
-      <p class="degree"><b>Information Systems</b> · Stony Brook University · Class of 2028</p>
-      <p class="lede">Software engineering intern at Amicus and Information Systems student at Stony Brook. I build full-stack
-        web apps and AI tools, including NFLillion, a trivia game 1,000+ people play every day.</p>
-      <div class="acts">
-        <a class="btn" href="Alex-Chan-Resume.pdf" target="_blank" rel="noopener">Read the resume <svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></a>
-        <a class="u" href="#contact">Get in touch</a>
-        <span class="social">
-          <a href="mailto:alexrc06nyc@gmail.com" aria-label="Email"><svg aria-hidden="true"><use href="#i-mail"/></svg></a>
-          <a href="https://github.com/archan06" target="_blank" rel="noopener" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
-          <a href="https://www.linkedin.com/in/alexrchan/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-        </span>
-      </div>
-      <p class="open"><span class="dot" aria-hidden="true"></span>Open to internship opportunities</p>
+<main>
+  <header>
+    <h1>Alex Chan</h1>
+    <p class="sub">Information Systems · Stony Brook University · Class of 2028</p>
+    <p class="lede">Software engineering intern at Amicus and Information Systems student at Stony Brook. I build full-stack
+      web apps and AI tools, including NFLillion, a trivia game 1,000+ people play every day.</p>
+    <div class="links">
+      <a href="mailto:alexrc06nyc@gmail.com">Email</a>
+      <a href="https://github.com/archan06" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/alexrchan/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="Alex-Chan-Resume.pdf" target="_blank" rel="noopener">Resume</a>
     </div>
-    <div class="offered layer">
-      <p class="cap">§3 Projects</p>
-      <ol>
-        <li><a href="#nflillion"><span class="nm">NFLillion<small>NFL trivia game</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#loki"><span class="nm">Loki Analyzer<small>AI fantasy football assistant</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#landed"><span class="nm">Landed<small>Job application tracker</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#bustedblends"><span class="nm">Busted Blends<small>Barber booking site</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#resumeai"><span class="nm">ResumeAI<small>AI resume analyzer</small></span><span class="live">LIVE</span></a></li>
-        <li><a href="#amicus"><span class="nm">Software Engineering Intern, Amicus<small>June – August 2026</small></span><span></span></a></li>
-      </ol>
-    </div>
-    <div class="folio"><span>p. 1</span><span>alexrchan.dev</span></div>
-  </div>
+    <p class="open">Open to internship opportunities</p>
+  </header>
 
-  <!-- §1 about -->
   <section id="about" aria-labelledby="about-h">
-    <span class="mark" aria-hidden="true">§1</span>
-    <div class="sec-head"><h2 id="about-h"><span class="sym">§1</span>About <em>me</em></h2></div>
-    <div class="about">
-      <div class="plate">
-        <figure>
-          <img src="headshot.jpg" alt="Alex Chan" loading="lazy">
-          <figcaption>Fig. 1 — Alex Chan, Stony Brook University</figcaption>
-        </figure>
-      </div>
-      <div>
-        <p>I'm a <strong>junior studying Information Systems</strong> at Stony Brook University and
-          <strong>Vice President External of Lambda Phi Epsilon</strong>. This past summer I was an
-          <strong>Software Engineering Intern at Amicus</strong>, building LLM features for a legal case-management platform, and I
-          <strong>build websites for small businesses</strong> on the side, from idea to launch. Coaching youth tennis and working in a
-          hospital lab and in retail taught me to <strong>communicate clearly and stay detail-oriented under pressure</strong>.
-          I'm looking for <strong>internships</strong> where I can keep shipping real products.</p>
-        <dl class="ledger facts">
-          <div><dt>Live projects</dt><dd>5</dd></div>
-          <div><dt>Graduation</dt><dd>2028</dd></div>
-        </dl>
-      </div>
-    </div>
+    <h2 id="about-h">About</h2>
+    <p>I'm a junior studying Information Systems at Stony Brook University and Vice President External of
+      Lambda Phi Epsilon. This past summer I was a Software Engineering Intern at Amicus, building LLM features for a
+      legal case-management platform, and I build websites for small businesses on the side, from idea to launch.
+      Coaching youth tennis and working in a hospital lab and in retail taught me to communicate clearly and stay
+      detail-oriented under pressure. I'm looking for internships where I can keep shipping real products.</p>
   </section>
 
-  <!-- §2 experience -->
   <section id="experience" aria-labelledby="exp-h">
-    <span class="mark" aria-hidden="true">§2</span>
-    <div class="sec-head"><h2 id="exp-h"><span class="sym">§2</span><em>Experience</em></h2></div>
-
-
-    <article class="entry" id="amicus">
-      <div class="when"><img class="logo full" src="img/logos/amicus.png" alt="Amicus logo" width="48" height="48">June – August 2026</div>
-      <div>
-        <h3>Software Engineering Intern</h3>
-        <div class="org">Amicus</div>
-        <p>Developed Python and PostgreSQL features for an AI case-management platform used by personal injury law firms. Built a RAG-based case assistant on Claude and ChatGPT that answers questions from a case's documents, and co-built a Python LLM pipeline that routes incoming court filings, emails, calls and texts to the right case.</p>
-        <p class="topics"><b>Topics</b>Python · PostgreSQL · RAG · Claude · LLM Pipelines</p>
-      </div>
+    <h2 id="exp-h">Experience</h2>
+    <article class="item" id="amicus">
+      <div class="row"><h3>Software Engineering Intern, Amicus</h3><span class="muted">June – August 2026</span></div>
+      <p>Developed Python and PostgreSQL features for an AI case-management platform used by personal injury law firms. Built a RAG-based case assistant on Claude and ChatGPT that answers questions from a case's documents, and co-built a Python LLM pipeline that routes incoming court filings, emails, calls and texts to the right case.</p>
+      <p class="tags">Python · PostgreSQL · RAG · Claude · LLM Pipelines</p>
     </article>
-    <article class="entry" id="freelance">
-      <div class="when"><span class="logo" role="img" aria-label="Freelance web development"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span>June 2026 – Present</div>
-      <div>
-        <h3>Web Developer</h3>
-        <div class="org">Freelance</div>
-        <p>Build and launch websites for clients, including a university barber (<a class="u" href="#bustedblends">Busted Blends</a>, live), local companies and a clothing brand. For booking clients I build React and TypeScript sites with appointment slots synced to Google Calendar, plus a password-protected admin page for managing appointments, deployed with Vercel Functions.</p>
-        <p class="topics"><b>Topics</b>React · TypeScript · Vercel · Google Calendar</p>
-      </div>
+    <article class="item" id="freelance">
+      <div class="row"><h3>Web Developer, Freelance</h3><span class="muted">June 2026 – Present</span></div>
+      <p>Build and launch websites for clients, including a university barber (<a href="#bustedblends">Busted Blends</a>, live), local companies and a clothing brand. For booking clients I build React and TypeScript sites with appointment slots synced to Google Calendar, plus a password-protected admin page for managing appointments, deployed with Vercel Functions.</p>
+      <p class="tags">React · TypeScript · Vercel · Google Calendar</p>
     </article>
-    <article class="entry">
-      <div class="when"><img class="logo" src="img/logos/nyulangone.png" alt="NYU Langone Health logo" width="48" height="48">September – November 2023</div>
-      <div>
-        <h3>Lab Assistant, Clinical Data &amp; Specimen Tracking</h3>
-        <div class="org">NYU Langone Hospital</div>
-        <p>Maintained patient and supply records in Epic's laboratory information system, checking entries for accuracy. Tracked and labeled blood samples in Epic under hospital and regulatory data-handling protocols, kept blood product inventory records current and coordinated timely specimen delivery to clinical staff.</p>
-        <p class="topics"><b>Topics</b>Epic · Clinical Data · Data Accuracy</p>
-      </div>
+    <article class="item">
+      <div class="row"><h3>Lab Assistant, NYU Langone Hospital</h3><span class="muted">September – November 2023</span></div>
+      <p>Clinical Data &amp; Specimen Tracking. Maintained patient and supply records in Epic's laboratory information system, checking entries for accuracy. Tracked and labeled blood samples in Epic under hospital and regulatory data-handling protocols, kept blood product inventory records current and coordinated timely specimen delivery to clinical staff.</p>
+      <p class="tags">Epic · Clinical Data · Data Accuracy</p>
     </article>
-    <article class="entry">
-      <div class="when"><span class="logo" role="img" aria-label="Other experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></span>2023 – 2025</div>
-      <div>
-        <h3>Other experience</h3>
-        <ul class="other">
-          <li><span class="mini" role="img" aria-label="HackSBU"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></span>Hackathon Participant, HackSBU <span>2025</span></li>
-          <li><img src="img/logos/nyjtl.png" alt="NYJTL logo" width="22" height="22">Tennis Instructor, NYJTL <span>Summers 2024 and 2025</span></li>
-          <li><img src="img/logos/adidas.png" alt="Adidas logo" width="22" height="22">Retail Sales Representative, Adidas <span>2023 – 2024</span></li>
-          <li><img src="img/logos/nmdp.png" alt="NMDP logo" width="22" height="22">Volunteer, National Marrow Donor Program <span>Stony Brook University</span></li>
-        </ul>
-      </div>
+    <article class="item">
+      <h3>Other experience</h3>
+      <ul class="plain">
+        <li>Hackathon Participant, HackSBU <span>2025</span></li>
+        <li>Tennis Instructor, NYJTL <span>Summers 2024 and 2025</span></li>
+        <li>Retail Sales Representative, Adidas <span>2023 – 2024</span></li>
+        <li>Volunteer, National Marrow Donor Program <span>Stony Brook University</span></li>
+      </ul>
     </article>
   </section>
 
-  <!-- §3 projects -->
   <section id="projects" aria-labelledby="proj-h">
-    <span class="mark" aria-hidden="true">§3</span>
-    <div class="sec-head"><h2 id="proj-h"><span class="sym">§3</span><em>Projects</em></h2></div>
-
-    <div class="projs">
-      <article class="proj" id="nflillion">
-        <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">nflillion.com</span></div><img src="img/nflillion.webp" alt="NFLillion's home screen: a pixel-art football field, the five scoring tiers from Checkdown +15 yards to Hail Mary +100, and a Press start button" width="1440" height="900" loading="lazy" decoding="async"></figure>
-        <div class="entry project">
-          <div class="when">Next.js · TypeScript</div>
-          <div>
-            <h3>NFLillion</h3>
-            <div class="tagline">Retro NFL Trivia Game · 1,000+ daily players</div>
-            <p>A free NFL trivia game that over 1,000 people play every day: seven prompts, 25 seconds each, and the rarer your correct answer, the bigger the play. I wrote a Python pipeline that generates the 418 prompts and 18,000+ accepted answers from cited Wikipedia tables. The server owns the clock and the scoring, and player scores and stats are saved in the browser.</p>
-            <p class="topics"><b>Built with</b>Next.js · TypeScript · React · Tailwind CSS · SQLite · Fly.io</p>
-          </div>
-          <div class="side"><span class="live">LIVE</span>
-            <span class="users"><b id="nfl-users">3,108</b> users</span>
-            <div class="links"><a class="u" href="https://nflillion.com" target="_blank" rel="noopener">Live site <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><a class="u" href="https://nflillion.com/numbers" target="_blank" rel="noopener">Stats <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><span class="priv">Private repo, code on request</span></div></div>
-        </div>
-      </article>
-      <article class="proj" id="loki">
-        <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">loki-fantasy-analyzer…streamlit.app</span></div><img src="img/loki.webp" alt="Loki Analyzer's Matchup screen: the week's score drawn as a field, with both starting lineups" width="1440" height="900" loading="lazy" decoding="async"></figure>
-        <div class="entry project">
-          <div class="when">Python · Streamlit</div>
-          <div>
-            <h3>Loki Analyzer</h3>
-            <div class="tagline">AI Fantasy Football Assistant</div>
-            <p>A phone-first ESPN fantasy football app with live matchups, lineup and waiver advice, and injury news. Its trade analyzer blends ESPN and Sleeper projections and trade values, then has Claude decide, and a tool-using chat assistant runs on the Anthropic Claude API. Supports multiple users with Google sign-in, encrypted per-user settings and a PostgreSQL database.</p>
-            <p class="topics"><b>Built with</b>Python · Streamlit · Anthropic Claude · PostgreSQL · Google OAuth · Playwright</p>
-          </div>
-          <div class="side"><span class="live">LIVE</span>
-            <div class="links"><a class="u" href="https://loki-fantasy-analyzer-ewzmsjdrv93qwsshsufap8.streamlit.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a><span class="priv">Private repo, code on request</span></div></div>
-        </div>
-      </article>
-      <article class="proj" id="landed">
-        <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">job-tracker-eight-orcin.vercel.app</span></div><img src="img/landed.webp" alt="Landed's board: job applications as cards in Saved, Applied, Phone screen, Interview and Offer columns" width="1440" height="900" loading="lazy" decoding="async"></figure>
-        <div class="entry project">
-          <div class="when">Next.js · TypeScript</div>
-          <div>
-            <h3>Landed</h3>
-            <div class="tagline">Job Application Tracker</div>
-            <p>A full-stack job tracker with a drag-and-drop Kanban board and event-sourced status history. An MCP server with OAuth 2.1 lets Claude and ChatGPT read and update your applications, and the Claude API classifies forwarded job emails and updates applications automatically, with undo. Covered by unit, integration and Playwright end-to-end tests, with rate limiting and per-user data isolation.</p>
-            <p class="topics"><b>Built with</b>Next.js · TypeScript · PostgreSQL · Prisma · Claude API · MCP · Playwright</p>
-          </div>
-          <div class="side"><span class="live">LIVE</span>
-            <div class="links"><a class="u" href="https://job-tracker-eight-orcin.vercel.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
-              <a class="u" href="https://github.com/archan06/job-tracker" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
-        </div>
-      </article>
-      <article class="proj" id="bustedblends">
-        <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">busted-blends.vercel.app</span></div><img src="img/bustedblends.webp" alt="Busted Blends home page: the name in huge white and red letters, with photos of haircuts flying toward the viewer" width="1440" height="900" loading="lazy" decoding="async"></figure>
-        <div class="entry project">
-          <div class="when">React · TypeScript</div>
-          <div>
-            <h3>Busted Blends</h3>
-            <div class="tagline">Barber Booking Site</div>
-            <p>Site for a student barber at Stony Brook. Photos of real cuts fly toward you as you scroll, and customers book 45-minute slots that go straight onto the barber's Google Calendar, so times already taken never show up. A password-protected admin page lists upcoming cuts with text, call and cancel buttons.</p>
-            <p class="topics"><b>Built with</b>React · TypeScript · Vite · Tailwind CSS · Framer Motion · Google Calendar API · Vercel Functions</p>
-          </div>
-          <div class="side"><span class="live">LIVE</span>
-            <div class="links"><a class="u" href="https://busted-blends.vercel.app" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
-              <a class="u" href="https://github.com/archan06/busted-blends" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
-        </div>
-      </article>
-      <article class="proj" id="resumeai">
-        <figure class="shot"><div class="shot-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">resume-anaylzer-ai.onrender.com</span></div><img src="img/resumeai.webp" alt="ResumeAI's upload screen: drop a PDF resume and a target job title to analyze it" width="1440" height="900" loading="lazy" decoding="async"></figure>
-        <div class="entry project">
-          <div class="when">Node.js · Express</div>
-          <div>
-            <h3>ResumeAI</h3>
-            <div class="tagline">AI Resume Analyzer</div>
-            <p>Upload a PDF resume and a target job, and Claude scores how well they match. Results stream in live as a radar chart, a score dial, rewritten bullets and a keyword cloud, plus a report you can export.</p>
-            <p class="topics"><b>Built with</b>Node.js · Express · Anthropic Claude · SSE Streaming · Chart.js</p>
-          </div>
-          <div class="side"><span class="live">LIVE</span>
-            <div class="links"><a class="u" href="https://resume-anaylzer-ai.onrender.com" target="_blank" rel="noopener">Live demo <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a>
-              <a class="u" href="https://github.com/archan06/resume-analyzer-ai" target="_blank" rel="noopener">Source <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></a></div></div>
-        </div>
-      </article>
-    </div>
+    <h2 id="proj-h">Projects</h2>
+    <article class="item" id="nflillion">
+      <div class="row"><h3>NFLillion</h3><span class="muted"><span id="nfl-users">3,108</span> users</span></div>
+      <p>A free NFL trivia game that over 1,000 people play every day: seven prompts, 25 seconds each, and the rarer your correct answer, the bigger the play. I wrote a Python pipeline that generates the 418 prompts and 18,000+ accepted answers from cited Wikipedia tables. The server owns the clock and the scoring, and player scores and stats are saved in the browser.</p>
+      <p class="tags">Next.js · TypeScript · React · Tailwind CSS · SQLite · Fly.io</p>
+      <div class="links"><a href="https://nflillion.com" target="_blank" rel="noopener">Live site</a><a href="https://nflillion.com/numbers" target="_blank" rel="noopener">Stats</a><span class="muted">Private repo, code on request</span></div>
+    </article>
+    <article class="item" id="loki">
+      <h3>Loki Analyzer</h3>
+      <p>A phone-first ESPN fantasy football app with live matchups, lineup and waiver advice, and injury news. Its trade analyzer blends ESPN and Sleeper projections and trade values, then has Claude decide, and a tool-using chat assistant runs on the Anthropic Claude API. Supports multiple users with Google sign-in, encrypted per-user settings and a PostgreSQL database.</p>
+      <p class="tags">Python · Streamlit · Anthropic Claude · PostgreSQL · Google OAuth · Playwright</p>
+      <div class="links"><a href="https://loki-fantasy-analyzer-ewzmsjdrv93qwsshsufap8.streamlit.app" target="_blank" rel="noopener">Live demo</a><span class="muted">Private repo, code on request</span></div>
+    </article>
+    <article class="item" id="landed">
+      <h3>Landed</h3>
+      <p>A full-stack job tracker with a drag-and-drop Kanban board and event-sourced status history. An MCP server with OAuth 2.1 lets Claude and ChatGPT read and update your applications, and the Claude API classifies forwarded job emails and updates applications automatically, with undo. Covered by unit, integration and Playwright end-to-end tests, with rate limiting and per-user data isolation.</p>
+      <p class="tags">Next.js · TypeScript · PostgreSQL · Prisma · Claude API · MCP · Playwright</p>
+      <div class="links"><a href="https://job-tracker-eight-orcin.vercel.app" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/archan06/job-tracker" target="_blank" rel="noopener">Source</a></div>
+    </article>
+    <article class="item" id="bustedblends">
+      <h3>Busted Blends</h3>
+      <p>Site for a student barber at Stony Brook. Photos of real cuts fly toward you as you scroll, and customers book 45-minute slots that go straight onto the barber's Google Calendar, so times already taken never show up. A password-protected admin page lists upcoming cuts with text, call and cancel buttons.</p>
+      <p class="tags">React · TypeScript · Vite · Tailwind CSS · Framer Motion · Google Calendar API · Vercel Functions</p>
+      <div class="links"><a href="https://busted-blends.vercel.app" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/archan06/busted-blends" target="_blank" rel="noopener">Source</a></div>
+    </article>
+    <article class="item" id="resumeai">
+      <h3>ResumeAI</h3>
+      <p>Upload a PDF resume and a target job, and Claude scores how well they match. Results stream in live as a radar chart, a score dial, rewritten bullets and a keyword cloud, plus a report you can export.</p>
+      <p class="tags">Node.js · Express · Anthropic Claude · SSE Streaming · Chart.js</p>
+      <div class="links"><a href="https://resume-anaylzer-ai.onrender.com" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/archan06/resume-analyzer-ai" target="_blank" rel="noopener">Source</a></div>
+    </article>
   </section>
 
-  <!-- §4 skills -->
   <section id="skills" aria-labelledby="skills-h">
-    <span class="mark" aria-hidden="true">§4</span>
-    <div class="sec-head"><h2 id="skills-h"><span class="sym">§4</span><em>Skills</em></h2></div>
-    <div class="depts">
-      <div class="dept"><h3>Languages</h3>
-        <ul><li>Java</li><li>Python</li><li>TypeScript</li><li>JavaScript</li><li>SQL</li><li>C</li><li>C++</li><li>HTML / CSS</li></ul></div>
-      <div class="dept"><h3>Frameworks &amp; Libraries</h3>
-        <ul><li>Next.js</li><li>React</li><li>Node.js</li><li>Express</li><li>Prisma</li><li>Tailwind CSS</li><li>FastAPI</li><li>Streamlit</li><li>Chart.js</li><li>Auth.js</li></ul></div>
-      <div class="dept"><h3>Tools &amp; Platforms</h3>
-        <ul><li>PostgreSQL</li><li>SQLite</li><li>Claude API</li><li>Vercel</li><li>Fly.io</li><li>Git / GitHub</li><li>Vitest</li><li>Playwright</li><li>Firebase</li><li>Wireshark</li><li>Epic</li></ul></div>
-      <div class="dept"><h3>Concepts</h3>
-        <ul><li>REST APIs</li><li>OAuth 2.1</li><li>MCP Servers</li><li>AI / LLM Integration</li><li>RAG</li><li>Automated Testing</li><li>OOP</li><li>SSE Streaming</li></ul></div>
-    </div>
+    <h2 id="skills-h">Skills</h2>
+    <dl>
+      <dt>Languages</dt><dd>Java, Python, TypeScript, JavaScript, SQL, C, C++, HTML / CSS</dd>
+      <dt>Frameworks &amp; Libraries</dt><dd>Next.js, React, Node.js, Express, Prisma, Tailwind CSS, FastAPI, Streamlit, Chart.js, Auth.js</dd>
+      <dt>Tools &amp; Platforms</dt><dd>PostgreSQL, SQLite, Claude API, Vercel, Fly.io, Git / GitHub, Vitest, Playwright, Firebase, Wireshark, Epic</dd>
+      <dt>Concepts</dt><dd>REST APIs, OAuth 2.1, MCP Servers, AI / LLM Integration, RAG, Automated Testing, OOP, SSE Streaming</dd>
+    </dl>
   </section>
 
-  <!-- §5 education -->
   <section id="education" aria-labelledby="edu-h">
-    <span class="mark" aria-hidden="true">§5</span>
-    <div class="sec-head"><h2 id="edu-h"><span class="sym">§5</span><em>Education</em></h2></div>
-    <div class="record">
-      <div>
-        <h3>Stony Brook University</h3>
-        <p class="deg">B.S. in Information Systems<br><i>Concentration in Technology Systems Management</i></p>
-        <div class="course">Coursework
-          <ul><li>Data Structures &amp; Algorithms</li><li>Database Systems</li><li>Software Engineering</li><li>Systems Fundamentals</li><li>Web Development</li><li>Machine Learning</li><li>Computer Networks</li></ul></div>
-      </div>
-      <dl class="ledger">
-        <div><dt>Location</dt><dd>Stony Brook, NY</dd></div>
-        <div><dt>Expected</dt><dd>May 2028</dd></div>
-        <div><dt>Leadership</dt><dd>VP External, Lambda Phi Epsilon</dd></div>
-      </dl>
-    </div>
+    <h2 id="edu-h">Education</h2>
+    <div class="row"><h3>Stony Brook University</h3><span class="muted">Expected May 2028</span></div>
+    <p class="sub">B.S. in Information Systems, Concentration in Technology Systems Management</p>
+    <p class="tags">Coursework: Data Structures &amp; Algorithms, Database Systems, Software Engineering, Systems Fundamentals, Web Development, Machine Learning, Computer Networks</p>
   </section>
 
-  <!-- §6 contact -->
   <section id="contact" aria-labelledby="contact-h">
-    <span class="mark" aria-hidden="true">§6</span>
-    <div class="sec-head"><h2 id="contact-h"><span class="sym">§6</span>Let's work <em>together</em></h2></div>
-    <div class="contact">
-      <p class="big"><a href="mailto:alexrc06nyc@gmail.com"><span class="u">alexrc06nyc@gmail.com</span></a></p>
-      <p class="note">Open to internships, collaborative projects, and conversations about software and AI.</p>
-      <div class="hours">
-        <a href="mailto:alexrc06nyc@gmail.com"><span>Write</span><b>Send an Email</b></a>
-        <a href="https://github.com/archan06" target="_blank" rel="noopener"><span>Code</span><b>GitHub <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></b></a>
-        <a href="https://www.linkedin.com/in/alexrchan/" target="_blank" rel="noopener"><span>Network</span><b>LinkedIn <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></b></a>
-        <a href="Alex-Chan-Resume.pdf" target="_blank" rel="noopener"><span>Read</span><b>Resume <svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></b></a>
-      </div>
-    </div>
-    <footer><span>Alex Chan · 2026</span><span>Built with HTML, CSS &amp; JS</span></footer>
+    <h2 id="contact-h">Contact</h2>
+    <p>Open to internships, collaborative projects, and conversations about software and AI.
+      Reach me at <a href="mailto:alexrc06nyc@gmail.com">alexrc06nyc@gmail.com</a>.</p>
   </section>
+
+  <footer>Alex Chan · 2026</footer>
 </main>
 
 <script>
@@ -581,105 +184,6 @@ main, footer { position: relative; z-index: 1; }
 fetch("https://nflillion.com/api/numbers").then((r) => r.ok ? r.json() : null).then((t) => {
   if (t && Number.isFinite(t.users)) document.getElementById("nfl-users").textContent = t.users.toLocaleString("en-US");
 }).catch(() => {});
-</script>
-<script type="module">
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// 21st.dev "Table of Contents" scroll-spy, ported: the section in view lights its link and its § mark.
-const links = [...document.querySelectorAll(".toc a")];
-const sections = [...document.querySelectorAll("main section[id]")];
-const visible = new Set();
-const spy = new IntersectionObserver((entries) => {
-  for (const e of entries) e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id);
-  const current = sections.find((s) => visible.has(s.id))?.id;
-  links.forEach((a) => a.setAttribute("aria-current", String(a.hash === `#${current}`)));
-  sections.forEach((s) => s.querySelector(".mark")?.classList.toggle("on", s.id === current));
-}, { rootMargin: "-45% 0px -50% 0px" });
-sections.forEach((s) => spy.observe(s));
-document.querySelectorAll(".contents a").forEach((a) => a.addEventListener("click", () => { a.closest("details").open = false; }));
-
-
-// Background VFX, the whole page: a living topographic map. Amber contour lines (every 5th one heavier, as on
-// a survey map) breathe slowly. Scrolling glides you over the terrain and reshapes it, and one bright gold
-// "waterline" contour rises through the elevations as you read further down the page. Paused in hidden tabs;
-// one still frame under reduced motion.
-{
-  const canvas = document.querySelector(".embers");
-  const ctx = canvas.getContext("2d");
-  const LEVELS = 14;
-  let w = 0, h = 0, dpr = 1, cell = 16, cols = 0, rows = 0, field = new Float32Array(0);
-  let running = false, last = 0, t = 0, intro = reduce ? 1 : 0, sy = scrollY;
-
-  // 3D value noise (x, y, time) with smoothstep interpolation; two octaves read as terrain.
-  const P = new Uint8Array(512); { const a = [...Array(256).keys()]; for (let i = 255; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } for (let i = 0; i < 512; i++) P[i] = a[i & 255]; }
-  const hash = (x, y, z) => P[P[P[x & 255] + (y & 255)] + (z & 255)] / 255;
-  const sm = (v) => v * v * (3 - 2 * v), mix = (a, b, v) => a + (b - a) * v;
-  function noise(x, y, z) {
-    const X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z), u = sm(x - X), v = sm(y - Y), q = sm(z - Z);
-    const l = (dz) => mix(mix(hash(X, Y, Z + dz), hash(X + 1, Y, Z + dz), u), mix(hash(X, Y + 1, Z + dz), hash(X + 1, Y + 1, Z + dz), u), v);
-    return mix(l(0), l(1), q);
-  }
-  function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2); w = innerWidth; h = innerHeight; cell = w < 700 ? 20 : 16;
-    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = Math.ceil(w / cell) + 1; rows = Math.ceil(h / cell) + 1; field = new Float32Array(cols * rows);
-  }
-  function sample(pan, z) {
-    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
-      const x = i * cell / 260, y = (j * cell + pan) / 260;
-      field[j * cols + i] = noise(x, y, z) * 0.7 + noise(x * 2.3 + 9, y * 2.3, z * 1.4) * 0.3;
-    }
-  }
-  // Marching squares: trace one elevation into the current path.
-  function contour(th) {
-    const at = (a, b) => (th - a) / (b - a || 1e-6);
-    for (let j = 0; j < rows - 1; j++) for (let i = 0; i < cols - 1; i++) {
-      const k = j * cols + i, a = field[k], b = field[k + 1], c = field[k + cols + 1], d = field[k + cols];
-      const idx = (a > th) | ((b > th) << 1) | ((c > th) << 2) | ((d > th) << 3);
-      if (idx === 0 || idx === 15) continue;
-      const x = i * cell, y = j * cell, pts = [];
-      if ((a > th) !== (b > th)) pts.push(x + at(a, b) * cell, y);
-      if ((b > th) !== (c > th)) pts.push(x + cell, y + at(b, c) * cell);
-      if ((c > th) !== (d > th)) pts.push(x + at(d, c) * cell, y + cell);
-      if ((d > th) !== (a > th)) pts.push(x, y + at(a, d) * cell);
-      for (let n = 0; n + 3 < pts.length; n += 4) { ctx.moveTo(pts[n], pts[n + 1]); ctx.lineTo(pts[n + 2], pts[n + 3]); }
-    }
-  }
-  function frame() {
-    const max = Math.max(1, document.documentElement.scrollHeight - h), p = Math.min(1, Math.max(0, sy / max));
-    sample(sy * 0.35, t * 0.04 + p * 2.2);  // scroll pans over the land and reshapes it
-    ctx.clearRect(0, 0, w, h);
-    ctx.lineWidth = 1;
-    for (let L = 1; L < LEVELS; L++) {
-      const index = L % 5 === 0;
-      ctx.strokeStyle = `rgba(245,158,11,${(index ? 0.2 : 0.09) * intro})`;
-      ctx.beginPath(); contour(0.18 + (L / LEVELS) * 0.64); ctx.stroke();
-    }
-    // the waterline: rises from the lowlands to the peaks as you read down the page
-    ctx.strokeStyle = `rgba(252,211,77,${0.42 * intro})`; ctx.lineWidth = 1.6;
-    ctx.shadowColor = "rgba(245,158,11,.8)"; ctx.shadowBlur = 8;
-    ctx.beginPath(); contour(0.3 + p * 0.42); ctx.stroke();
-    ctx.shadowBlur = 0;
-  }
-  function loop(now) {
-    if (!running) return;
-    const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
-    if (dt === 0 || dt > 1 / 40) {  // ~30 fps is plenty for slow terrain and halves the work
-      last = now; t += dt; intro = Math.min(1, intro + dt / 1.4);
-      sy += (scrollY - sy) * Math.min(1, dt * 7);  // eased, so the land glides after the scroll
-      frame();
-    }
-    requestAnimationFrame(loop);
-  }
-  const start = () => { if (!running && !reduce && !document.hidden) { running = true; last = 0; requestAnimationFrame(loop); } };
-  resize(); frame();
-  addEventListener("resize", () => { resize(); frame(); });
-  document.addEventListener("visibilitychange", () => (document.hidden ? (running = false) : start()));
-  start();
-}
-
-
-
 </script>
 </body>
 </html>
